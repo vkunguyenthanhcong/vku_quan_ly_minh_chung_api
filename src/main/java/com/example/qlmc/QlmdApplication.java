@@ -1,9 +1,4 @@
-<<<<<<< HEAD
 package com.example.qlmc;
-=======
-	package com.example.qlmc;
->>>>>>> master
-
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
