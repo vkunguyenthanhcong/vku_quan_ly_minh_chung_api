@@ -9,6 +9,10 @@ import org.springframework.data.repository.query.Param;
 import com.example.qlmc.entity.GoiY;
 
 public interface GoiYRepository extends JpaRepository<GoiY, Long> {
+<<<<<<< HEAD
     @Query(value = "SELECT * FROM goiynguonmc WHERE id_tieuchi = :idTieuChi", nativeQuery =  true)
+=======
+    @Query(value = "SELECT gy.*, (SELECT COUNT(*) FROM minhchung mc WHERE mc.id_goiy = gy.id_goiy) AS total FROM goiynguonmc gy WHERE gy.id_tieuchi = :idTieuChi;", nativeQuery =  true)
+>>>>>>> master
     List<GoiY> findAllByIdTieuChi(@Param("idTieuChi") int idTieuChi);
 }
