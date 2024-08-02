@@ -16,4 +16,5 @@ public class ChuanKDCLService {
     public List<ChuanKDCL> getAllChuanKDCLs() {
         return chuanKDCLRepository.findAll();
     }
+    
 }

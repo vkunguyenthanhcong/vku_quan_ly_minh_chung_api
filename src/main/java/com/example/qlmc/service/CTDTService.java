@@ -1,6 +1,7 @@
 package com.example.qlmc.service;
 
 import com.example.qlmc.entity.CTDT;
+import com.example.qlmc.entity.ChuanKDCL;
 import com.example.qlmc.repository.CTDTRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -23,5 +24,8 @@ public class CTDTService {
 
         return data.stream()
                 .collect(Collectors.groupingBy(CTDT::getMaKdcl));
+    }
+    public List<CTDT> getAllCTDTByMaKDCL(String maKdcl) {
+        return ctdtLRepository.findAllByMaKDCL(maKdcl);
     }
 }
