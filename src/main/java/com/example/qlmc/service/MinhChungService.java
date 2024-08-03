@@ -21,4 +21,8 @@ public class MinhChungService {
     public List<MinhChung> getAllMinhChung() {
         return minhChungRepository.findAll();
     }
+
+    public List<Object[]> getAllWithIdGoiY(int idGoiY) {
+        return minhChungRepository.findAllByIdGoiY(idGoiY);
+    }
 }

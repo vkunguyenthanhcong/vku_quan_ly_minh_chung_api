@@ -21,8 +21,6 @@ public class GoiY {
     @Column (name = "id_tieuchi")
     private int idTieuChi;
 
-    private int total;
-
     public GoiY(){
 
     }
@@ -59,12 +57,5 @@ public class GoiY {
 
     public void setIdTieuChi(int idTieuChi) {
         this.idTieuChi = idTieuChi;
-    }
-    public int getTotal() {
-        return total;
-    }
-
-    public void setTotal(int total) {
-        this.total = total;
     }
 }

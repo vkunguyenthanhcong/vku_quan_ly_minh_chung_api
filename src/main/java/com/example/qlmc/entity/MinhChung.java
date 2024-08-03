@@ -19,7 +19,21 @@ public class MinhChung {
     private int idKmc;
 
     @Column (name = "id_tieuchuan")
-    private String idTieuChuan;
+    private int idTieuChuan;
+
+    @Column (name = "id_goiy")
+    private int idGoiY;
+
+
+    public MinhChung(int idMc, String maMc, int idKmc, int idTieuChuan, int idGoiY) {
+        this.idMc = idMc;
+        this.maMc = maMc;
+        this.idKmc = idKmc;
+        this.idTieuChuan = idTieuChuan;
+        this.idGoiY = idGoiY;
+    }
+
+
 
     public MinhChung() {
     }
@@ -49,11 +63,19 @@ public class MinhChung {
         this.idKmc = idKmc;
     }
 
-    public String getIdTieuChuan() {
+    public int getIdTieuChuan() {
         return idTieuChuan;
     }
 
-    public void setIdTieuChuan(String idTieuChuan) {
+    public void setIdTieuChuan(int idTieuChuan) {
         this.idTieuChuan = idTieuChuan;
+    }
+
+    public int getIdGoiY() {
+        return idGoiY;
+    }
+
+    public void setIdGoiY(int idGoiY) {
+        this.idGoiY = idGoiY;
     }
 }

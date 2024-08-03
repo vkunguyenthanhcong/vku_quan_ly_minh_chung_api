@@ -18,7 +18,7 @@ public class GoiYService {
         return goiYRepository.findAll();
     }
 
-    public List<GoiY> getAllGoiYWithIdTieuChi(int idTieuChi) {
+    public List<Object[]> getAllGoiYWithIdTieuChi(int idTieuChi) {
         return goiYRepository.findAllByIdTieuChi(idTieuChi);
     }
 }
