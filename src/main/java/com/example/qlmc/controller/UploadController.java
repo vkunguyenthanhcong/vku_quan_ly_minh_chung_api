@@ -1,15 +1,12 @@
 package com.example.qlmc.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.example.qlmc.entity.Res;
 import com.example.qlmc.service.UploadService;
-import com.google.api.client.http.FileContent;
-
 import java.io.File;
 import java.io.IOException;
 import java.security.GeneralSecurityException;
@@ -29,7 +26,6 @@ public class UploadController {
         String originalFilename = file.getOriginalFilename();
         String suffix = "";
         if (originalFilename != null && originalFilename.contains(".")) {
-            // Extract suffix from the original filename
             suffix = originalFilename.substring(originalFilename.lastIndexOf('.'));
         }
         File tempFile = File.createTempFile("vku", suffix);
