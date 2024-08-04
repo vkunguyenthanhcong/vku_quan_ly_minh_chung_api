@@ -30,7 +30,20 @@ public class KhoMinhChung {
     private int idDvbh;
     @Column (name = "linkluutru")
     private String linkLuuTru;
+    @Column (name = "mota")
+    private String moTa;
     
+    public KhoMinhChung(String tenMinhChung, String soHieu, Date thoigian, int idLoai, int idDvbh, String linkLuuTru,
+            String moTa) {
+        this.tenMinhChung = tenMinhChung;
+        this.soHieu = soHieu;
+        this.thoigian = thoigian;
+        this.idLoai = idLoai;
+        this.idDvbh = idDvbh;
+        this.linkLuuTru = linkLuuTru;
+        this.moTa = moTa;
+    }
+
     public KhoMinhChung(){
         
     }
@@ -89,5 +102,13 @@ public int getIdKhoMinhChung() {
 
     public void setLinkLuuTru(String linkLuuTru) {
         this.linkLuuTru = linkLuuTru;
+    }
+
+    public String getMoTa() {
+        return moTa;
+    }
+
+    public void setMoTa(String moTa) {
+        this.moTa = moTa;
     }
 }
