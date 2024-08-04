@@ -32,9 +32,7 @@ public class MinhChung {
         this.idTieuChuan = idTieuChuan;
         this.idGoiY = idGoiY;
     }
-
-
-
+    
     public MinhChung() {
     }
 
