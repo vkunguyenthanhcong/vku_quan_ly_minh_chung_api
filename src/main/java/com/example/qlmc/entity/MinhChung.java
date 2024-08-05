@@ -12,8 +12,10 @@ public class MinhChung {
     @Column (name = "id_mc")
     private int idMc;
 
-    @Column (name = "ma_mc")
-    private String maMc;
+    @Column (name = "parent_ma_mc")
+    private String parentMaMc;
+    @Column (name = "child_ma_mc")
+    private String childMaMc;
 
     @Column (name = "id_kmc")
     private int idKmc;
@@ -25,55 +27,116 @@ public class MinhChung {
     private int idGoiY;
 
 
-    public MinhChung(int idMc, String maMc, int idKmc, int idTieuChuan, int idGoiY) {
+  
+    
+    public MinhChung(int idMc, String parentMaMc, String childMaMc, int idKmc, int idTieuChuan, int idGoiY) {
         this.idMc = idMc;
-        this.maMc = maMc;
+        this.parentMaMc = parentMaMc;
+        this.childMaMc = childMaMc;
         this.idKmc = idKmc;
         this.idTieuChuan = idTieuChuan;
         this.idGoiY = idGoiY;
     }
-    
-    public MinhChung() {
+
+
+
+
+    public MinhChung(String parentMaMc, String childMaMc, int idKmc, int idTieuChuan, int idGoiY) {
+        this.parentMaMc = parentMaMc;
+        this.childMaMc = childMaMc;
+        this.idKmc = idKmc;
+        this.idTieuChuan = idTieuChuan;
+        this.idGoiY = idGoiY;
     }
 
-    // Getters and Setters
+
+
+
     public int getIdMc() {
         return idMc;
     }
+
+
+
 
     public void setIdMc(int idMc) {
         this.idMc = idMc;
     }
 
-    public String getMaMc() {
-        return maMc;
+
+
+
+    public String getParentMaMc() {
+        return parentMaMc;
     }
 
-    public void setMaMc(String maMc) {
-        this.maMc = maMc;
+
+
+
+    public void setParentMaMc(String parentMaMc) {
+        this.parentMaMc = parentMaMc;
     }
+
+
+
+
+    public String getChildMaMc() {
+        return childMaMc;
+    }
+
+
+
+
+    public void setChildMaMc(String childMaMc) {
+        this.childMaMc = childMaMc;
+    }
+
+
+
 
     public int getIdKmc() {
         return idKmc;
     }
 
+
+
+
     public void setIdKmc(int idKmc) {
         this.idKmc = idKmc;
     }
+
+
+
 
     public int getIdTieuChuan() {
         return idTieuChuan;
     }
 
+
+
+
     public void setIdTieuChuan(int idTieuChuan) {
         this.idTieuChuan = idTieuChuan;
     }
+
+
+
 
     public int getIdGoiY() {
         return idGoiY;
     }
 
+
+
+
     public void setIdGoiY(int idGoiY) {
         this.idGoiY = idGoiY;
     }
+
+
+
+
+    public MinhChung() {
+    }
+
 }

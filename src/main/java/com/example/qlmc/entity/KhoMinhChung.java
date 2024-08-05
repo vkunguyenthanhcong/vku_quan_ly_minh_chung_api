@@ -17,6 +17,7 @@ public class KhoMinhChung {
 
     @Column (name = "ten_mc")
     private String tenMinhChung;
+    
     @Column (name = "sohieu")
     private String soHieu;
 
