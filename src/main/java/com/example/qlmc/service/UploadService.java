@@ -40,7 +40,7 @@ public class UploadService {
             FileContent mediaContent = new FileContent("application/octet-stream", file);
             com.google.api.services.drive.model.File uploadedFile = drive.files().create(fileMetaData, mediaContent)
                     .setFields("id").execute();
-            String imageUrl = "https://drive.google.com/file/d/"+uploadedFile.getId()+"/view?usp=drive_link";
+            String imageUrl = "https://drive.google.com/file/d/"+uploadedFile.getId()+"/preview";
             System.out.println("IMAGE URL: " + imageUrl);
             file.delete();
             res.setStatus(200);
