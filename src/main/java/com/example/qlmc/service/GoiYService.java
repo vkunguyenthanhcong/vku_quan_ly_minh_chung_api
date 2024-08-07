@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.example.qlmc.entity.GoiY;
+import com.example.qlmc.entity.MinhChung;
 import com.example.qlmc.repository.GoiYRepository;
 
 @Service
@@ -20,5 +21,9 @@ public class GoiYService {
 
     public List<Object[]> getAllGoiYWithIdTieuChi(int idTieuChi) {
         return goiYRepository.findAllByIdTieuChi(idTieuChi);
+    }
+
+    public GoiY saveData(GoiY data){
+        return goiYRepository.save(data);
     }
 }

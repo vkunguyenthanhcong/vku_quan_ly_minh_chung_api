@@ -21,6 +21,11 @@ public class GoiY {
     @Column (name = "id_tieuchi")
     private int idTieuChi;
 
+    public GoiY(String tenGoiY, int batBuoc, int idTieuChi) {
+        this.tenGoiY = tenGoiY;
+        this.batBuoc = batBuoc;
+        this.idTieuChi = idTieuChi;
+    }
     public GoiY(){
 
     }
