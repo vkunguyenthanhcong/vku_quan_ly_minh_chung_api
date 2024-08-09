@@ -33,9 +33,14 @@ public class KhoMinhChung {
     private String linkLuuTru;
     @Column (name = "mota")
     private String moTa;
+    @Column (name = "canhan")
+    private String caNhan;
     
-    public KhoMinhChung(String tenMinhChung, String soHieu, Date thoigian, int idLoai, int idDvbh, String linkLuuTru,
-            String moTa) {
+
+
+    public KhoMinhChung(int idKhoMinhChung, String tenMinhChung, String soHieu, Date thoigian, int idLoai, int idDvbh,
+            String linkLuuTru, String moTa, String caNhan) {
+        this.idKhoMinhChung = idKhoMinhChung;
         this.tenMinhChung = tenMinhChung;
         this.soHieu = soHieu;
         this.thoigian = thoigian;
@@ -43,6 +48,27 @@ public class KhoMinhChung {
         this.idDvbh = idDvbh;
         this.linkLuuTru = linkLuuTru;
         this.moTa = moTa;
+        this.caNhan = caNhan;
+    }
+
+    public KhoMinhChung(String tenMinhChung, String soHieu, Date thoigian, int idLoai, int idDvbh, String linkLuuTru,
+            String moTa, String caNhan) {
+        this.tenMinhChung = tenMinhChung;
+        this.soHieu = soHieu;
+        this.thoigian = thoigian;
+        this.idLoai = idLoai;
+        this.idDvbh = idDvbh;
+        this.linkLuuTru = linkLuuTru;
+        this.moTa = moTa;
+        this.caNhan = caNhan;
+    }
+
+    public String getCaNhan() {
+        return caNhan;
+    }
+
+    public void setCaNhan(String caNhan) {
+        this.caNhan = caNhan;
     }
 
     public KhoMinhChung(){

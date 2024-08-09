@@ -41,7 +41,8 @@ public class MinhChungController {
                     "idGoiY", row[5],
                     "soHieu", row[6],
                     "tenMinhChung", row[7],
-                    "linkLuuTru", row[8]))
+                    "linkLuuTru", row[8],
+                    "caNhan", row[9]))
                 .collect(Collectors.toList());
     }
 

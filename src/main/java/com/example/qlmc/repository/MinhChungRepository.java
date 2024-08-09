@@ -12,9 +12,10 @@ import com.example.qlmc.entity.MinhChung;
 import jakarta.transaction.Transactional;
 
 public interface MinhChungRepository extends JpaRepository<MinhChung, Long> {
-    @Query(value = "SELECT mc.*, kmc.sohieu, kmc.ten_mc, kmc.linkluutru FROM minhchung mc JOIN khominhchung kmc ON kmc.id_kmc = mc.id_kmc WHERE mc.id_goiy = :idGoiY;", nativeQuery =  true)
+    @Query(value = "SELECT mc.*, kmc.sohieu, kmc.ten_mc, kmc.linkluutru, kmc.caNhan FROM minhchung mc JOIN khominhchung kmc ON kmc.id_kmc = mc.id_kmc WHERE mc.id_goiy = :idGoiY;", nativeQuery =  true)
     List<Object[]> findAllByIdGoiY(@Param("idGoiY") int idGoiY);
 
+    
     @Modifying
     @Transactional
     @Query(value = "DELETE FROM minhchung WHERE id_mc = :idMc", nativeQuery = true)
