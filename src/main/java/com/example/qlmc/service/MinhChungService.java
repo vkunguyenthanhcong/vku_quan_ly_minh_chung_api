@@ -29,6 +29,10 @@ public class MinhChungService {
         return minhChungRepository.findAllByIdGoiY(idGoiY);
     }
 
+    public List<Object[]> getAllWithIdTieuChi(int idTieuChi) {
+        return minhChungRepository.findAllByIdTieuChi(idTieuChi);
+    }
+
     @Transactional
     public void processMinhChung(int idMc, String parentMaMc) {
         minhChungRepository.deleteByIdMc(idMc);

@@ -45,6 +45,20 @@ public class MinhChungController {
                     "caNhan", row[9]))
                 .collect(Collectors.toList());
     }
+    @GetMapping("/findByIdTieuChi/{idTieuChi}")
+    public List<Map<String, Object>> getAllWithIdTieuChi(@PathVariable int idTieuChi) {
+        List<Object[]> result = service.getAllWithIdTieuChi(idTieuChi);
+        return result.stream()
+                .map(row -> Map.of(
+                    "parentMaMc", row[0],
+                    "childMaMc", row[1],
+                    "tenMinhChung", row[2],
+                    "soHieu", row[3],
+                    "thoiGian", row[4],
+                    "donViBanHanh", row[5],
+                    "caNhan", row[6]))
+                .collect(Collectors.toList());
+    }
 
     @GetMapping("/delete")
     public ResponseEntity<String> processMinhChung(@RequestParam(value = "idMc") int idMc,@RequestParam (value = "parentMaMc") String parentMaMc) {
