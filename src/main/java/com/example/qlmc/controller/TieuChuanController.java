@@ -25,23 +25,20 @@ public class TieuChuanController {
     public List<TieuChuan> getAllTieuChuan() {
         return tieuChuanService.getAllTieuChuan();
     }
+    @GetMapping("/listandcount/{maCtdt}")
+    public List<Map<String, Object>> getListTieuChuanAndCount(@PathVariable String maCtdt){
+        List<Object[]> result = tieuChuanService.getListTieuChuanAndCount(maCtdt);
+        return result.stream()
+                .map(row -> Map.of(
+                    "idTieuChuan", row[0],
+                    "tenTieuChuan", row[1],
+                    "total", row[2]))
+                .collect(Collectors.toList());
+    }
 
     @GetMapping("/{id}")
-    public TieuChuan getTieuChuanById(@PathVariable int id) {
-        return tieuChuanService.getTieuChuanById(id);
-    }
-    @GetMapping("/filterMaCtdt/{maCtdt}")
-    public List<TieuChuan> getTieuChuanByMaCtdt(@PathVariable String maCtdt) {
-        return tieuChuanService.getTieuChuanByMaCtdt(maCtdt);
+    public TieuChuan findById(@PathVariable int id) {
+        return tieuChuanService.findById(id);
     }
     
-    // @PostMapping
-    // public TieuChuan createTieuChuan(@RequestBody TieuChuan tieuChuan) {
-    //     return tieuChuanService.saveTieuChuan(tieuChuan);
-    // }
-
-    // @DeleteMapping("/{id}")
-    // public void deleteTieuChuan(@PathVariable int id) {
-    //     tieuChuanService.deleteTieuChuan(id);
-    // }
 }

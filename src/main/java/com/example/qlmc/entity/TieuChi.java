@@ -11,16 +11,25 @@ public class TieuChi {
     @Id
     @Column (name = "id_tieuchi")
     private int idTieuChi;
+    
     @Column (name = "ten_tieuchi")
     private String tenTieuChi;
 
     @Column (name = "id_tieuchuan")
     private int idTieuChuan;
+
     @Column (name = "yeucau")
     private String yeuCau;
-    @Column (name = "mocchuan")
-    private String mocChuan;
 
+    @Column (name = "stt")
+    private int stt;
+
+    public int getStt() {
+        return stt;
+    }
+    public void setStt(int stt) {
+        this.stt = stt;
+    }
     public TieuChi(){
 
     }
@@ -54,13 +63,5 @@ public class TieuChi {
 
     public void setYeuCau(String yeuCau) {
         this.yeuCau = yeuCau;
-    }
-
-    public String getMocChuan() {
-        return mocChuan;
-    }
-
-    public void setMocChuan(String mocChuan) {
-        this.mocChuan = mocChuan;
     }
 }

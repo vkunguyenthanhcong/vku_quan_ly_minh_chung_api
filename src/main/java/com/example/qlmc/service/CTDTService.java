@@ -28,4 +28,10 @@ public class CTDTService {
     public List<CTDT> getAllCTDTByMaKDCL(String maKdcl) {
         return ctdtLRepository.findAllByMaKDCL(maKdcl);
     }
+    public List<Object[]> getThongTinChuongTrinhDaoTao(String maCtdt) {
+        return ctdtLRepository.getThongTinChuongTrinhDaoTao(maCtdt);
+    }
+    public List<CTDT> findAllByMaKDCL(String maKdcl){
+        return ctdtLRepository.findAllByMaKDCL(maKdcl);
+    }
 }

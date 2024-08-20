@@ -21,6 +21,19 @@ public class CTDT {
     @Column(name = "ma_khoa")
     private String maKhoa;
 
+    public CTDT(String tenCtdt, String maCtdt, String maKdcl, String maKhoa) {
+        this.tenCtdt = tenCtdt;
+        this.maCtdt = maCtdt;
+        this.maKdcl = maKdcl;
+        this.maKhoa = maKhoa;
+    }
+    public CTDT(int idCtdt, String tenCtdt, String maCtdt, String maKdcl, String maKhoa) {
+        this.idCtdt = idCtdt;
+        this.tenCtdt = tenCtdt;
+        this.maCtdt = maCtdt;
+        this.maKdcl = maKdcl;
+        this.maKhoa = maKhoa;
+    }
     public CTDT() {
     }
     // Getters and Setters

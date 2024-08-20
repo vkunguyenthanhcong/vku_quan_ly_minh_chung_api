@@ -18,13 +18,13 @@ public class GoiY {
     @Column (name = "batbuoc")
     private int batBuoc;
 
-    @Column (name = "id_tieuchi")
-    private int idTieuChi;
+    @Column (name = "id_mocchuan")
+    private int idMocChuan;
 
-    public GoiY(String tenGoiY, int batBuoc, int idTieuChi) {
+    public GoiY(String tenGoiY, int batBuoc, int idMocChuan) {
         this.tenGoiY = tenGoiY;
         this.batBuoc = batBuoc;
-        this.idTieuChi = idTieuChi;
+        this.idMocChuan = idMocChuan;
     }
     public GoiY(){
 
@@ -56,11 +56,11 @@ public class GoiY {
     }
 
     // Getter and Setter for idTieuChi
-    public int getIdTieuChi() {
-        return idTieuChi;
+    public int getIdMocChuan() {
+        return idMocChuan;
     }
 
-    public void setIdTieuChi(int idTieuChi) {
-        this.idTieuChi = idTieuChi;
+    public void setIdMocChuan(int idMocChuan) {
+        this.idMocChuan = idMocChuan;
     }
 }

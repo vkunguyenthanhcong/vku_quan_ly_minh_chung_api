@@ -8,15 +8,19 @@ import org.springframework.data.repository.query.Param;
 
 import com.example.qlmc.entity.KhoMinhChung;
 import com.example.qlmc.entity.MinhChung;
+import com.example.qlmc.entity.TieuChi;
 
 import jakarta.transaction.Transactional;
 
 public interface MinhChungRepository extends JpaRepository<MinhChung, Long> {
-    @Query(value = "SELECT mc.*, kmc.sohieu, kmc.ten_mc, kmc.linkluutru, kmc.caNhan FROM minhchung mc JOIN khominhchung kmc ON kmc.id_kmc = mc.id_kmc WHERE mc.id_goiy = :idGoiY;", nativeQuery =  true)
+    @Query(value = "SELECT mc.*, kmc.sohieu, kmc.ten_mc, kmc.linkluutru FROM minhchung mc JOIN khominhchung kmc ON kmc.id_kmc = mc.id_kmc WHERE mc.id_goiy = :idGoiY;", nativeQuery =  true)
     List<Object[]> findAllByIdGoiY(@Param("idGoiY") int idGoiY);
 
     @Query(value = "SELECT mc.parent_ma_mc, mc.child_ma_mc, kmc.ten_mc, kmc.sohieu, kmc.thoigian, dvbh.ten_dvbh, kmc.canhan FROM minhchung mc, khominhchung kmc, donvibanhanh dvbh, goiynguonmc goiy WHERE goiy.id_tieuchi = :idTieuChi AND mc.id_goiy = goiy.id_goiy AND mc.id_kmc = kmc.id_kmc AND kmc.id_dvbh = dvbh.id_dvbh", nativeQuery =  true)
     List<Object[]> findAllByIdTieuChi(@Param("idTieuChi") int idTieuChi);
+
+    @Query(value = "SELECT minhchung.* FROM minhchung, tieuchuan WHERE tieuchuan.ma_ctdt = :maCtdt AND tieuchuan.id_tieuchuan = minhchung.id_tieuchuan; ", nativeQuery = true)
+    List<MinhChung> findByMaCtdt(@Param("maCtdt") String maCtdt);
     
     @Modifying
     @Transactional
@@ -46,4 +50,6 @@ public interface MinhChungRepository extends JpaRepository<MinhChung, Long> {
     @Transactional
     @Query(value = "DROP TEMPORARY TABLE temp_table;", nativeQuery = true)
     void dropTempTable();
+
+    
 }

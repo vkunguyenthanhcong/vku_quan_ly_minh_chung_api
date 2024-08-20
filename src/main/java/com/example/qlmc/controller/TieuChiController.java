@@ -2,6 +2,7 @@ package com.example.qlmc.controller;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,6 +31,16 @@ public class TieuChiController {
     public List<TieuChi> getAllTieuChiWithIdTieuChuan(@PathVariable int idTieuChuan) {
         return tieuChiService.getAllTieuChiWithIdTieuChuan(idTieuChuan);
     }
+
+    @GetMapping("/findById/{idTieuChi}")
+    public Optional<TieuChi> findById(@PathVariable int idTieuChi) {
+        return tieuChiService.findById(idTieuChi);
+    }
+    @GetMapping("/findByMaCtdt/{maCtdt}")
+    public List<TieuChi> findByMaCtdt(@PathVariable String maCtdt) {
+        return tieuChiService.findByMaCtdt(maCtdt);
+    }
+
 
     
 }

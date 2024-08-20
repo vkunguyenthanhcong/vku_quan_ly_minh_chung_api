@@ -1,6 +1,7 @@
 package com.example.qlmc.service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +25,12 @@ public class TieuChiService {
     }
     public List<TieuChi> getAllTieuChiWithIdTieuChuan(int idTieuChuan) {
         return tieuChiRepository.findByIdTieuChuan(idTieuChuan);
+    }
+    public Optional<TieuChi> findById(int idTieuChi){
+        return tieuChiRepository.findById(idTieuChi);
+    }
+    public List<TieuChi> findByMaCtdt(String maCtdt) {
+        return tieuChiRepository.findByMaCtdt(maCtdt);
     }
 
 }

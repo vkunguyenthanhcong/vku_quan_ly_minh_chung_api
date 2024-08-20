@@ -18,7 +18,15 @@ public class TieuChuan {
 
     @Column (name = "ma_ctdt")
     private String maCtdt;
+    @Column (name = "stt")
+    private int stt;
 
+    public int getStt() {
+        return stt;
+    }
+    public void setStt(int stt) {
+        this.stt = stt;
+    }
     public TieuChuan(){
 
     }

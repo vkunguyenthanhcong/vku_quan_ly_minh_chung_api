@@ -22,17 +22,14 @@ public class TieuChuanService {
         return tieuChuanRepository.findAll();
     }
 
-    public TieuChuan getTieuChuanById(int id) {
+    public TieuChuan findById(int id) {
         return tieuChuanRepository.findById(id).orElse(null);
     }
     public List<TieuChuan> getTieuChuanByMaCtdt(String maCtdt) {
         return tieuChuanRepository.findByMaCtdt(maCtdt);
     }
-    // public TieuChuan saveTieuChuan(TieuChuan tieuChuan) {
-    //     return tieuChuanRepository.save(tieuChuan);
-    // }
-
-    // public void deleteTieuChuan(int id) {
-    //     tieuChuanRepository.deleteById(id);
-    // }
+    public List<Object[]> getListTieuChuanAndCount(String maCtdt){
+        return tieuChuanRepository.getListTieuChuanAndCount(maCtdt);
+    }
+    
 }

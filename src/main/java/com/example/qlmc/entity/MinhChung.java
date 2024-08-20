@@ -26,27 +26,25 @@ public class MinhChung {
     @Column (name = "id_goiy")
     private int idGoiY;
 
+    @Column (name = "madungchung")
+    private int maDungChung;
 
-  
-    
-    public MinhChung(int idMc, String parentMaMc, String childMaMc, int idKmc, int idTieuChuan, int idGoiY) {
+    public MinhChung(int idMc, String parentMaMc, String childMaMc, int idKmc, int idTieuChuan, int idGoiY, int maDungChung) {
         this.idMc = idMc;
         this.parentMaMc = parentMaMc;
         this.childMaMc = childMaMc;
         this.idKmc = idKmc;
         this.idTieuChuan = idTieuChuan;
         this.idGoiY = idGoiY;
+        this.maDungChung = maDungChung;
     }
-
-
-
-
-    public MinhChung(String parentMaMc, String childMaMc, int idKmc, int idTieuChuan, int idGoiY) {
+    public MinhChung(String parentMaMc, String childMaMc, int idKmc, int idTieuChuan, int idGoiY, int maDungChung) {
         this.parentMaMc = parentMaMc;
         this.childMaMc = childMaMc;
         this.idKmc = idKmc;
         this.idTieuChuan = idTieuChuan;
         this.idGoiY = idGoiY;
+        this.maDungChung = maDungChung;
     }
 
 
@@ -131,6 +129,17 @@ public class MinhChung {
 
     public void setIdGoiY(int idGoiY) {
         this.idGoiY = idGoiY;
+    }
+
+    public int getMaDungChung() {
+        return maDungChung;
+    }
+
+
+
+
+    public void setMaDungChung(int maDungChung) {
+        this.maDungChung = maDungChung;
     }
 
 

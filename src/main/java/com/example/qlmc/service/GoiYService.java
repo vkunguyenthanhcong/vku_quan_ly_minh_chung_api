@@ -1,6 +1,7 @@
 package com.example.qlmc.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -19,11 +20,14 @@ public class GoiYService {
         return goiYRepository.findAll();
     }
 
-    public List<Object[]> getAllGoiYWithIdTieuChi(int idTieuChi) {
-        return goiYRepository.findAllByIdTieuChi(idTieuChi);
+    public List<Object[]> getAllGoiYWithIdMocChuan(int idMocChuan) {
+        return goiYRepository.findAllByIdMocChuan(idMocChuan);
     }
 
     public GoiY saveData(GoiY data){
         return goiYRepository.save(data);
+    }
+    public Optional<GoiY> findById(int idGoiY){
+        return goiYRepository.findById(idGoiY);
     }
 }

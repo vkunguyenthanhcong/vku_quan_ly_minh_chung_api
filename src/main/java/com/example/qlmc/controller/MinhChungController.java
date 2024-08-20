@@ -39,10 +39,10 @@ public class MinhChungController {
                     "idKmc", row[3],
                     "idTieuChuan", row[4],
                     "idGoiY", row[5],
-                    "soHieu", row[6],
-                    "tenMinhChung", row[7],
-                    "linkLuuTru", row[8],
-                    "caNhan", row[9]))
+                    "maDungChung", row[6],
+                    "soHieu", row[7],
+                    "tenMinhChung", row[8],
+                    "linkLuuTru", row[9]))
                 .collect(Collectors.toList());
     }
     @GetMapping("/findByIdTieuChi/{idTieuChi}")
@@ -75,5 +75,10 @@ public class MinhChungController {
     @PostMapping
     public MinhChung saveMinhChung(@RequestBody MinhChung data) {
         return service.saveData(data);
+    }
+
+    @GetMapping("/findByMaCtdt/{maCtdt}")
+    public List<MinhChung> findByMaCtdt(@PathVariable String maCtdt) {
+        return service.findByMaCtdt(maCtdt);
     }
 }

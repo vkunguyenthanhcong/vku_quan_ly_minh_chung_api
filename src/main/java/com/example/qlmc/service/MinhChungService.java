@@ -24,6 +24,9 @@ public class MinhChungService {
     public List<MinhChung> getAllMinhChung() {
         return minhChungRepository.findAll();
     }
+    public List<MinhChung> findByMaCtdt(String maCtdt) {
+        return minhChungRepository.findByMaCtdt(maCtdt);
+    }
 
     public List<Object[]> getAllWithIdGoiY(int idGoiY) {
         return minhChungRepository.findAllByIdGoiY(idGoiY);

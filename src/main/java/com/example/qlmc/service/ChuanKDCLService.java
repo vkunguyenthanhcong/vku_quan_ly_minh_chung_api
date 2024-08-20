@@ -31,6 +31,7 @@ public class ChuanKDCLService {
 
     @Transactional
     public void deleteChuanKDCL(int idKdcl){
+        chuanKDCLRepository.deleteChuongTrinhDaoTao(idKdcl);
         chuanKDCLRepository.deleteChuanKDCL(idKdcl);
     }
     
