@@ -1,7 +1,6 @@
 package com.example.qlmc.entity;
 
 import java.sql.Date;
-import java.time.LocalDateTime;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -31,15 +30,12 @@ public class KhoMinhChung {
     private int idDvbh;
     @Column (name = "linkluutru")
     private String linkLuuTru;
-    @Column (name = "mota")
-    private String moTa;
-    @Column (name = "canhan")
-    private String caNhan;
+
     
 
 
     public KhoMinhChung(int idKhoMinhChung, String tenMinhChung, String soHieu, Date thoigian, int idLoai, int idDvbh,
-            String linkLuuTru, String moTa, String caNhan) {
+            String linkLuuTru) {
         this.idKhoMinhChung = idKhoMinhChung;
         this.tenMinhChung = tenMinhChung;
         this.soHieu = soHieu;
@@ -47,28 +43,16 @@ public class KhoMinhChung {
         this.idLoai = idLoai;
         this.idDvbh = idDvbh;
         this.linkLuuTru = linkLuuTru;
-        this.moTa = moTa;
-        this.caNhan = caNhan;
     }
 
-    public KhoMinhChung(String tenMinhChung, String soHieu, Date thoigian, int idLoai, int idDvbh, String linkLuuTru,
-            String moTa, String caNhan) {
+    public KhoMinhChung(String tenMinhChung, String soHieu, Date thoigian, int idLoai, int idDvbh, String linkLuuTru, String caNhan) {
         this.tenMinhChung = tenMinhChung;
         this.soHieu = soHieu;
         this.thoigian = thoigian;
         this.idLoai = idLoai;
         this.idDvbh = idDvbh;
         this.linkLuuTru = linkLuuTru;
-        this.moTa = moTa;
-        this.caNhan = caNhan;
-    }
 
-    public String getCaNhan() {
-        return caNhan;
-    }
-
-    public void setCaNhan(String caNhan) {
-        this.caNhan = caNhan;
     }
 
     public KhoMinhChung(){
@@ -131,11 +115,4 @@ public int getIdKhoMinhChung() {
         this.linkLuuTru = linkLuuTru;
     }
 
-    public String getMoTa() {
-        return moTa;
-    }
-
-    public void setMoTa(String moTa) {
-        this.moTa = moTa;
-    }
 }

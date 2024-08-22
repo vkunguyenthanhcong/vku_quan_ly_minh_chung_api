@@ -1,0 +1,13 @@
+{
+  "type": "service_account",
+  "project_id": "vkuminhchung",
+  "private_key_id": "a72e81bf2d98e0031cd05bb7f6d738d9b18c8f64",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQCcmFD55g6bmEUl\nFI1Wzg6h8aK+6LKUxW0ZxUoN0+iUAxpYMetyp4dPXseJe43ycTkj2PjT3PzNBrTE\ns8GOGXVHFXoeypJKmJ0mccLHUMy5NXD+yqedHYFRZ6xf+7aol0oQenxB92N3wr80\nFf9PuG1WZPL7qcc+umn6ReSVIqmdCXg8ddabnhcj6P7ihSujfK4hh2JPunszyibp\nQeWJVn1p8YUiEVN1M75rQBW/Us9XrmDqxZVNHtzU7J76UC5bUduJThTUuSAxtPYx\nc/S/sEWkEscCX8UP32lykBIMwRnKEYRrlJrWe53JqRXQVzQYgIcWRvG8DG6bn0NM\nDUf4cLERAgMBAAECggEAEtntSaAt2wJSNJwMRcppjYpKxsO5l9pKf4M2HoMHqSXU\nepCL4RIU4nOs/rp+hJSnxc59affdAQuRIGrpXqNm8Gc/+8v0H4HOzU19nsP12Uf7\nMdkQo4PlSPj7kdR6EUKhOmmcYs6WzViG7wzE3wJ7Ox7M94nhQAZt8qCOW3vAQnSs\nrST8zQ90qZre38VdSCTRAQY/VVH+3Uz079DuuyEqqAWipiywimP8SdoD9NPs8I4N\nmi9vrrZkawawi3BH+PCdrX/vsmBRUVF7WepuxNp9IlGVwOVszuclOXTiL+3GA2wp\nj60BhC13MduSdOS8FG0dxY321IAzcEDx/eYBAWJOTwKBgQDJaboAyGdzE9rJ38b6\nZ4lTKIqaKg6bWevFnqS82jidBy1JJiQ/XjN8HDMz7gg/lviKFzJ19gKP+kz8rvel\nKwOw5y6seKQJfzpQ4cYk3JFzIQjOQGytBOCWSWnLgEG/Hi5oJTtHyslQOydd0tNk\nQlGhWV0ynBfzVVYtQNCB8MVCGwKBgQDHCRAa3404vQT+EkL8HcEe6ooyFprRIE2j\nHrc6wXQIjPCRt+dYKd5o5R0D3FwjyDTBUmGHl2uhvbmXGHTdtYS9ll9r6zojYUiz\n1ctZov6RuBWqvI6xTSR+OWs1BEPYmLRejjQJAloc6AXJ85RcfoztBFs4veVD616T\nN8XOLZdsQwKBgGmId0hfuSyn85ShJx4fT+n9rRn3/W1S4WHLrR+y68UDdKwGSynU\nzv8xu3ZzO2kuTo30d6EtRMxx5xLjDqlBb46qo18FW1YKjuDAW9UGqUN8xKNlSEwj\n6RV14/QYANsGEmTJVVVZoL/kLs1PYSoAQctcCqQw+6+pQB03/8iGAqWPAoGBAKJk\n4p8Kh08j6k7i14SdQlTXSKpVhzvZ/354MUffT60qUZ6TTk7A2pb7WREtWoBXebPC\nY5EeGtN82VBOxAuhbwzBBFopMuZrGcahSal5M/vxFryX3FUNfBkBAFfhgvnWnlQH\n8qznHl83cIG2G/bbymAYjdVeGxGvmRrFBr+Ss1nBAoGAPVgpeelL1U/Vs0dB5MXs\n5hw2bfoZOU12VBqvCwdIik3YnaBdZgVQ9ZsvZ46zjyOCFe1Ve+pNxIuOoUR0XtKT\ngz8OK6CxARLqUzztfpXfLSgTEd9MaiThzn7d+9OBOths60RT4PB+8vRewNYhfkXB\nV92yoHX5V9RK4UdMDIhj5Ak=\n-----END PRIVATE KEY-----\n",
+  "client_email": "vku-minh-chung@vkuminhchung.iam.gserviceaccount.com",
+  "client_id": "115676754958190603820",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/vku-minh-chung%40vkuminhchung.iam.gserviceaccount.com",
+  "universe_domain": "googleapis.com"
+}

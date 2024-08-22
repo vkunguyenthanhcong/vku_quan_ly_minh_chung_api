@@ -6,9 +6,7 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
-import com.example.qlmc.entity.KhoMinhChung;
 import com.example.qlmc.entity.MinhChung;
-import com.example.qlmc.entity.TieuChi;
 
 import jakarta.transaction.Transactional;
 
@@ -21,7 +19,18 @@ public interface MinhChungRepository extends JpaRepository<MinhChung, Long> {
 
     @Query(value = "SELECT minhchung.* FROM minhchung, tieuchuan WHERE tieuchuan.ma_ctdt = :maCtdt AND tieuchuan.id_tieuchuan = minhchung.id_tieuchuan; ", nativeQuery = true)
     List<MinhChung> findByMaCtdt(@Param("maCtdt") String maCtdt);
-    
+
+    @Query(value = "SELECT minhchung.*, tieuchuan.ma_ctdt FROM minhchung, tieuchuan WHERE tieuchuan.id_tieuchuan = minhchung.id_tieuchuan", nativeQuery=true)
+    List<Object[]> findAllAndCtdt();
+
+    @Modifying
+    @Transactional
+    @Query(value = "INSERT INTO minhchung (id_kmc, id_tieuchuan, id_goiy, madungchung) VALUES (:idKmc, :idTieuChuan, :idGoiY, :maDungChung)", nativeQuery = true)
+    void insertMinhChung(@Param("idKmc") int idKmc,
+                         @Param("idTieuChuan") int idTieuChuan,
+                         @Param("idGoiY") int idGoiY,
+                         @Param("maDungChung") int maDungChung);
+
     @Modifying
     @Transactional
     @Query(value = "DELETE FROM minhchung WHERE id_mc = :idMc", nativeQuery = true)

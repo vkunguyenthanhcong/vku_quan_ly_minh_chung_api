@@ -28,6 +28,21 @@ public class MinhChungController {
     public List<MinhChung> getAllMinhChung() {
         return service.getAllMinhChung();
     }
+    @GetMapping("/MinhChungAndCtdt")
+    public List<Map<String, Object>> getAllAndCtdt() {
+        List<Object[]> result = service.findAllAndCtdt();
+        return result.stream()
+                .map(row -> Map.of(
+                    "idMc", row[0],
+                    "parentMaMc", row[1],
+                    "childMaMc", row[2],
+                    "idKmc", row[3],
+                    "idTieuChuan", row[4],
+                    "idGoiY", row[5],
+                    "maDungChung", row[6],
+                    "maCtdt", row[7]))
+                .collect(Collectors.toList());
+    }
     @GetMapping("/{idGoiY}")
     public List<Map<String, Object>> getAllWithIdGoiY(@PathVariable int idGoiY) {
         List<Object[]> result = service.getAllWithIdGoiY(idGoiY);
@@ -80,5 +95,9 @@ public class MinhChungController {
     @GetMapping("/findByMaCtdt/{maCtdt}")
     public List<MinhChung> findByMaCtdt(@PathVariable String maCtdt) {
         return service.findByMaCtdt(maCtdt);
+    }
+    @PostMapping("/dungchung")
+    public void createMinhChung(@RequestBody MinhChung request) {
+        service.addMinhChungDungChung(request.getIdKmc(), request.getIdTieuChuan(), request.getIdGoiY(), request.getMaDungChung());
     }
 }

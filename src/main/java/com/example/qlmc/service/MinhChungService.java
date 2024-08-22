@@ -1,16 +1,12 @@
 package com.example.qlmc.service;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.example.qlmc.entity.KhoMinhChung;
 import com.example.qlmc.entity.MinhChung;
-import com.example.qlmc.entity.TieuChuan;
 import com.example.qlmc.repository.MinhChungRepository;
-import com.example.qlmc.repository.TieuChuanRepository;
 
 import jakarta.transaction.Transactional;
 
@@ -20,6 +16,9 @@ public class MinhChungService {
     @Autowired
     private MinhChungRepository minhChungRepository;
 
+    public void addMinhChungDungChung(int idKmc, int idTieuChuan, int idGoiY, int maDungChung) {
+        minhChungRepository.insertMinhChung(idKmc, idTieuChuan, idGoiY, maDungChung);
+    }
 
     public List<MinhChung> getAllMinhChung() {
         return minhChungRepository.findAll();
@@ -27,7 +26,9 @@ public class MinhChungService {
     public List<MinhChung> findByMaCtdt(String maCtdt) {
         return minhChungRepository.findByMaCtdt(maCtdt);
     }
-
+    public List<Object[]> findAllAndCtdt() {
+        return minhChungRepository.findAllAndCtdt();
+    }
     public List<Object[]> getAllWithIdGoiY(int idGoiY) {
         return minhChungRepository.findAllByIdGoiY(idGoiY);
     }

@@ -46,6 +46,12 @@ public class MinhChung {
         this.idGoiY = idGoiY;
         this.maDungChung = maDungChung;
     }
+    public MinhChung(int idKmc, int idTieuChuan, int idGoiY, int maDungChung) {
+        this.idKmc = idKmc;
+        this.idTieuChuan = idTieuChuan;
+        this.idGoiY = idGoiY;
+        this.maDungChung = maDungChung;
+    }
 
 
 
