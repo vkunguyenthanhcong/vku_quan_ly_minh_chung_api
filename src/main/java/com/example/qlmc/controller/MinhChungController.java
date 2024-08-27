@@ -43,6 +43,14 @@ public class MinhChungController {
                     "maCtdt", row[7]))
                 .collect(Collectors.toList());
     }
+    @GetMapping("/CountMinhChungWithTieuChi/{idTieuChi}")
+    public List<Map<String, Object>> countMinhChungWithTieuChi(@PathVariable int idTieuChi) {
+        List<Object[]> result = service.countMinhChungWithTieuChi(idTieuChi);
+        return result.stream()
+                .map(row -> Map.of(
+                    "total", row[0]))
+                .collect(Collectors.toList());
+    }
     @GetMapping("/{idGoiY}")
     public List<Map<String, Object>> getAllWithIdGoiY(@PathVariable int idGoiY) {
         List<Object[]> result = service.getAllWithIdGoiY(idGoiY);
@@ -93,11 +101,23 @@ public class MinhChungController {
     }
 
     @GetMapping("/findByMaCtdt/{maCtdt}")
-    public List<MinhChung> findByMaCtdt(@PathVariable String maCtdt) {
-        return service.findByMaCtdt(maCtdt);
+    public List<Map<String, Object>> findByMaCtdt(@PathVariable String maCtdt) {
+        List<Object[]> result = service.findByMaCtdt(maCtdt);
+        return result.stream()
+                .map(row -> Map.of(
+                    "idMinhChung", row[0],
+                    "parentMaMc", row[1],
+                    "childMaMc", row[2],
+                    "idKhoMinhChung", row[3],
+                    "idTieuChuan", row[4],
+                    "idGoiY", row[5],
+                    "maDungChung", row[6],
+                    "tenMinhChung", row[7]))
+                .collect(Collectors.toList());
     }
     @PostMapping("/dungchung")
     public void createMinhChung(@RequestBody MinhChung request) {
         service.addMinhChungDungChung(request.getIdKmc(), request.getIdTieuChuan(), request.getIdGoiY(), request.getMaDungChung());
     }
+    
 }

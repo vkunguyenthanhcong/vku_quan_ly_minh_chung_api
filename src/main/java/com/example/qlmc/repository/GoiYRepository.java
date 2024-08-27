@@ -10,6 +10,6 @@ import com.example.qlmc.entity.GoiY;
 
 public interface GoiYRepository extends JpaRepository<GoiY, Integer> {
 
-    @Query(value = "SELECT gy.*, (SELECT COUNT(*) FROM minhchung mc WHERE mc.id_goiy = gy.id_goiy) AS total FROM goiynguonmc gy WHERE gy.id_mocchuan = :idMocChuan;", nativeQuery =  true)
+    @Query(value = "SELECT gy.* FROM goiynguonmc gy WHERE gy.id_mocchuan = :idMocChuan;", nativeQuery =  true)
     List<Object[]> findAllByIdMocChuan(@Param("idMocChuan") int idMocChuan);
 }

@@ -1,6 +1,5 @@
 package com.example.qlmc.controller;
 
-import java.lang.classfile.ClassFile.Option;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -37,8 +36,7 @@ public class GoiYController {
                     "idGoiY", row[0],
                     "tenGoiY", row[1],
                     "batBuoc", row[2],
-                    "idMocChuan", row[3],
-                    "total", row[4]))
+                    "idMocChuan", row[3]))
                 .collect(Collectors.toList());
     }
     @PostMapping
