@@ -25,13 +25,13 @@ public class MinhChungController {
     private MinhChungService service;
 
     @GetMapping
-    public List<MinhChung> getAllMinhChung() {
-        return service.getAllMinhChung();
+    public ResponseEntity<List<MinhChung>> getAllMinhChung() {
+        return ResponseEntity.ok(service.getAllMinhChung());
     }
     @GetMapping("/MinhChungAndCtdt")
-    public List<Map<String, Object>> getAllAndCtdt() {
+    public ResponseEntity<List<Map<String, Object>>> getAllAndCtdt() {
         List<Object[]> result = service.findAllAndCtdt();
-        return result.stream()
+        List<Map<String, Object>> response = result.stream()
                 .map(row -> Map.of(
                     "idMc", row[0],
                     "parentMaMc", row[1],
@@ -42,19 +42,22 @@ public class MinhChungController {
                     "maDungChung", row[6],
                     "maCtdt", row[7]))
                 .collect(Collectors.toList());
+
+    return ResponseEntity.ok(response);
     }
     @GetMapping("/CountMinhChungWithTieuChi/{idTieuChi}")
-    public List<Map<String, Object>> countMinhChungWithTieuChi(@PathVariable int idTieuChi) {
+    public ResponseEntity<List<Map<String, Object>>>countMinhChungWithTieuChi(@PathVariable int idTieuChi) {
         List<Object[]> result = service.countMinhChungWithTieuChi(idTieuChi);
-        return result.stream()
-                .map(row -> Map.of(
-                    "total", row[0]))
-                .collect(Collectors.toList());
+        List<Map<String, Object>> responseList = result.stream()
+            .map(row -> Map.of(
+                "total", row[0]))
+            .collect(Collectors.toList());
+        return ResponseEntity.ok(responseList);    
     }
     @GetMapping("/{idGoiY}")
-    public List<Map<String, Object>> getAllWithIdGoiY(@PathVariable int idGoiY) {
+    public ResponseEntity<List<Map<String, Object>>> getAllWithIdGoiY(@PathVariable int idGoiY) {
         List<Object[]> result = service.getAllWithIdGoiY(idGoiY);
-        return result.stream()
+        List<Map<String, Object>> response = result.stream()
                 .map(row -> Map.of(
                     "idMc", row[0],
                     "parentMaMc", row[1],
@@ -67,11 +70,12 @@ public class MinhChungController {
                     "tenMinhChung", row[8],
                     "linkLuuTru", row[9]))
                 .collect(Collectors.toList());
-    }
+    return ResponseEntity.ok(response);
+            }
     @GetMapping("/findByIdTieuChi/{idTieuChi}")
-    public List<Map<String, Object>> getAllWithIdTieuChi(@PathVariable int idTieuChi) {
+    public ResponseEntity<List<Map<String, Object>>> getAllWithIdTieuChi(@PathVariable int idTieuChi) {
         List<Object[]> result = service.getAllWithIdTieuChi(idTieuChi);
-        return result.stream()
+        List<Map<String, Object>> response = result.stream()
                 .map(row -> Map.of(
                     "parentMaMc", row[0],
                     "childMaMc", row[1],
@@ -81,6 +85,7 @@ public class MinhChungController {
                     "donViBanHanh", row[5],
                     "caNhan", row[6]))
                 .collect(Collectors.toList());
+                return ResponseEntity.ok(response);
     }
 
     @GetMapping("/MinhChungKhongDungChung")
@@ -102,21 +107,26 @@ public class MinhChungController {
 
         try {
             service.processMinhChung(idMc, parentMaMc);
-            return ResponseEntity.ok("Processing completed successfully.");
+            return ResponseEntity.ok("OK");
         } catch (Exception e) {
-            return ResponseEntity.status(500).body("Error processing MinhChung: " + e.getMessage());
+            return ResponseEntity.status(500).body("Error processing: " + e.getMessage());
         }
     }
 
     @PostMapping
-    public MinhChung saveMinhChung(@RequestBody MinhChung data) {
-        return service.saveData(data);
+    public ResponseEntity<String> saveMinhChung(@RequestBody MinhChung data) {
+        try {
+            service.saveData(data);
+            return ResponseEntity.ok("OK");
+        } catch (Exception e) {
+            return ResponseEntity.status(500).body("Error processing: " + e.getMessage());
+        }
     }
 
     @GetMapping("/findByMaCtdt/{maCtdt}")
-    public List<Map<String, Object>> findByMaCtdt(@PathVariable String maCtdt) {
+    public ResponseEntity<List<Map<String, Object>>> findByMaCtdt(@PathVariable String maCtdt) {
         List<Object[]> result = service.findByMaCtdt(maCtdt);
-        return result.stream()
+        List<Map<String, Object>> response = result.stream()
                 .map(row -> Map.of(
                     "idMinhChung", row[0],
                     "parentMaMc", row[1],
@@ -127,10 +137,16 @@ public class MinhChungController {
                     "maDungChung", row[6],
                     "tenMinhChung", row[7]))
                 .collect(Collectors.toList());
+                return ResponseEntity.ok(response);
     }
     @PostMapping("/dungchung")
-    public void createMinhChung(@RequestBody MinhChung request) {
-        service.addMinhChungDungChung(request.getIdKmc(), request.getIdTieuChuan(), request.getIdGoiY(), request.getMaDungChung());
+    public ResponseEntity<String> createMinhChung(@RequestBody MinhChung request) {
+        try {
+            service.addMinhChungDungChung(request.getIdKmc(), request.getIdTieuChuan(), request.getIdGoiY(), request.getMaDungChung());
+            return ResponseEntity.ok("OK");
+        } catch (Exception e) {
+            return ResponseEntity.status(500).body("Error processing: " + e.getMessage());
+        }
     }
     
 }

@@ -5,7 +5,6 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.rest.webmvc.ResourceNotFoundException;
 import org.springframework.stereotype.Service;
 
 import com.example.qlmc.entity.KhoMinhChung;
@@ -21,8 +20,8 @@ public class KhoMinhChungService {
         return khoMinhChungRepository.findAll();
     }
 
-    public KhoMinhChung saveData(KhoMinhChung data){
-        return khoMinhChungRepository.save(data);
+    public void saveData(KhoMinhChung data){
+        khoMinhChungRepository.save(data);
     }
     public List<KhoMinhChung> searchByNotDate(String tenMc, String soHieu, String idLoai){
         if(tenMc != null && soHieu != null && idLoai != null){
@@ -60,8 +59,8 @@ public class KhoMinhChungService {
         return khoMinhChungRepository.findById(idKmc);
     }
     
-    public KhoMinhChung updateKhoMinhChung(int idKmc, KhoMinhChung data) {
+    public void updateKhoMinhChung(int idKmc, KhoMinhChung data) {
         data.setIdKhoMinhChung(idKmc);
-        return khoMinhChungRepository.save(data);
+        khoMinhChungRepository.save(data);
     }
 }

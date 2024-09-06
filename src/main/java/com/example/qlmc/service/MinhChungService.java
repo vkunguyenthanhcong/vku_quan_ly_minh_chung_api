@@ -3,6 +3,7 @@ package com.example.qlmc.service;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.stereotype.Service;
 
 import com.example.qlmc.entity.MinhChung;
@@ -49,7 +50,8 @@ public class MinhChungService {
         minhChungRepository.updateWithTempTable(parentMaMc);
         minhChungRepository.dropTempTable();
     }
-    public MinhChung saveData(MinhChung data){
-        return minhChungRepository.save(data);
+    @Modifying
+    public void saveData(MinhChung data){
+        minhChungRepository.save(data);
     }
 }
