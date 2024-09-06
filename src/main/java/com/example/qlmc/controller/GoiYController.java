@@ -41,11 +41,17 @@ public class GoiYController {
                 .collect(Collectors.toList());
     }
     @PostMapping
-    public GoiY saveGoiY(@RequestBody GoiY data) {
-        return goiYService.saveData(data);
+    public ResponseEntity<String> saveGoiY(@RequestBody GoiY data) {
+        try{
+            goiYService.saveData(data);
+            return ResponseEntity.ok("OK");
+        }catch (Exception e){
+            return ResponseEntity.status(500).body("Error processing: " + e.getMessage());
+        }
     }
+
     @GetMapping("/findById/{idGoiY}")
-    public Optional<GoiY> findById(@PathVariable int idGoiY){
-        return goiYService.findById(idGoiY);
+    public ResponseEntity<Optional<GoiY>> findById(@PathVariable int idGoiY){
+        return ResponseEntity.ok(goiYService.findById(idGoiY));
     }
 }

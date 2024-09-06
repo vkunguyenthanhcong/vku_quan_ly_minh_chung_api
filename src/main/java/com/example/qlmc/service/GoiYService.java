@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.example.qlmc.entity.GoiY;
-import com.example.qlmc.entity.MinhChung;
 import com.example.qlmc.repository.GoiYRepository;
 
 @Service
@@ -24,8 +23,8 @@ public class GoiYService {
         return goiYRepository.findAllByIdMocChuan(idMocChuan);
     }
 
-    public GoiY saveData(GoiY data){
-        return goiYRepository.save(data);
+    public void saveData(GoiY data){
+        goiYRepository.save(data);
     }
     public Optional<GoiY> findById(int idGoiY){
         return goiYRepository.findById(idGoiY);
