@@ -20,6 +20,19 @@ public class ChuanKDCL {
     public ChuanKDCL() {
     }
 
+    public ChuanKDCL(int idKdcl, String tenKdcl, String namBanHanh, String maKdcl) {
+        this.idKdcl = idKdcl;
+        this.tenKdcl = tenKdcl;
+        this.namBanHanh = namBanHanh;
+        this.maKdcl = maKdcl;
+    }
+
+    public ChuanKDCL(String tenKdcl, String namBanHanh, String maKdcl) {
+        this.tenKdcl = tenKdcl;
+        this.namBanHanh = namBanHanh;
+        this.maKdcl = maKdcl;
+    }
+
     // Getters and setters
     public int getIdKdcl() {
         return idKdcl;
