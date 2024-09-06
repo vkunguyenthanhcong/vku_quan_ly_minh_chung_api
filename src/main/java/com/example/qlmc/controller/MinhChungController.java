@@ -83,6 +83,20 @@ public class MinhChungController {
                 .collect(Collectors.toList());
     }
 
+    @GetMapping("/MinhChungKhongDungChung")
+    public List<Map<String, Object>> getAllMinhChungKhongDungChung() {
+        List<Object[]> result = service.getAllMinhChungKhongDungChung();
+        return result.stream()
+                .map(row -> Map.of(
+                    "idMc", row[0],
+                    "parentMaMc", row[1],
+                    "childMaMc", row[2],
+                    "tenMinhChung", row[3],
+                    "linkLuuTru", row[4]))
+                .collect(Collectors.toList());
+    }
+
+
     @GetMapping("/delete")
     public ResponseEntity<String> processMinhChung(@RequestParam(value = "idMc") int idMc,@RequestParam (value = "parentMaMc") String parentMaMc) {
 
@@ -93,7 +107,6 @@ public class MinhChungController {
             return ResponseEntity.status(500).body("Error processing MinhChung: " + e.getMessage());
         }
     }
-
 
     @PostMapping
     public MinhChung saveMinhChung(@RequestBody MinhChung data) {

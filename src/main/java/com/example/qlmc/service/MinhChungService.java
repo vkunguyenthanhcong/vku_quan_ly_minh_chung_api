@@ -39,7 +39,9 @@ public class MinhChungService {
     public List<Object[]> countMinhChungWithTieuChi(int idTieuChi){
         return minhChungRepository.countMinhChungWithTieuChi(idTieuChi);
     }
-
+    public List<Object[]> getAllMinhChungKhongDungChung(){
+        return minhChungRepository.getAllMinhChung();
+    }
     @Transactional
     public void processMinhChung(int idMc, String parentMaMc) {
         minhChungRepository.deleteByIdMc(idMc);

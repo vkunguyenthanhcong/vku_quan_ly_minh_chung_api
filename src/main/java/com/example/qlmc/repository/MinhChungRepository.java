@@ -26,6 +26,9 @@ public interface MinhChungRepository extends JpaRepository<MinhChung, Long> {
     @Query (value = "SELECT COUNT(*) AS total FROM minhchung JOIN goiynguonmc ON minhchung.id_goiy = goiynguonmc.id_goiy JOIN mocchuan ON goiynguonmc.id_mocchuan = mocchuan.id_mocchuan WHERE mocchuan.id_tieuchi = :idTieuChi;", nativeQuery=true)
     List<Object[]> countMinhChungWithTieuChi(@Param("idTieuChi") int idTieuChi);
 
+    @Query (value = "SELECT minhchung.id_mc, minhchung.parent_ma_mc, minhchung.child_ma_mc, khominhchung.ten_mc, khominhchung.linkluutru FROM minhchung, khominhchung WHERE minhchung.madungchung = 0 AND minhchung.id_kmc = khominhchung.id_kmc;", nativeQuery=true)
+    List<Object[]> getAllMinhChung();
+
     @Modifying
     @Transactional
     @Query(value = "INSERT INTO minhchung (id_kmc, id_tieuchuan, id_goiy, madungchung) VALUES (:idKmc, :idTieuChuan, :idGoiY, :maDungChung)", nativeQuery = true)
