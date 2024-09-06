@@ -1,12 +1,12 @@
 package com.example.qlmc.controller;
 
-import java.lang.classfile.ClassFile.Option;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -25,8 +25,8 @@ public class GoiYController {
     private GoiYService goiYService;
 
     @GetMapping
-    public List<GoiY> getAllGoiY() {
-        return goiYService.getAllGoiY();
+    public ResponseEntity<List<GoiY>> getAllGoiY() {
+        return ResponseEntity.ok(goiYService.getAllGoiY());
     }
 
     @GetMapping("/{idMocChuan}")
@@ -37,8 +37,7 @@ public class GoiYController {
                     "idGoiY", row[0],
                     "tenGoiY", row[1],
                     "batBuoc", row[2],
-                    "idMocChuan", row[3],
-                    "total", row[4]))
+                    "idMocChuan", row[3]))
                 .collect(Collectors.toList());
     }
     @PostMapping

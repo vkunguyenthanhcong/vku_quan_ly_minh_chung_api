@@ -23,7 +23,7 @@ public class MinhChungService {
     public List<MinhChung> getAllMinhChung() {
         return minhChungRepository.findAll();
     }
-    public List<MinhChung> findByMaCtdt(String maCtdt) {
+    public List<Object[]> findByMaCtdt(String maCtdt) {
         return minhChungRepository.findByMaCtdt(maCtdt);
     }
     public List<Object[]> findAllAndCtdt() {
@@ -35,6 +35,9 @@ public class MinhChungService {
 
     public List<Object[]> getAllWithIdTieuChi(int idTieuChi) {
         return minhChungRepository.findAllByIdTieuChi(idTieuChi);
+    }
+    public List<Object[]> countMinhChungWithTieuChi(int idTieuChi){
+        return minhChungRepository.countMinhChungWithTieuChi(idTieuChi);
     }
 
     @Transactional

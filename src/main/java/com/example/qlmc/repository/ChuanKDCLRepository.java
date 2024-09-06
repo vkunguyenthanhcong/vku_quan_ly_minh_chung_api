@@ -10,6 +10,15 @@ import com.example.qlmc.entity.ChuanKDCL;
 import jakarta.transaction.Transactional;
 
 public interface ChuanKDCLRepository extends JpaRepository<ChuanKDCL, Long> {
+
+    @Modifying
+    @Transactional
+    @Query(value = "INSERT INTO chuankdcl (ten_kdcl, nambanhanh, ma_kdcl) " +
+                   "SELECT :tenKdcl, :namBanHanh, " +
+                   "IFNULL(CONCAT('ckd', CAST(SUBSTRING_INDEX(MAX(ma_kdcl), 'ckd', -1) + 1 AS UNSIGNED)), 'ckd1') " +
+                   "FROM chuankdcl", nativeQuery = true)
+    void insertNewChuanKdcl(@Param("tenKdcl") String tenKdcl, @Param("namBanHanh") String namBanHanh);         
+
     @Modifying
     @Transactional
     @Query (value = "UPDATE chuankdcl SET ten_kdcl = :tenKdcl WHERE id_kdcl = :idKdcl", nativeQuery = true)

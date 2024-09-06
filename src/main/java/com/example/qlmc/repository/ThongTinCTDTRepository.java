@@ -19,4 +19,5 @@ public interface ThongTinCTDTRepository extends JpaRepository<ChuanKDCL, String>
                    "JOIN nganh ON nganh.ma_nganh = dt.ma_nganh " +
                    "WHERE dt.ma_ctdt = :maCtdt", nativeQuery = true)
     List<Object[]> findDetailsByCtdt(@Param("maCtdt") String maCtdt);
+    
 }
