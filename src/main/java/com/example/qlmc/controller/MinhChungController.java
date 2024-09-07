@@ -28,23 +28,7 @@ public class MinhChungController {
     public ResponseEntity<List<MinhChung>> getAllMinhChung() {
         return ResponseEntity.ok(service.getAllMinhChung());
     }
-    @GetMapping("/MinhChungAndCtdt")
-    public ResponseEntity<List<Map<String, Object>>> getAllAndCtdt() {
-        List<Object[]> result = service.findAllAndCtdt();
-        List<Map<String, Object>> response = result.stream()
-                .map(row -> Map.of(
-                    "idMc", row[0],
-                    "parentMaMc", row[1],
-                    "childMaMc", row[2],
-                    "idKmc", row[3],
-                    "idTieuChuan", row[4],
-                    "idGoiY", row[5],
-                    "maDungChung", row[6],
-                    "maCtdt", row[7]))
-                .collect(Collectors.toList());
-
-    return ResponseEntity.ok(response);
-    }
+    
     @GetMapping("/CountMinhChungWithTieuChi/{idTieuChi}")
     public ResponseEntity<List<Map<String, Object>>>countMinhChungWithTieuChi(@PathVariable int idTieuChi) {
         List<Object[]> result = service.countMinhChungWithTieuChi(idTieuChi);
@@ -57,21 +41,30 @@ public class MinhChungController {
     @GetMapping("/{idGoiY}")
     public ResponseEntity<List<Map<String, Object>>> getAllWithIdGoiY(@PathVariable int idGoiY) {
         List<Object[]> result = service.getAllWithIdGoiY(idGoiY);
+        
         List<Map<String, Object>> response = result.stream()
-                .map(row -> Map.of(
-                    "idMc", row[0],
-                    "parentMaMc", row[1],
-                    "childMaMc", row[2],
-                    "idKmc", row[3],
-                    "idTieuChuan", row[4],
-                    "idGoiY", row[5],
-                    "maDungChung", row[6],
-                    "soHieu", row[7],
-                    "tenMinhChung", row[8],
-                    "linkLuuTru", row[9]))
+                .map(row -> {
+                    String parentMaMc = (String) row[1];
+                    String childMaMc = (String) row[2];
+                    String maMinhChung = parentMaMc + childMaMc;
+                    return Map.of(
+                        "idMc", row[0],
+                        "maMinhChung", maMinhChung,
+                        "idKmc", row[3],
+                        "idTieuChuan", row[4],
+                        "idGoiY", row[5],
+                        "maDungChung", row[6],
+                        "soHieu", row[7],
+                        "tenMinhChung", row[8],
+                        "linkLuuTru", row[9],
+                        "idTieuChi", row[10]
+                    );
+                })
                 .collect(Collectors.toList());
-    return ResponseEntity.ok(response);
-            }
+        
+        return ResponseEntity.ok(response);
+    }
+    
     @GetMapping("/findByIdTieuChi/{idTieuChi}")
     public ResponseEntity<List<Map<String, Object>>> getAllWithIdTieuChi(@PathVariable int idTieuChi) {
         List<Object[]> result = service.getAllWithIdTieuChi(idTieuChi);
@@ -89,9 +82,9 @@ public class MinhChungController {
     }
 
     @GetMapping("/MinhChungKhongDungChung")
-    public List<Map<String, Object>> getAllMinhChungKhongDungChung() {
+    public ResponseEntity<List<Map<String, Object>>> getAllMinhChungKhongDungChung() {
         List<Object[]> result = service.getAllMinhChungKhongDungChung();
-        return result.stream()
+        List<Map<String, Object>> response = result.stream()
                 .map(row -> Map.of(
                     "idMc", row[0],
                     "parentMaMc", row[1],
@@ -99,6 +92,7 @@ public class MinhChungController {
                     "tenMinhChung", row[3],
                     "linkLuuTru", row[4]))
                 .collect(Collectors.toList());
+                return ResponseEntity.ok(response);
     }
 
 
