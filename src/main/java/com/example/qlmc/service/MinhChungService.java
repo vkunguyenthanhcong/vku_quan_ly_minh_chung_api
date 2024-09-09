@@ -27,8 +27,8 @@ public class MinhChungService {
     public List<Object[]> findByMaCtdt(String maCtdt) {
         return minhChungRepository.findByMaCtdt(maCtdt);
     }
-    public List<Object[]> getAllWithIdGoiY(int idGoiY) {
-        return minhChungRepository.findAllByIdGoiY(idGoiY);
+    public List<Object[]> getAllMinhChungAndidTieuChi() {
+        return minhChungRepository.getAllMinhChungAndidTieuChi();
     }
 
     public List<Object[]> getAllWithIdTieuChi(int idTieuChi) {

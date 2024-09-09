@@ -38,9 +38,9 @@ public class MinhChungController {
             .collect(Collectors.toList());
         return ResponseEntity.ok(responseList);    
     }
-    @GetMapping("/{idGoiY}")
-    public ResponseEntity<List<Map<String, Object>>> getAllWithIdGoiY(@PathVariable int idGoiY) {
-        List<Object[]> result = service.getAllWithIdGoiY(idGoiY);
+    @GetMapping("/MinhChungAndIdTieuChi")
+    public ResponseEntity<List<Map<String, Object>>> getAllWithIdGoiY() {
+        List<Object[]> result = service.getAllMinhChungAndidTieuChi();
         
         List<Map<String, Object>> response = result.stream()
                 .map(row -> {
