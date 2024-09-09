@@ -30,7 +30,7 @@ public interface MinhChungRepository extends JpaRepository<MinhChung, Long> {
                 "", nativeQuery =  true)
     List<Object[]> getAllMinhChungAndidTieuChi();
 
-    @Query(value = "SELECT mc.parent_ma_mc, mc.child_ma_mc, kmc.ten_mc, kmc.sohieu, kmc.thoigian, dvbh.ten_dvbh, kmc.canhan FROM minhchung mc, khominhchung kmc, donvibanhanh dvbh, goiynguonmc goiy WHERE goiy.id_tieuchi = :idTieuChi AND mc.id_goiy = goiy.id_goiy AND mc.id_kmc = kmc.id_kmc AND kmc.id_dvbh = dvbh.id_dvbh", nativeQuery =  true)
+    @Query(value = "SELECT mc.parent_ma_mc, mc.child_ma_mc, kmc.ten_mc, kmc.sohieu, kmc.thoigian, dvbh.ten_dvbh, kmc.canhan FROM minhchung mc, khominhchung kmc, donvibanhanh dvbh, goiynguonmc goiy, mocchuan WHERE mocchuan.id_tieuchi = :idTieuChi AND mocchuan.id_mocchuan = goiy.id_mocchuan AND mc.id_goiy = goiy.id_goiy AND mc.id_kmc = kmc.id_kmc AND kmc.id_dvbh = dvbh.id_dvbh", nativeQuery =  true)
     List<Object[]> findAllByIdTieuChi(@Param("idTieuChi") int idTieuChi);
 
     @Query(value = "SELECT minhchung.*, khominhchung.ten_mc FROM minhchung, tieuchuan, khominhchung WHERE tieuchuan.ma_ctdt = :maCtdt AND tieuchuan.id_tieuchuan = minhchung.id_tieuchuan AND khominhchung.id_kmc = minhchung.id_kmc;", nativeQuery = true)
