@@ -60,7 +60,7 @@ public interface MinhChungRepository extends JpaRepository<MinhChung, Long> {
     @Transactional
     @Query(value = "CREATE TEMPORARY TABLE temp_table AS " +
                    "SELECT child_ma_mc, LPAD(@row_num := @row_num + 1, 2, '0') AS new_stt " +
-                   "FROM minhchung, (SELECT @row_num := 0) AS r " +
+                   "FROM minhchung, (SELECT @row_num := 0) AS r " +     
                    "WHERE parent_ma_mc = :parentMaMc " +
                    "ORDER BY CAST(child_ma_mc AS UNSIGNED);", 
            nativeQuery = true)

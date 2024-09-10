@@ -20,7 +20,7 @@ public class Khoa {
     @Column(name="email")
     private String email;
     @Column(name="sdt")
-    private int sdt;
+    private String sdt;
 
     public Khoa(){
 
@@ -66,11 +66,11 @@ public class Khoa {
         this.email = email;
     }
 
-    public int getSdt() {
+    public String getSdt() {
         return sdt;
     }
 
-    public void setSdt(int sdt) {
+    public void setSdt(String sdt) {
         this.sdt = sdt;
     }
 }

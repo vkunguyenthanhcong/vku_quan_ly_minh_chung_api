@@ -1,4 +1,4 @@
-package com.example.qlmc.entity;
+    package com.example.qlmc.entity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
