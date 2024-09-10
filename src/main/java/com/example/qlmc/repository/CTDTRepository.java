@@ -16,27 +16,26 @@ public interface CTDTRepository extends JpaRepository<CTDT, Integer> {
     List<CTDT> findAllByMaKDCL(@Param("maKdcl") String maKdcl);
 
     @Query(value = "SELECT \n" + //
-                "    ctdt.ten_ctdt ,  \n" + //
-                "    chuankdcl.ten_kdcl , \n" + //
-                "    khoa.ten_khoa , \n" + //
-                "    khoa.web , \n" + //
-                "    khoa.sdt , \n" + //
-                "    khoa.email , \n" + //
-                "    nganh.ten_nganh , \n" + //
-                "    ctdt.trinhdo , \n" + //
+                "    ctdt.ten_ctdt,  \n" + //
+                "    chuankdcl.ten_kdcl, \n" + //
+                "    khoa.ten_khoa, \n" + //
+                "    khoa.web, \n" + //
+                "    khoa.sdt, \n" + //
+                "    khoa.email, \n" + //
+                "    nganh.ten_nganh, \n" + //
+                "    ctdt.trinhdo, \n" + //
                 "    ctdt.sotinchi,\n" + //
                 "    ctdt.id_ctdt\n" + //
                 "FROM \n" + //
                 "    chuongtrinhdaotao ctdt\n" + //
-                "JOIN \n" + //
+                "LEFT JOIN \n" + //
                 "    chuankdcl ON ctdt.ma_kdcl = chuankdcl.ma_kdcl\n" + //
-                "JOIN \n" + //
+                "LEFT JOIN \n" + //
                 "    khoa ON ctdt.ma_khoa = khoa.ma_khoa\n" + //
-                "JOIN \n" + //
+                "LEFT JOIN \n" + //
                 "    nganh ON ctdt.ma_nganh = nganh.ma_nganh\n" + //
                 "WHERE  \n" + //
-                "    ctdt.ma_ctdt = :maCtdt;\n" + //
-                "", nativeQuery =  true)
+                "    ctdt.ma_ctdt = :maCtdt;", nativeQuery =  true)
     List<Object[]> getThongTinChuongTrinhDaoTao(@Param("maCtdt") String maCtdt);
 
     @Modifying

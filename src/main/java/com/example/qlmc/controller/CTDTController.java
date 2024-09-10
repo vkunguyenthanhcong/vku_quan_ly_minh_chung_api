@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.qlmc.entity.CTDT;
@@ -43,13 +42,13 @@ public class CTDTController {
                 .map(row -> Map.of(
                 "tenCtdt", row[0],
                 "tenKdcl", row[1],
-                "tenKhoa", row[2],
-                "web", row[3],
-                "soDienThoai", row[4],
-                "email", row[5],
-                "tenNganh", row[6],
+                "tenKhoa", (row[2] == null ? "" : row[2]),
+                "web", row[3] == null ? "" : row[3],
+                "soDienThoai", row[4] == null ? "" : row[4],
+                "email", row[5] == null ? "" : row[5],
+                "tenNganh", row[6] == null ? "" : row[6],
                 "trinhDo", row[7],
-                "soTinChi", row[8],
+                "soTinChi", row[8] == null ? "" : row[8],
                 "idCtdt", row[9]
         ))
                 .collect(Collectors.toList());
@@ -73,7 +72,7 @@ public class CTDTController {
     }
 
     @DeleteMapping("/delete/{idCtdt}")
-    public ResponseEntity<String> deleteCTDT(@RequestParam(value = "idCtdt") int idCtdt) {
+    public ResponseEntity<String> deleteCTDT(@PathVariable(value = "idCtdt") int idCtdt) {
         try {
             ctdtService.deleteCTDT(idCtdt);
             return ResponseEntity.ok("OK");
