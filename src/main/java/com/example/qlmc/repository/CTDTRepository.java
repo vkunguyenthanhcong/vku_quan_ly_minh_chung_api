@@ -24,7 +24,8 @@ public interface CTDTRepository extends JpaRepository<CTDT, Long> {
                 "    khoa.email , \n" + //
                 "    nganh.ten_nganh , \n" + //
                 "    ctdt.trinhdo , \n" + //
-                "    ctdt.sotinchi\n" + //
+                "    ctdt.sotinchi,\n" + //
+                "    ctdt.id_ctdt\n" + //
                 "FROM \n" + //
                 "    chuongtrinhdaotao ctdt\n" + //
                 "JOIN \n" + //

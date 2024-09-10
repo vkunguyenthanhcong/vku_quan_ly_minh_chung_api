@@ -8,14 +8,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.qlmc.entity.CTDT;
-import com.example.qlmc.entity.KhoMinhChung;
 import com.example.qlmc.service.CTDTService;
 
 @RestController
@@ -49,12 +47,14 @@ public class CTDTController {
                 "email", row[5],
                 "tenNganh", row[6],
                 "trinhDo", row[7],
-                "soTinChi", row[8]
+                "soTinChi", row[8],
+                "idCtdt", row[9]
         ))
                 .collect(Collectors.toList());
 
         return ResponseEntity.ok(response);
     }
+
     @PutMapping("/update")
     public ResponseEntity<String> updateCTDT(@RequestBody CTDT data) {
         try {
