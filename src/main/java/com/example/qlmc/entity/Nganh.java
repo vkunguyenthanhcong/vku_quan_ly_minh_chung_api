@@ -24,6 +24,7 @@ public class Nganh {
     @Column (name="trinhdodaotao")
     private String trinhDo;
 
+    public Nganh(){}
     public Nganh(int idNganh, String maKhoa, String maNganh, String tenNganh, String trinhDo) {
         this.idNganh = idNganh;
         this.maKhoa = maKhoa;
