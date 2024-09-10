@@ -8,10 +8,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.qlmc.entity.CTDT;
+import com.example.qlmc.entity.KhoMinhChung;
 import com.example.qlmc.service.CTDTService;
 
 @RestController
@@ -51,5 +55,20 @@ public class CTDTController {
 
         return ResponseEntity.ok(response);
     }
+    @PutMapping("/update")
+    public ResponseEntity<String> updateCTDT(@RequestBody CTDT data) {
+        try {
+            String tenCtdt = data.getTenCtdt();
+            String maKhoa = data.getMaKhoa();
+            String maNganh = data.getMaNganh();
+            int idCtdt = data.getIdCtdt();
+
+            ctdtService.updateCTDT(tenCtdt, maKhoa, maNganh, idCtdt);
+            return ResponseEntity.ok("OK");
+        } catch (Exception e) {
+            return ResponseEntity.status(500).body("Error processing: " + e.getMessage());
+        }
+    }
+
 
 }

@@ -20,19 +20,29 @@ public class CTDT {
     private String maKdcl;
     @Column(name = "ma_khoa")
     private String maKhoa;
+    @Column(name = "ma_nganh")
+    private String maNganh;
 
-    public CTDT(String tenCtdt, String maCtdt, String maKdcl, String maKhoa) {
+    public CTDT(String tenCtdt, String maCtdt, String maKdcl, String maKhoa, String maNganh) {
         this.tenCtdt = tenCtdt;
         this.maCtdt = maCtdt;
         this.maKdcl = maKdcl;
         this.maKhoa = maKhoa;
+        this.maNganh = maNganh;
     }
-    public CTDT(int idCtdt, String tenCtdt, String maCtdt, String maKdcl, String maKhoa) {
+    public CTDT(int idCtdt, String tenCtdt, String maCtdt, String maKdcl, String maKhoa, String maNganh) {
         this.idCtdt = idCtdt;
         this.tenCtdt = tenCtdt;
         this.maCtdt = maCtdt;
         this.maKdcl = maKdcl;
         this.maKhoa = maKhoa;
+        this.maNganh = maNganh;
+    }
+    public CTDT(int idCtdt, String tenCtdt, String maKhoa, String maNganh) {
+        this.idCtdt = idCtdt;
+        this.tenCtdt = tenCtdt;
+        this.maKhoa = maKhoa;
+        this.maNganh = maNganh;
     }
     public CTDT() {
     }
@@ -76,5 +86,10 @@ public class CTDT {
     public void setMaKhoa(String maKhoa) {
         this.maKhoa = maKhoa;
     }
-
+    public String getMaNganh() {
+        return maNganh;
+    }
+    public void setMaNganh(String maNganh) {
+        this.maNganh = maNganh;
+    }
 }

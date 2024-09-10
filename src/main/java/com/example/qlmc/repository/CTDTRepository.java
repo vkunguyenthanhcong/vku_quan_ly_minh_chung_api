@@ -40,8 +40,10 @@ public interface CTDTRepository extends JpaRepository<CTDT, Long> {
 
     @Modifying
     @Transactional
-    @Query (value = "UPDATE chuongtrinhdaotao SET tenC = :namBanHanh WHERE id_kdcl = :idKdcl", nativeQuery = true)
-    void updateNamBanHanh(@Param("namBanHanh") String namBanHanh, @Param("idKdcl") int idKdcl);
+    @Query (value = "UPDATE chuongtrinhdaotao SET ten_ctdt = :tenCtdt, ma_khoa = :maKhoa, ma_nganh = :maNganh WHERE id_ctdt = :idCtdt", nativeQuery = true)
+    void updateCTDT(@Param("tenCtdt") String tenCtdt, @Param("maKhoa") String maKhoa, @Param("maNganh") String maNganh, @Param("idCtdt") int idCtdt);
+
+    
 
     
 

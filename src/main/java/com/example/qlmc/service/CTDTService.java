@@ -4,6 +4,7 @@ import com.example.qlmc.entity.CTDT;
 import com.example.qlmc.entity.ChuanKDCL;
 import com.example.qlmc.repository.CTDTRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -33,5 +34,9 @@ public class CTDTService {
     }
     public List<CTDT> findAllByMaKDCL(String maKdcl){
         return ctdtLRepository.findAllByMaKDCL(maKdcl);
+    }
+    @Modifying
+    public void updateCTDT(String tenCtdt, String maKhoa, String maNganh, int idCtdt){
+         ctdtLRepository.updateCTDT(tenCtdt, maKhoa, maNganh, idCtdt);
     }
 }
