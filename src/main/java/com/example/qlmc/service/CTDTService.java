@@ -39,4 +39,8 @@ public class CTDTService {
     public void updateCTDT(String tenCtdt, String maKhoa, String maNganh, int idCtdt){
          ctdtLRepository.updateCTDT(tenCtdt, maKhoa, maNganh, idCtdt);
     }
+    
+    public void deleteCTDT(int idCtdt){
+        ctdtLRepository.deleteById(idCtdt);
+    }
 }

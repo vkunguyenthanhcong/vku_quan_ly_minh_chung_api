@@ -46,6 +46,7 @@ public class CTDT {
     }
     public CTDT() {
     }
+    
     // Getters and Setters
     public int getIdCtdt() {
         return idCtdt;
