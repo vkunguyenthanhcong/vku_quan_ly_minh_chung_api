@@ -76,7 +76,7 @@ public class MinhChungController {
                     "soHieu", row[3],
                     "thoiGian", row[4],
                     "donViBanHanh", row[5],
-                    "caNhan", row[6]))
+                    "linkLuuTru", row[6]))
                 .collect(Collectors.toList());
                 return ResponseEntity.ok(response);
     }

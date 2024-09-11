@@ -49,7 +49,7 @@ public class CTDTController {
                 "tenNganh", row[6] == null ? "" : row[6],
                 "trinhDo", row[7],
                 "soTinChi", row[8] == null ? "" : row[8],
-                "idCtdt", row[9]
+                "idCtdt", row[9]  
         ))
                 .collect(Collectors.toList());
 
