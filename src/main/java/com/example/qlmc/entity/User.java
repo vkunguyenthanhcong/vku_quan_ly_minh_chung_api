@@ -42,6 +42,9 @@ public class User implements UserDetails{
     @Column (name = "sdt")
     private String sdt;
 
+    @Column (name = "phongban")
+    private int phongBan;
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return List.of(new SimpleGrantedAuthority(role));

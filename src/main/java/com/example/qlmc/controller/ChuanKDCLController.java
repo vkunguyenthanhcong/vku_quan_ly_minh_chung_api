@@ -61,7 +61,7 @@ public class ChuanKDCLController {
     public ResponseEntity<String> deleteChuanKDCL(@RequestParam (value = "idKdcl") int idKdcl) {
         try {
             chuanKDCLService.deleteChuanKDCL(idKdcl);
-            return ResponseEntity.ok("Processing completed successfully.");
+            return ResponseEntity.ok("OK");
         } catch (Exception e) {
             return ResponseEntity.status(500).body("Error processing: " + e.getMessage());
         }
