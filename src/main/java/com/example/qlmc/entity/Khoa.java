@@ -1,8 +1,11 @@
 package com.example.qlmc.entity;
 
+import java.util.List;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 @Entity
@@ -21,6 +24,9 @@ public class Khoa {
     private String email;
     @Column(name="sdt")
     private String sdt;
+
+    @OneToMany(mappedBy = "khoa")
+    private List<CTDT> chuongTrinhDaoTao;
 
     public Khoa(){
 

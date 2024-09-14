@@ -2,14 +2,18 @@ package com.example.qlmc.entity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
 @Entity
 @Table(name="chuongtrinhdaotao")
 public class CTDT {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_ctdt")
     private int idCtdt;
     @Column(name = "ten_ctdt")
@@ -22,6 +26,18 @@ public class CTDT {
     private String maKhoa;
     @Column(name = "ma_nganh")
     private String maNganh;
+    
+    @ManyToOne
+    @JoinColumn(name = "ma_kdcl")
+    private ChuanKDCL chuanKdcl;
+
+    @ManyToOne
+    @JoinColumn(name = "ma_khoa")
+    private Khoa khoa;
+
+    @ManyToOne
+    @JoinColumn(name = "ma_nganh")
+    private Nganh nganh;
 
     public CTDT(String tenCtdt, String maCtdt, String maKdcl, String maKhoa, String maNganh) {
         this.tenCtdt = tenCtdt;

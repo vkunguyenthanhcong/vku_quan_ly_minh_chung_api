@@ -1,8 +1,7 @@
 package com.example.qlmc.controller;
 
 import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -35,24 +34,8 @@ public class CTDTController {
     }
 
     @GetMapping("/detail/{maCtdt}")
-    public ResponseEntity<List<Map<String, Object>>> getThongTinChuongTrinhDaoTao(@PathVariable String maCtdt) {
-        List<Object[]> result = ctdtService.getThongTinChuongTrinhDaoTao(maCtdt);
-
-        List<Map<String, Object>> response = result.stream()
-                .map(row -> Map.of(
-                "tenCtdt", row[0],
-                "tenKdcl", row[1],
-                "tenKhoa", (row[2] == null ? "" : row[2]),
-                "web", row[3] == null ? "" : row[3],
-                "soDienThoai", row[4] == null ? "" : row[4],
-                "email", row[5] == null ? "" : row[5],
-                "tenNganh", row[6] == null ? "" : row[6],
-                "trinhDo", row[7],
-                "soTinChi", row[8] == null ? "" : row[8],
-                "idCtdt", row[9]  
-        ))
-                .collect(Collectors.toList());
-
+    public ResponseEntity<Optional<CTDT>> getThongTinChuongTrinhDaoTao(@PathVariable String maCtdt) {
+        Optional<CTDT> response = ctdtService.getThongTinChuongTrinhDaoTao(maCtdt);
         return ResponseEntity.ok(response);
     }
 

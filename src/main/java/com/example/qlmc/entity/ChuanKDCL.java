@@ -1,13 +1,19 @@
 package com.example.qlmc.entity;
 
+import java.util.List;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 
 @Entity
 public class ChuanKDCL {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_kdcl")
     private int idKdcl;
     @Column(name = "ten_kdcl")
@@ -16,6 +22,9 @@ public class ChuanKDCL {
     private String namBanHanh;
     @Column(name = "ma_kdcl")
     private String maKdcl;
+
+    @OneToMany(mappedBy = "chuanKdcl")
+    private List<CTDT> chuongTrinhDaoTao;
 
     public ChuanKDCL() {
     }
