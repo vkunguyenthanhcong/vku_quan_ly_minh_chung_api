@@ -26,6 +26,10 @@ public class PhongBanController {
     public ResponseEntity<List<PhongBan>> getAllPhongBan(){
         return ResponseEntity.ok(phongBanService.getAllPhongBan());
     }
+    @GetMapping("/{idPhongBan}")
+    public ResponseEntity<PhongBan> getAllPhongBanById(@PathVariable int idPhongBan){
+        return ResponseEntity.ok(phongBanService.getPhongBanWithId(idPhongBan));
+    }
 
     @PostMapping
     public ResponseEntity<List<PhongBan>> createNewPhongBan(@RequestBody PhongBan phongBan) {

@@ -20,6 +20,9 @@ public class PhongBanService {
     public List<PhongBan> getAllPhongBan(){
         return phongBanRepository.findAll();
     }
+    public PhongBan getPhongBanWithId(int id){
+        return phongBanRepository.findById(id).orElse(null);
+    }
     @Modifying
     public void createNewPhongBan(PhongBan phongBan){
         phongBanRepository.save(phongBan);
@@ -34,4 +37,5 @@ public class PhongBanService {
     public void deletePhongBan(int idPhongBan){
         phongBanRepository.deleteById(idPhongBan);
     }
+
 }

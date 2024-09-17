@@ -38,9 +38,9 @@ public class ChuanKDCLController {
     }
 
     @GetMapping("/updateTenKdcl")
-    public ResponseEntity<String> updateTenKdcl(@RequestParam(value = "tenKdcl") String tenKdcl,@RequestParam (value = "idKdcl") int idKdcl) {
+    public ResponseEntity<String> updateTenKdcl(@RequestParam(value = "tenKdcl") String tenKdcl,@RequestParam (value = "maKdcl") String maKdcl) {
         try {
-            chuanKDCLService.updateTenKdcl(tenKdcl, idKdcl);
+            chuanKDCLService.updateTenKdcl(tenKdcl, maKdcl);
             return ResponseEntity.ok("OK");
         } catch (Exception e) {
             return ResponseEntity.status(500).body("Error processing: " + e.getMessage());
@@ -48,9 +48,9 @@ public class ChuanKDCLController {
     }
 
     @GetMapping("/updateNamBanHanh")
-    public ResponseEntity<String> updateNamBanHanh(@RequestParam(value = "namBanHanh") String namBanHanh,@RequestParam (value = "idKdcl") int idKdcl) {
+    public ResponseEntity<String> updateNamBanHanh(@RequestParam(value = "namBanHanh") String namBanHanh,@RequestParam (value = "maKdcl") String maKdcl) {
         try {
-            chuanKDCLService.updateNamBanHanh(namBanHanh, idKdcl);
+            chuanKDCLService.updateNamBanHanh(namBanHanh, maKdcl);
             return ResponseEntity.ok("OK");
         } catch (Exception e) {
             return ResponseEntity.status(500).body("Error processing: " + e.getMessage());
@@ -58,9 +58,9 @@ public class ChuanKDCLController {
     }
 
     @DeleteMapping("/deleteChuanKDCL")
-    public ResponseEntity<String> deleteChuanKDCL(@RequestParam (value = "idKdcl") int idKdcl) {
+    public ResponseEntity<String> deleteChuanKDCL(@RequestParam (value = "maKdcl") String maKdcl) {
         try {
-            chuanKDCLService.deleteChuanKDCL(idKdcl);
+            chuanKDCLService.deleteChuanKDCL(maKdcl);
             return ResponseEntity.ok("OK");
         } catch (Exception e) {
             return ResponseEntity.status(500).body("Error processing: " + e.getMessage());

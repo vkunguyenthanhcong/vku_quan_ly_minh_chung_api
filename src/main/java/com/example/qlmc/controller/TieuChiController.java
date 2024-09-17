@@ -1,7 +1,6 @@
 package com.example.qlmc.controller;
 
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -33,7 +32,7 @@ public class TieuChiController {
 
 
     @GetMapping("/findById/{idTieuChi}")
-    public ResponseEntity<Optional<TieuChi>> findById(@PathVariable int idTieuChi) {
+    public ResponseEntity<TieuChi> findById(@PathVariable int idTieuChi) {
         return ResponseEntity.ok(tieuChiService.findById(idTieuChi));
     }
     @GetMapping("/findByMaCtdt/{maCtdt}")

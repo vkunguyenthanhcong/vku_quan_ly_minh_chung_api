@@ -20,24 +20,28 @@ public class ChuanKDCLService {
         return chuanKDCLRepository.findAll();
     }
 
+    public ChuanKDCL getChuanKdclByMaKdcl(String maKdcl){
+        return chuanKDCLRepository.findById(maKdcl).orElse(null);
+    }
+
     @Transactional
     public void insertNewChuanKdcl(String tenKdcl, String namBanHanh) {
         chuanKDCLRepository.insertNewChuanKdcl(tenKdcl, namBanHanh);
     }
 
     @Transactional
-    public void updateTenKdcl(String tenKdcl, int idKdcl){
-        chuanKDCLRepository.updateTenKdcl(tenKdcl, idKdcl);
+    public void updateTenKdcl(String tenKdcl, String maKdcl){
+        chuanKDCLRepository.updateTenKdcl(tenKdcl, maKdcl);
     }
     @Transactional
-    public void updateNamBanHanh(String namBanHanh, int idKdcl){
-        chuanKDCLRepository.updateNamBanHanh(namBanHanh, idKdcl);
+    public void updateNamBanHanh(String namBanHanh,String maKdcl){
+        chuanKDCLRepository.updateNamBanHanh(namBanHanh, maKdcl);
     }
 
     @Transactional
-    public void deleteChuanKDCL(int idKdcl){
-        chuanKDCLRepository.deleteChuongTrinhDaoTao(idKdcl);
-        chuanKDCLRepository.deleteChuanKDCL(idKdcl);
+    public void deleteChuanKDCL(String maKdcl){
+        chuanKDCLRepository.deleteChuongTrinhDaoTao(maKdcl);
+        chuanKDCLRepository.deleteChuanKDCL(maKdcl);
     }
     
 }

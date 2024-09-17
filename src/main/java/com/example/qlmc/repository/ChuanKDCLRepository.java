@@ -9,7 +9,7 @@ import com.example.qlmc.entity.ChuanKDCL;
 
 import jakarta.transaction.Transactional;
 
-public interface ChuanKDCLRepository extends JpaRepository<ChuanKDCL, Long> {
+public interface ChuanKDCLRepository extends JpaRepository<ChuanKDCL, String> {
 
     @Modifying
     @Transactional
@@ -21,21 +21,21 @@ public interface ChuanKDCLRepository extends JpaRepository<ChuanKDCL, Long> {
 
     @Modifying
     @Transactional
-    @Query (value = "UPDATE chuankdcl SET ten_kdcl = :tenKdcl WHERE id_kdcl = :idKdcl", nativeQuery = true)
-    void updateTenKdcl(@Param("tenKdcl") String tenKdcl, @Param("idKdcl") int idKdcl);
+    @Query (value = "UPDATE chuankdcl SET ten_kdcl = :tenKdcl WHERE ma_kdcl = :maKdcl", nativeQuery = true)
+    void updateTenKdcl(@Param("tenKdcl") String tenKdcl, @Param("maKdcl") String maKdcl);
 
     @Modifying
     @Transactional
-    @Query (value = "UPDATE chuankdcl SET nambanhanh = :namBanHanh WHERE id_kdcl = :idKdcl", nativeQuery = true)
-    void updateNamBanHanh(@Param("namBanHanh") String namBanHanh, @Param("idKdcl") int idKdcl);
+    @Query (value = "UPDATE chuankdcl SET nambanhanh = :namBanHanh WHERE ma_kdcl = :maKdcl", nativeQuery = true)
+    void updateNamBanHanh(@Param("namBanHanh") String namBanHanh, @Param("maKdcl") String maKdcl);
 
     @Modifying
     @Transactional
-    @Query(value = "DELETE FROM chuongtrinhdaotao WHERE ma_kdcl IN (SELECT ma_kdcl FROM chuankdcl WHERE id_kdcl = :idKdcl)", nativeQuery = true)
-    void deleteChuongTrinhDaoTao(@Param("idKdcl") int idKdcl);
+    @Query(value = "DELETE FROM chuongtrinhdaotao WHERE ma_kdcl IN (SELECT ma_kdcl FROM chuankdcl WHERE ma_kdcl = :maKdcl)", nativeQuery = true)
+    void deleteChuongTrinhDaoTao(@Param("maKdcl") String maKdcl);
 
     @Modifying
     @Transactional
-    @Query(value = "DELETE FROM chuankdcl WHERE id_kdcl = :idKdcl", nativeQuery = true)
-    void deleteChuanKDCL(@Param("idKdcl") int idKdcl);
+    @Query(value = "DELETE FROM chuankdcl WHERE ma_kdcl = :maKdcl", nativeQuery = true)
+    void deleteChuanKDCL(@Param("maKdcl") String maKdcl);
 }

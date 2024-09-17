@@ -2,6 +2,8 @@ package com.example.qlmc.entity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
@@ -10,7 +12,8 @@ import jakarta.persistence.Table;
 @Table (name = "phongban")
 public class PhongBan {
     @Id
-    @Column (name = "id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column (name = "id_phongban")
     private int idPhongBan;
 
     @Column (name = "tenphongban")

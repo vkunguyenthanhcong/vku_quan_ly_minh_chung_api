@@ -1,9 +1,7 @@
 package com.example.qlmc.service;
 
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.Modifying;
@@ -16,32 +14,27 @@ import com.example.qlmc.repository.CTDTRepository;
 public class CTDTService {
 
     @Autowired
-    private CTDTRepository ctdtLRepository;
+    private CTDTRepository ctdtRepository;
+
 
     public List<CTDT> getAllCTDT() {
-        return ctdtLRepository.findAll();
-    }
-    public Map<String, List<CTDT>> getGroupedByMaCtdt() {
-        List<CTDT> data = ctdtLRepository.findAll();
-
-        return data.stream()
-                .collect(Collectors.groupingBy(CTDT::getMaKdcl));
+        return ctdtRepository.findAll();
     }
     public List<CTDT> getAllCTDTByMaKDCL(String maKdcl) {
-        return ctdtLRepository.findAllByMaKDCL(maKdcl);
+        return ctdtRepository.findAllByMaKDCL(maKdcl);
     }
     public Optional<CTDT> getThongTinChuongTrinhDaoTao(String maCtdt) {
-        return ctdtLRepository.getThongTinChuongTrinhDaoTao(maCtdt);
+        return ctdtRepository.getThongTinChuongTrinhDaoTao(maCtdt);
     }
     public List<CTDT> findAllByMaKDCL(String maKdcl){
-        return ctdtLRepository.findAllByMaKDCL(maKdcl);
+        return ctdtRepository.findAllByMaKDCL(maKdcl);
     }
     @Modifying
-    public void updateCTDT(String tenCtdt, String maKhoa, String maNganh, int idCtdt){
-         ctdtLRepository.updateCTDT(tenCtdt, maKhoa, maNganh, idCtdt);
+    public void updateCTDT(String maCtdt, String tenCtdt, String maKhoa, String maNganh) {
+        ctdtRepository.updateCTDT(tenCtdt, maKhoa, maNganh, maCtdt);
     }
     
-    public void deleteCTDT(int idCtdt){
-        ctdtLRepository.deleteById(idCtdt);
+    public void deleteCTDT(String maCtdt){
+        ctdtRepository.deleteById(maCtdt);
     }
 }

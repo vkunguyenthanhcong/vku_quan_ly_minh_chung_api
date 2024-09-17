@@ -32,7 +32,8 @@ public class TieuChuanController {
                 .map(row -> Map.of(
                     "idTieuChuan", row[0],
                     "tenTieuChuan", row[1],
-                    "total", row[2]))
+                    "total", row[2],
+                    "stt", row[3]))
                 .collect(Collectors.toList());
                 return ResponseEntity.ok(response);
     }

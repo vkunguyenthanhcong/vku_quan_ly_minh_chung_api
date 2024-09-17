@@ -4,6 +4,7 @@ import java.util.List;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -14,41 +15,49 @@ public class ChuanKDCL {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id_kdcl")
-    private int idKdcl;
+    @Column(name = "ma_kdcl")
+    private String maKdcl;
     @Column(name = "ten_kdcl")
     private String tenKdcl;
     @Column(name = "nambanhanh")
     private String namBanHanh;
-    @Column(name = "ma_kdcl")
-    private String maKdcl;
+    @Column(name = "soluongtieuchuan")
+    private int soLuongTieuChuan;
+    
+    
+    public ChuanKDCL(String maKdcl, String tenKdcl, String namBanHanh, int soLuongTieuChuan) {
+        this.maKdcl = maKdcl;
+        this.tenKdcl = tenKdcl;
+        this.namBanHanh = namBanHanh;
+        this.soLuongTieuChuan = soLuongTieuChuan;
+    }
 
-    @OneToMany(mappedBy = "chuanKdcl")
-    private List<CTDT> chuongTrinhDaoTao;
+    public int getSoLuongTieuChuan() {
+        return soLuongTieuChuan;
+    }
+
+    public void setSoLuongTieuChuan(int soLuongTieuChuan) {
+        this.soLuongTieuChuan = soLuongTieuChuan;
+    }
+
+    public ChuanKDCL(String maKdcl, String tenKdcl, String namBanHanh) {
+        this.maKdcl = maKdcl;
+        this.tenKdcl = tenKdcl;
+        this.namBanHanh = namBanHanh;
+    }
 
     public ChuanKDCL() {
     }
+     
+    @OneToMany(mappedBy = "chuanKdcl", fetch = FetchType.LAZY)
+    private List<CTDT> chuongTrinhDaoTao;
 
-    public ChuanKDCL(int idKdcl, String tenKdcl, String namBanHanh, String maKdcl) {
-        this.idKdcl = idKdcl;
-        this.tenKdcl = tenKdcl;
-        this.namBanHanh = namBanHanh;
+    public String getMaKdcl() {
+        return maKdcl;
+    }
+
+    public void setMaKdcl(String maKdcl) {
         this.maKdcl = maKdcl;
-    }
-
-    public ChuanKDCL(String tenKdcl, String namBanHanh, String maKdcl) {
-        this.tenKdcl = tenKdcl;
-        this.namBanHanh = namBanHanh;
-        this.maKdcl = maKdcl;
-    }
-
-    // Getters and setters
-    public int getIdKdcl() {
-        return idKdcl;
-    }
-
-    public void setIdKdcl(int idKdcl) {
-        this.idKdcl = idKdcl;
     }
 
     public String getTenKdcl() {
@@ -67,11 +76,5 @@ public class ChuanKDCL {
         this.namBanHanh = namBanHanh;
     }
 
-    public String getMaKdcl() {
-        return maKdcl;
-    }
-
-    public void setMaKdcl(String maKdcl) {
-        this.maKdcl = maKdcl;
-    }
+    
 }

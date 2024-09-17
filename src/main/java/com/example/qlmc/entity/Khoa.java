@@ -1,9 +1,12 @@
 package com.example.qlmc.entity;
 
 import java.util.List;
+import java.util.Optional;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
@@ -12,8 +15,7 @@ import jakarta.persistence.Table;
 @Table(name = "khoa")
 public class Khoa {
     @Id
-    @Column(name="id_khoa")
-    private int idKhoa;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="ma_khoa")
     private String maKhoa;
     @Column(name="ten_khoa")
@@ -25,21 +27,21 @@ public class Khoa {
     @Column(name="sdt")
     private String sdt;
 
+    public Khoa(String maKhoa, String tenKhoa, String web, String email, String sdt) {
+        this.maKhoa = maKhoa;
+        this.tenKhoa = tenKhoa;
+        this.web = web;
+        this.email = email;
+        this.sdt = sdt;
+    }
+
     @OneToMany(mappedBy = "khoa")
     private List<CTDT> chuongTrinhDaoTao;
 
     public Khoa(){
 
     }
-
-    public int getIdKhoa() {
-        return idKhoa;
-    }
-
-    public void setIdKhoa(int idKhoa) {
-        this.idKhoa = idKhoa;
-    }
-
+    
     public String getMaKhoa() {
         return maKhoa;
     }
@@ -78,5 +80,10 @@ public class Khoa {
 
     public void setSdt(String sdt) {
         this.sdt = sdt;
+    }
+
+    public Optional<Khoa> findById(String maKhoa2) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'findById'");
     }
 }

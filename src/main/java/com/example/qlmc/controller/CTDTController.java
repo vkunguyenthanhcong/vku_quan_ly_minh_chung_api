@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.example.qlmc.entity.CTDT;
 import com.example.qlmc.service.CTDTService;
+import com.fasterxml.jackson.databind.JsonNode;
 
 @RestController
 @RequestMapping("/api/ctdt")
@@ -40,24 +41,19 @@ public class CTDTController {
     }
 
     @PutMapping("/update")
-    public ResponseEntity<String> updateCTDT(@RequestBody CTDT data) {
+    public ResponseEntity<String> updateCTDT(@RequestBody JsonNode formData) {
         try {
-            String tenCtdt = data.getTenCtdt();
-            String maKhoa = data.getMaKhoa();
-            String maNganh = data.getMaNganh();
-            int idCtdt = data.getIdCtdt();
-
-            ctdtService.updateCTDT(tenCtdt, maKhoa, maNganh, idCtdt);
+            ctdtService.updateCTDT(formData.get("maCtdt").asText(), formData.get("tenCtdt").asText(), formData.get("maKhoa").asText(), formData.get("maNganh").asText());
             return ResponseEntity.ok("OK");
         } catch (Exception e) {
             return ResponseEntity.status(500).body("Error processing: " + e.getMessage());
         }
     }
 
-    @DeleteMapping("/delete/{idCtdt}")
-    public ResponseEntity<String> deleteCTDT(@PathVariable(value = "idCtdt") int idCtdt) {
+    @DeleteMapping("/delete/{maCtdt}")
+    public ResponseEntity<String> deleteCTDT(@PathVariable(value = "maCtdt") String maCtdt) {
         try {
-            ctdtService.deleteCTDT(idCtdt);
+            ctdtService.deleteCTDT(maCtdt);
             return ResponseEntity.ok("OK");
         } catch (Exception e) {
             return ResponseEntity.status(500).body("Error processing: " + e.getMessage());

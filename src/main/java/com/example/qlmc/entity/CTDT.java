@@ -8,27 +8,22 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
-
 @Entity
-@Table(name="chuongtrinhdaotao")
+@Table(name = "chuongtrinhdaotao")
 public class CTDT {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id_ctdt")
-    private int idCtdt;
-    @Column(name = "ten_ctdt")
-    private String tenCtdt;
     @Column(name = "ma_ctdt")
     private String maCtdt;
-    @Column(name = "ma_kdcl")
-    private String maKdcl;
-    @Column(name = "ma_khoa")
-    private String maKhoa;
-    @Column(name = "ma_nganh")
-    private String maNganh;
-    
+
+    @Column(name = "ten_ctdt")
+    private String tenCtdt;
+
+    @Column(name = "sotinchi")
+    private int soTinChi; 
+
     @ManyToOne
-    @JoinColumn(name = "ma_kdcl")
+    @JoinColumn(name = "ma_kdcl")       
     private ChuanKDCL chuanKdcl;
 
     @ManyToOne
@@ -39,45 +34,13 @@ public class CTDT {
     @JoinColumn(name = "ma_nganh")
     private Nganh nganh;
 
-    public CTDT(String tenCtdt, String maCtdt, String maKdcl, String maKhoa, String maNganh) {
-        this.tenCtdt = tenCtdt;
+    public CTDT(String maCtdt, String tenCtdt, int soTinChi, ChuanKDCL chuanKdcl, Khoa khoa, Nganh nganh) {
         this.maCtdt = maCtdt;
-        this.maKdcl = maKdcl;
-        this.maKhoa = maKhoa;
-        this.maNganh = maNganh;
-    }
-    public CTDT(int idCtdt, String tenCtdt, String maCtdt, String maKdcl, String maKhoa, String maNganh) {
-        this.idCtdt = idCtdt;
         this.tenCtdt = tenCtdt;
-        this.maCtdt = maCtdt;
-        this.maKdcl = maKdcl;
-        this.maKhoa = maKhoa;
-        this.maNganh = maNganh;
-    }
-    public CTDT(int idCtdt, String tenCtdt, String maKhoa, String maNganh) {
-        this.idCtdt = idCtdt;
-        this.tenCtdt = tenCtdt;
-        this.maKhoa = maKhoa;
-        this.maNganh = maNganh;
-    }
-    public CTDT() {
-    }
-    
-    // Getters and Setters
-    public int getIdCtdt() {
-        return idCtdt;
-    }
-
-    public void setIdCtdt(int idCtdt) {
-        this.idCtdt = idCtdt;
-    }
-
-    public String getTenCtdt() {
-        return tenCtdt;
-    }
-
-    public void setTenCtdt(String tenCtdt) {
-        this.tenCtdt = tenCtdt;
+        this.soTinChi = soTinChi;
+        this.chuanKdcl = chuanKdcl;
+        this.khoa = khoa;
+        this.nganh = nganh;
     }
 
     public String getMaCtdt() {
@@ -88,25 +51,50 @@ public class CTDT {
         this.maCtdt = maCtdt;
     }
 
-    public String getMaKdcl() {
-        return maKdcl;
+    public String getTenCtdt() {
+        return tenCtdt;
     }
 
-    public void setMaKdcl(String maKdcl) {
-        this.maKdcl = maKdcl;
+    public void setTenCtdt(String tenCtdt) {
+        this.tenCtdt = tenCtdt;
     }
 
-    public String getMaKhoa() {
-        return maKhoa;
+    public ChuanKDCL getChuanKdcl() {
+        return chuanKdcl;
     }
 
-    public void setMaKhoa(String maKhoa) {
-        this.maKhoa = maKhoa;
+    public void setChuanKdcl(ChuanKDCL chuanKdcl) {
+        this.chuanKdcl = chuanKdcl;
     }
-    public String getMaNganh() {
-        return maNganh;
+
+    public Khoa getKhoa() {
+        return khoa;
     }
-    public void setMaNganh(String maNganh) {
-        this.maNganh = maNganh;
+
+    public void setKhoa(Khoa khoa) {
+        this.khoa = khoa;
     }
+
+    public Nganh getNganh() {
+        return nganh;
+    }
+
+    public void setNganh(Nganh nganh) {
+        this.nganh = nganh;
+    }
+
+    public CTDT(){
+        
+    }
+
+    public int getSoTinChi() {
+        return soTinChi;
+    }
+
+    public void setSoTinChi(int soTinChi) {
+        this.soTinChi = soTinChi;
+    }
+
+    
+    // Constructors, Getters and Setters...
 }
