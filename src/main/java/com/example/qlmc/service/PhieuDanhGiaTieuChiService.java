@@ -26,5 +26,8 @@ public class PhieuDanhGiaTieuChiService {
     public PhieuDanhGiaTieuChi findByidTieuChuanAndidTieuChi(int idTieuChuan, int idTieuChi){
         return phieuDanhGiaTieuChiRepository.findByTieuChuanAndTieuChi(idTieuChuan, idTieuChi);
     }
+    public void updatePhieuDanhGia(PhieuDanhGiaTieuChi phieuDanhGiaTieuChi){
+        phieuDanhGiaTieuChiRepository.save(phieuDanhGiaTieuChi);
+    }
 
 }
