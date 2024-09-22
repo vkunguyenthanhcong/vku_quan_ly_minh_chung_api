@@ -1,9 +1,7 @@
 package com.example.qlmc.controller;
 
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -30,15 +28,8 @@ public class GoiYController {
     }
 
     @GetMapping("/{idMocChuan}")
-    public List<Map<String, Object>> getAllWithIdGoiY(@PathVariable int idMocChuan) {
-        List<Object[]> result = goiYService.getAllGoiYWithIdMocChuan(idMocChuan);
-        return result.stream()
-                .map(row -> Map.of(
-                    "idGoiY", row[0],
-                    "tenGoiY", row[1],
-                    "batBuoc", row[2],
-                    "idMocChuan", row[3]))
-                .collect(Collectors.toList());
+    public ResponseEntity<List<GoiY>> getAllWithIdGoiY(@PathVariable int idMocChuan) {
+        return ResponseEntity.ok(goiYService.getAllGoiYWithIdMocChuan(idMocChuan));
     }
     @PostMapping
     public ResponseEntity<String> saveGoiY(@RequestBody GoiY data) {

@@ -46,6 +46,10 @@ public class PhieuDanhGiaTieuChiController {
     @GetMapping("/findByTieuChuanAndTieuChi")
     public ResponseEntity<PhieuDanhGiaTieuChi> findByTieuChuanAndTieuChi(@RequestParam(value = "idTieuChuan") int idTieuChuan, @RequestParam(value = "idTieuChi") int idTieuChi){
         return ResponseEntity.ok(phieuDanhGiaTieuChiService.findByidTieuChuanAndidTieuChi(idTieuChuan, idTieuChi));
+    }   
+    @GetMapping("/findByMaCtdt")
+    public ResponseEntity<List<PhieuDanhGiaTieuChi>> findByMaCtdt(@RequestParam(value = "maCtdt") String maCtdt){
+        return ResponseEntity.ok(phieuDanhGiaTieuChiService.findByMaCtdt(maCtdt));
     }    
 
     @DeleteMapping("/{idPhieuDanhGia}")

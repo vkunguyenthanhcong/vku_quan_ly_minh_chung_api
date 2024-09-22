@@ -34,11 +34,14 @@ public class MinhChungService {
     public List<Object[]> getAllWithIdTieuChi(int idTieuChi) {
         return minhChungRepository.findAllByIdTieuChi(idTieuChi);
     }
-    public List<Object[]> countMinhChungWithTieuChi(int idTieuChi){
-        return minhChungRepository.countMinhChungWithTieuChi(idTieuChi);
+    public int countMinhChungWithTieuChi(int idTieuChi){
+        return minhChungRepository.findAllByIdTieuChi(idTieuChi).size();
     }
     public List<Object[]> getAllMinhChungKhongDungChung(){
         return minhChungRepository.getAllMinhChung();
+    }
+    public int countMinhChungByTieuChuan(int idTieuChuan){
+        return minhChungRepository.countMinhChungByTieuChuan(idTieuChuan);
     }
     @Transactional
     public void processMinhChung(int idMc, String parentMaMc) {

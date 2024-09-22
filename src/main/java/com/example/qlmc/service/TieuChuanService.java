@@ -22,7 +22,7 @@ public class TieuChuanService {
         return tieuChuanRepository.findById(id).orElse(null);
     }
     public List<TieuChuan> getTieuChuanByMaCtdt(String maCtdt) {
-        return tieuChuanRepository.findByMaCtdt(maCtdt);
+        return tieuChuanRepository.findByCtdt_MaCtdt(maCtdt);
     }
     public List<Object[]> getListTieuChuanAndCount(String maCtdt){
         return tieuChuanRepository.getListTieuChuanAndCount(maCtdt);

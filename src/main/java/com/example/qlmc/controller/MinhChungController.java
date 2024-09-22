@@ -30,13 +30,12 @@ public class MinhChungController {
     }
     
     @GetMapping("/CountMinhChungWithTieuChi/{idTieuChi}")
-    public ResponseEntity<List<Map<String, Object>>>countMinhChungWithTieuChi(@PathVariable int idTieuChi) {
-        List<Object[]> result = service.countMinhChungWithTieuChi(idTieuChi);
-        List<Map<String, Object>> responseList = result.stream()
-            .map(row -> Map.of(
-                "total", row[0]))
-            .collect(Collectors.toList());
-        return ResponseEntity.ok(responseList);    
+    public ResponseEntity<Integer>countMinhChungWithTieuChi(@PathVariable int idTieuChi) {
+        return ResponseEntity.ok(service.countMinhChungWithTieuChi(idTieuChi));
+    }
+    @GetMapping("/CountMinhChungByTieuChuan/{idTieuChuan}")
+    public ResponseEntity<Integer>countMinhChungByTieuChuan(@PathVariable int idTieuChuan) {
+        return ResponseEntity.ok(service.countMinhChungByTieuChuan(idTieuChuan));
     }
     @GetMapping("/MinhChungAndIdTieuChi")
     public ResponseEntity<List<Map<String, Object>>> getAllWithIdGoiY() {
@@ -76,7 +75,8 @@ public class MinhChungController {
                     "soHieu", row[3],
                     "thoiGian", row[4],
                     "donViBanHanh", row[5],
-                    "linkLuuTru", row[6]))
+                    "linkLuuTru", row[6],
+                    "maDungChung", row[7]))
                 .collect(Collectors.toList());
                 return ResponseEntity.ok(response);
     }

@@ -1,8 +1,12 @@
 package com.example.qlmc.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
 @Entity
@@ -15,8 +19,10 @@ public class TieuChi {
     @Column (name = "ten_tieuchi")
     private String tenTieuChi;
 
-    @Column (name = "id_tieuchuan")
-    private int idTieuChuan;
+    @ManyToOne
+    @JoinColumn(name = "id_tieuchuan")
+    @JsonBackReference
+    private TieuChuan tieuChuan;
 
     @Column (name = "yeucau")
     private String yeuCau;
@@ -49,19 +55,20 @@ public class TieuChi {
         this.tenTieuChi = tenTieuChi;
     }
 
-    public int getIdTieuChuan() {
-        return idTieuChuan;
-    }
-
-    public void setIdTieuChuan(int idTieuChuan) {
-        this.idTieuChuan = idTieuChuan;
-    }
-
+  
     public String getYeuCau() {
         return yeuCau;
     }
 
     public void setYeuCau(String yeuCau) {
         this.yeuCau = yeuCau;
+    }
+
+    public TieuChuan getTieuChuan() {
+        return tieuChuan;
+    }
+
+    public void setTieuChuan(TieuChuan tieuChuan) {
+        this.tieuChuan = tieuChuan;
     }
 }

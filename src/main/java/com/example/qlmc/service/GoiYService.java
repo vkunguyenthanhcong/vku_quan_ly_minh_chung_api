@@ -19,7 +19,7 @@ public class GoiYService {
         return goiYRepository.findAll();
     }
 
-    public List<Object[]> getAllGoiYWithIdMocChuan(int idMocChuan) {
+    public List<GoiY> getAllGoiYWithIdMocChuan(int idMocChuan) {
         return goiYRepository.findAllByIdMocChuan(idMocChuan);
     }
 

@@ -10,11 +10,12 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
 @Entity
-@Table (name = "phieudanhgiatieuchi")
+@Table(name = "phieudanhgiatieuchi")
 public class PhieuDanhGiaTieuChi {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column (name = "id_phieudanhgiatieuchi")
+    @Column(name = "id_phieudanhgiatieuchi")
     private int idPhieuDanhGiaTieuChi;
 
     @ManyToOne
@@ -29,43 +30,42 @@ public class PhieuDanhGiaTieuChi {
     @JoinColumn(name = "id_tieuchi", referencedColumnName = "id_tieuchi")
     private TieuChi tieuChi;
 
-    @Column (name = "mota")
+    @Column(name = "mota")
     private String moTa;
 
-    @Column (name = "diemmanh")
+    @Column(name = "diemmanh")
     private String diemManh;
-    
 
-    @Column (name = "diemtontai")
+    @Column(name = "diemtontai")
     private String diemTonTai;
 
-    @Column (name = "noidungkhacphuc")
+    @Column(name = "noidungkhacphuc")
     private String noiDungKhacPhuc;
 
-    @Column (name = "donvikhacphuc")
+    @Column(name = "donvikhacphuc")
     private String donViKhacPhuc;
 
-    @Column (name = "thoigiankhacphuc")
+    @Column(name = "thoigiankhacphuc")
     private String thoiGianKhacPhuc;
 
-    @Column (name = "ghichukhacphuc")
+    @Column(name = "ghichukhacphuc")
     private String ghiChuKhacPhuc;
 
-    @Column (name = "noidungphathuy")
+    @Column(name = "noidungphathuy")
     private String noiDungPhatHuy;
 
-    @Column (name = "donviphathuy")
+    @Column(name = "donviphathuy")
     private String donViPhatHuy;
 
-    @Column (name = "thoigianphathuy")
+    @Column(name = "thoigianphathuy")
     private String thoiGianPhatHuy;
 
-    @Column (name = "ghichuphathuy")
+    @Column(name = "ghichuphathuy")
     private String ghiChuPhatHuy;
 
-    @Column (name = "mucdanhgia")
+    @Column(name = "mucdanhgia")
     private int mucDanhGia;
-    
+
     public PhieuDanhGiaTieuChi() {
     }
 
@@ -216,9 +216,4 @@ public class PhieuDanhGiaTieuChi {
         this.mucDanhGia = mucDanhGia;
     }
 
-
-
-
-    
-    
 }

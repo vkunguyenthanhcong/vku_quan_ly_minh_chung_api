@@ -11,9 +11,10 @@ import com.example.qlmc.entity.TieuChi;
 
 public interface TieuChiRepository extends JpaRepository<TieuChi, Integer> {
 
-    @Query(value = "SELECT tieuchi.* FROM tieuchi WHERE tieuchi.id_tieuchuan = :idTieuChuan", nativeQuery = true)
+    @Query(value = "SELECT t FROM TieuChi t WHERE t.tieuChuan.idTieuChuan = :idTieuChuan")
     List<TieuChi> findByIdTieuChuan(@Param("idTieuChuan") int idTieuChuan);
 
-    @Query(value = "SELECT tieuchi.* FROM tieuchi, tieuchuan WHERE tieuchuan.ma_ctdt = :maCtdt AND tieuchuan.id_tieuchuan = tieuchi.id_tieuchuan; ", nativeQuery = true)
+    @Query(value = "SELECT tieuchi.* FROM tieuchi INNER JOIN tieuchuan ON tieuchi.id_tieuchuan = tieuchuan.id_tieuchuan WHERE tieuchuan.ma_ctdt = :maCtdt", nativeQuery = true)
     List<TieuChi> findByMaCtdt(@Param("maCtdt") String maCtdt);
+
 }

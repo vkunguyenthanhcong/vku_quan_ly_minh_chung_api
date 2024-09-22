@@ -29,5 +29,8 @@ public class PhieuDanhGiaTieuChiService {
     public void updatePhieuDanhGia(PhieuDanhGiaTieuChi phieuDanhGiaTieuChi){
         phieuDanhGiaTieuChiRepository.save(phieuDanhGiaTieuChi);
     }
+    public List<PhieuDanhGiaTieuChi> findByMaCtdt(String maCtdt){
+        return phieuDanhGiaTieuChiRepository.findByMaCtdt(maCtdt);
+    }
 
 }
