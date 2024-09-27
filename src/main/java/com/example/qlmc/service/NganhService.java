@@ -11,11 +11,15 @@ import com.example.qlmc.repository.NganhRepository;
 @Service
 public class NganhService {
     @Autowired
-private NganhRepository nganhRepository;
+    private NganhRepository nganhRepository;
 
 
     public List<Nganh> getAllNganh() {
         return nganhRepository.findAll();
+    }
+
+    public Nganh getNganhById(String id) {
+        return nganhRepository.findById(id).orElse(null);
     }
 
 }

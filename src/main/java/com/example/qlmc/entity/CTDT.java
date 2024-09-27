@@ -19,8 +19,18 @@ import jakarta.persistence.Table;
 @Entity
 @Table(name = "chuongtrinhdaotao")
 public class CTDT {
+    public CTDT(String maCtdt, String tenCtdt, int soTinChi, String trinhDo, ChuanKDCL chuanKdcl, Khoa khoa, Nganh nganh, String idGoogleDrive) {
+        this.maCtdt = maCtdt;
+        this.tenCtdt = tenCtdt;
+        this.soTinChi = soTinChi;
+        this.trinhDo = trinhDo;
+        this.chuanKdcl = chuanKdcl;
+        this.khoa = khoa;
+        this.nganh = nganh;
+        this.idGoogleDrive = idGoogleDrive;
+    }
+
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ma_ctdt")
     private String maCtdt;
 
@@ -28,7 +38,12 @@ public class CTDT {
     private String tenCtdt;
 
     @Column(name = "sotinchi")
-    private int soTinChi; 
+    private int soTinChi;
+
+
+
+    @Column(name = "trinhdo")
+    private String trinhDo;
 
     @ManyToOne
     @JoinColumn(name = "ma_kdcl")       
@@ -41,21 +56,22 @@ public class CTDT {
     @ManyToOne
     @JoinColumn(name = "ma_nganh")
     private Nganh nganh;
- 
+
+    @Column(name="id_ggdrive")
+    private String idGoogleDrive;
+
+    public String getIdGoogleDrive() {
+        return idGoogleDrive;
+    }
+
+    public void setIdGoogleDrive(String idGoogleDrive) {
+        this.idGoogleDrive = idGoogleDrive;
+    }
+
 
     @OneToMany(mappedBy = "ctdt", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JsonManagedReference
     private List<TieuChuan> tieuChuan;
-
-  
-    public CTDT(String maCtdt, String tenCtdt, int soTinChi, ChuanKDCL chuanKdcl, Khoa khoa, Nganh nganh) {
-        this.maCtdt = maCtdt;
-        this.tenCtdt = tenCtdt;
-        this.soTinChi = soTinChi;
-        this.chuanKdcl = chuanKdcl;
-        this.khoa = khoa;
-        this.nganh = nganh;
-    }
 
     public String getMaCtdt() {
         return maCtdt;
@@ -96,7 +112,13 @@ public class CTDT {
     public void setNganh(Nganh nganh) {
         this.nganh = nganh;
     }
+    public String getTrinhDo() {
+        return trinhDo;
+    }
 
+    public void setTrinhDo(String trinhDo) {
+        this.trinhDo = trinhDo;
+    }
     public CTDT(){
         
     }

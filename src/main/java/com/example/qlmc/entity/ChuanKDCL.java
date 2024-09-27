@@ -14,7 +14,6 @@ import jakarta.persistence.OneToMany;
 public class ChuanKDCL {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ma_kdcl")
     private String maKdcl;
     @Column(name = "ten_kdcl")
@@ -23,34 +22,26 @@ public class ChuanKDCL {
     private String namBanHanh;
     @Column(name = "soluongtieuchuan")
     private int soLuongTieuChuan;
-    
-    
-    public ChuanKDCL(String maKdcl, String tenKdcl, String namBanHanh, int soLuongTieuChuan) {
+
+    public ChuanKDCL(String maKdcl, String tenKdcl, String namBanHanh, int soLuongTieuChuan, String idGoogleDrive) {
         this.maKdcl = maKdcl;
         this.tenKdcl = tenKdcl;
         this.namBanHanh = namBanHanh;
         this.soLuongTieuChuan = soLuongTieuChuan;
+        this.idGoogleDrive = idGoogleDrive;
     }
 
-    public int getSoLuongTieuChuan() {
-        return soLuongTieuChuan;
-    }
+    public ChuanKDCL(String tenKdcl, String namBanHanh, String idGoogleDrive, int soLuongTieuChuan) {
+        this.tenKdcl = tenKdcl;
+        this.namBanHanh = namBanHanh;
 
-    public void setSoLuongTieuChuan(int soLuongTieuChuan) {
+        this.idGoogleDrive = idGoogleDrive;
         this.soLuongTieuChuan = soLuongTieuChuan;
     }
 
-    public ChuanKDCL(String maKdcl, String tenKdcl, String namBanHanh) {
-        this.maKdcl = maKdcl;
-        this.tenKdcl = tenKdcl;
-        this.namBanHanh = namBanHanh;
-    }
+    @Column(name = "id_ggdrive")
+    private String idGoogleDrive;
 
-    public ChuanKDCL() {
-    }
-     
-    @OneToMany(mappedBy = "chuanKdcl", fetch = FetchType.LAZY)
-    private List<CTDT> chuongTrinhDaoTao;
 
     public String getMaKdcl() {
         return maKdcl;
@@ -76,5 +67,27 @@ public class ChuanKDCL {
         this.namBanHanh = namBanHanh;
     }
 
-    
+    public int getSoLuongTieuChuan() {
+        return soLuongTieuChuan;
+    }
+
+    public void setSoLuongTieuChuan(int soLuongTieuChuan) {
+        this.soLuongTieuChuan = soLuongTieuChuan;
+    }
+
+    public String getIdGoogleDrive() {
+        return idGoogleDrive;
+    }
+
+    public void setIdGoogleDrive(String idGoogleDrive) {
+        this.idGoogleDrive = idGoogleDrive;
+    }
+
+    public ChuanKDCL() {
+    }
+
+    @OneToMany(mappedBy = "chuanKdcl", fetch = FetchType.LAZY)
+    private List<CTDT> chuongTrinhDaoTao;
+
+
 }

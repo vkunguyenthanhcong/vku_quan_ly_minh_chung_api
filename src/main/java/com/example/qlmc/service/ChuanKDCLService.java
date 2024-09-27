@@ -25,8 +25,8 @@ public class ChuanKDCLService {
     }
 
     @Transactional
-    public void insertNewChuanKdcl(String tenKdcl, String namBanHanh) {
-        chuanKDCLRepository.insertNewChuanKdcl(tenKdcl, namBanHanh);
+    public void insertNewChuanKdcl(String tenKdcl, String namBanHanh, String idGoogleDrive, int soLuongTieuChuan) {
+        chuanKDCLRepository.insertNewChuanKdcl(tenKdcl, namBanHanh, idGoogleDrive, soLuongTieuChuan);
     }
 
     @Transactional

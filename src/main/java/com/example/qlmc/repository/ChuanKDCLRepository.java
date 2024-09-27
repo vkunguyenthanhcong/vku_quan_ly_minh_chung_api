@@ -13,11 +13,11 @@ public interface ChuanKDCLRepository extends JpaRepository<ChuanKDCL, String> {
 
     @Modifying
     @Transactional
-    @Query(value = "INSERT INTO chuankdcl (ten_kdcl, nambanhanh, ma_kdcl) " +
-                   "SELECT :tenKdcl, :namBanHanh, " +
+    @Query(value = "INSERT INTO chuankdcl (ten_kdcl, nambanhanh,  id_ggdrive, soluongtieuchuan, ma_kdcl) " +
+                   "SELECT :tenKdcl, :namBanHanh, :idGoogleDrive, :soLuongTieuChuan,  " +
                    "IFNULL(CONCAT('ckd', CAST(SUBSTRING_INDEX(MAX(ma_kdcl), 'ckd', -1) + 1 AS UNSIGNED)), 'ckd1') " +
                    "FROM chuankdcl", nativeQuery = true)
-    void insertNewChuanKdcl(@Param("tenKdcl") String tenKdcl, @Param("namBanHanh") String namBanHanh);         
+    void insertNewChuanKdcl(@Param("tenKdcl") String tenKdcl, @Param("namBanHanh") String namBanHanh, @Param("idGoogleDrive") String idGoogleDrive, @Param("soLuongTieuChuan") int soLuongTieuChuan);
 
     @Modifying
     @Transactional

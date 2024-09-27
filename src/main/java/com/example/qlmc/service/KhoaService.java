@@ -11,11 +11,15 @@ import com.example.qlmc.repository.KhoaRepository;
 @Service
 public class KhoaService {
     @Autowired
-private KhoaRepository khoaRepository;
-
+    private KhoaRepository khoaRepository;
 
     public List<Khoa> getAllKhoa() {
         return khoaRepository.findAll();
     }
+
+    public Khoa getKhoaById(String id) {
+        return khoaRepository.findById(id).orElse(null);
+    }
+
 
 }

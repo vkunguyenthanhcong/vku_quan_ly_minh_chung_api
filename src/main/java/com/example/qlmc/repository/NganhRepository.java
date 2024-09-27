@@ -4,6 +4,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import com.example.qlmc.entity.Nganh;
 
-public interface NganhRepository extends JpaRepository<Nganh, Long>{
+public interface NganhRepository extends JpaRepository<Nganh, String>{
     
 }

@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
 
+import com.example.qlmc.repository.PhongBanRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -26,6 +27,8 @@ public class UsersManagementService {
     private AuthenticationManager authenticationManager;
     @Autowired
     private PasswordEncoder passwordEncoder;
+    @Autowired
+    private PhongBanRepository phongBanRepository;
 
 
     public ReqRes register(ReqRes registrationRequest){
@@ -66,6 +69,7 @@ public class UsersManagementService {
             response.setToken(jwt);
             response.setRole(user.getRole());
             response.setPhongBan(user.getPhongBan());
+            response.setAvatar(user.getAvatar());
             response.setRefreshToken(refreshToken);
             response.setExpirationTime("24Hrs");
             response.setMessage("Successfully Logged In");
@@ -107,7 +111,6 @@ public class UsersManagementService {
 
     public ReqRes getAllUsers() {
         ReqRes reqRes = new ReqRes();
-
         try {
             List<User> result = usersRepo.findAll();
             if (!result.isEmpty()) {

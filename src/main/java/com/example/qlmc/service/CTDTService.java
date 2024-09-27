@@ -16,14 +16,13 @@ public class CTDTService {
     @Autowired
     private CTDTRepository ctdtRepository;
 
-
     public List<CTDT> getAllCTDT() {
         return ctdtRepository.findAll();
     }
     public List<CTDT> getAllCTDTByMaKDCL(String maKdcl) {
         return ctdtRepository.findAllByMaKDCL(maKdcl);
     }
-    public Optional<CTDT> getThongTinChuongTrinhDaoTao(String maCtdt) {
+    public CTDT getThongTinChuongTrinhDaoTao(String maCtdt) {
         return ctdtRepository.getThongTinChuongTrinhDaoTao(maCtdt);
     }
     public List<CTDT> findAllByMaKDCL(String maKdcl){
@@ -32,6 +31,10 @@ public class CTDTService {
     @Modifying
     public void updateCTDT(String maCtdt, String tenCtdt, String maKhoa, String maNganh) {
         ctdtRepository.updateCTDT(tenCtdt, maKhoa, maNganh, maCtdt);
+    }
+
+    public void insertCTDT(CTDT ctdt) {
+        ctdtRepository.save(ctdt);
     }
     
     public void deleteCTDT(String maCtdt){

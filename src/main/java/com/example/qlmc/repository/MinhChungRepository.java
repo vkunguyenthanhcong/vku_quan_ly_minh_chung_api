@@ -11,23 +11,7 @@ import com.example.qlmc.entity.MinhChung;
 import jakarta.transaction.Transactional;
 
 public interface MinhChungRepository extends JpaRepository<MinhChung, Long> {
-    @Query(value = "SELECT \n" + //
-                "    minhchung.*, \n" + //
-                "    khominhchung.sohieu, \n" + //
-                "    khominhchung.ten_mc, \n" + //
-                "    khominhchung.linkluutru, \n" + //
-                "    tieuchi.id_tieuchi \n" + //
-                "FROM \n" + //
-                "    minhchung\n" + //
-                "JOIN \n" + //
-                "    khominhchung ON minhchung.id_kmc = khominhchung.id_kmc\n" + //
-                "JOIN \n" + //
-                "    goiynguonmc ON minhchung.id_goiy = goiynguonmc.id_goiy\n" + //
-                "JOIN \n" + //
-                "    mocchuan ON goiynguonmc.id_mocchuan = mocchuan.id_mocchuan\n" + //
-                "JOIN \n" + //
-                "    tieuchi ON mocchuan.id_tieuchi = tieuchi.id_tieuchi\n" + //
-                "", nativeQuery =  true)
+    @Query(value = "SELECT minhchung.*, khominhchung.sohieu, khominhchung.ten_mc, khominhchung.linkluutru, tieuchi.id_tieuchi ,tieuchuan.ma_ctdt FROM minhchung JOIN khominhchung ON minhchung.id_kmc = khominhchung.id_kmc JOIN goiynguonmc ON minhchung.id_goiy = goiynguonmc.id_goiy JOIN mocchuan ON goiynguonmc.id_mocchuan = mocchuan.id_mocchuan JOIN tieuchi ON mocchuan.id_tieuchi = tieuchi.id_tieuchi JOIN tieuchuan ON tieuchuan.id_tieuchuan = minhchung.id_tieuchuan", nativeQuery =  true)
     List<Object[]> getAllMinhChungAndidTieuChi();
 
     @Query(value = "SELECT mc.parent_ma_mc, mc.child_ma_mc, kmc.ten_mc, kmc.sohieu, kmc.thoigian, dvbh.ten_dvbh, kmc.linkluutru, mc.madungchung FROM minhchung mc, khominhchung kmc, donvibanhanh dvbh, goiynguonmc goiy, mocchuan WHERE mocchuan.id_tieuchi = :idTieuChi AND mocchuan.id_mocchuan = goiy.id_mocchuan AND mc.id_goiy = goiy.id_goiy AND mc.id_kmc = kmc.id_kmc AND kmc.id_dvbh = dvbh.id_dvbh", nativeQuery =  true)

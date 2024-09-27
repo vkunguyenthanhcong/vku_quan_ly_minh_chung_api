@@ -40,7 +40,6 @@ public class MinhChungController {
     @GetMapping("/MinhChungAndIdTieuChi")
     public ResponseEntity<List<Map<String, Object>>> getAllWithIdGoiY() {
         List<Object[]> result = service.getAllMinhChungAndidTieuChi();
-        
         List<Map<String, Object>> response = result.stream()
                 .map(row -> {
                     String parentMaMc = (String) row[1];
@@ -53,10 +52,10 @@ public class MinhChungController {
                         "idTieuChuan", row[4],
                         "idGoiY", row[5],
                         "maDungChung", row[6],
-                        "soHieu", row[7],
                         "tenMinhChung", row[8],
                         "linkLuuTru", row[9],
-                        "idTieuChi", row[10]
+                        "idTieuChi", row[10],
+                            "maCtdt", row[11]
                     );
                 })
                 .collect(Collectors.toList());

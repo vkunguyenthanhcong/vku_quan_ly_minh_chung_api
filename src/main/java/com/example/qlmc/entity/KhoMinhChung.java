@@ -31,9 +31,6 @@ public class KhoMinhChung {
     @Column (name = "linkluutru")
     private String linkLuuTru;
 
-    
-
-
     public KhoMinhChung(int idKhoMinhChung, String tenMinhChung, String soHieu, Date thoigian, int idLoai, int idDvbh,
             String linkLuuTru) {
         this.idKhoMinhChung = idKhoMinhChung;
@@ -45,7 +42,7 @@ public class KhoMinhChung {
         this.linkLuuTru = linkLuuTru;
     }
 
-    public KhoMinhChung(String tenMinhChung, String soHieu, Date thoigian, int idLoai, int idDvbh, String linkLuuTru, String caNhan) {
+    public KhoMinhChung(String tenMinhChung, String soHieu, Date thoigian, int idLoai, int idDvbh, String linkLuuTru) {
         this.tenMinhChung = tenMinhChung;
         this.soHieu = soHieu;
         this.thoigian = thoigian;
