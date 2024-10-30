@@ -40,12 +40,11 @@ public class UploadService {
             FileContent mediaContent = new FileContent("application/octet-stream", file);
             com.google.api.services.drive.model.File uploadedFile = drive.files().create(fileMetaData, mediaContent)
                     .setFields("id").execute();
-            String imageUrl = "https://drive.google.com/file/d/"+uploadedFile.getId()+"/preview";
-            System.out.println("IMAGE URL: " + imageUrl);
+            System.out.println("IMAGE ID: " + uploadedFile.getId());
             file.delete();
             res.setStatus(200);
             res.setMessage("File Successfully Uploaded To Drive");
-            res.setUrl(imageUrl);
+            res.setUrl(uploadedFile.getId());
         }catch (Exception e){
             System.out.println(e.getMessage());
             res.setStatus(500);
@@ -109,5 +108,38 @@ public class UploadService {
                 credential)
                 .build();
 
+    }
+    public Res createShortcut(String name, String parentFolderId, String targetFileId) throws GeneralSecurityException, IOException {
+        Res res = new Res();
+
+        try {
+            // Initialize Drive service
+            Drive driveService = createDriveService();
+
+            // Set up shortcut metadata
+            com.google.api.services.drive.model.File shortcutMetadata = new com.google.api.services.drive.model.File();
+            shortcutMetadata.setName(name);
+            shortcutMetadata.setMimeType("application/vnd.google-apps.shortcut");
+            shortcutMetadata.setParents(Collections.singletonList(parentFolderId));
+
+            com.google.api.services.drive.model.File.ShortcutDetails shortcutDetails = new com.google.api.services.drive.model.File.ShortcutDetails();
+            shortcutDetails.setTargetId(targetFileId);
+            shortcutMetadata.setShortcutDetails(shortcutDetails);
+
+            com.google.api.services.drive.model.File shortcut = driveService.files().create(shortcutMetadata)
+                    .setFields("id")  // Only request the shortcut ID
+                    .execute();
+            String shortcutUrl = "https://drive.google.com/file/d/" + shortcut.getId() + "/preview";
+
+            res.setStatus(200);
+            res.setMessage("Shortcut successfully created");
+            res.setUrl(shortcutUrl);
+        } catch (Exception e) {
+            System.out.println("Error creating shortcut: " + e.getMessage());
+            res.setStatus(500);
+            res.setMessage("Error creating shortcut: " + e.getMessage());
+        }
+
+        return res;
     }
 }

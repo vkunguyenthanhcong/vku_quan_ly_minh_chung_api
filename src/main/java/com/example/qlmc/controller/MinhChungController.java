@@ -6,8 +6,10 @@ import java.util.stream.Collectors;
 
 import com.example.qlmc.entity.GoiY;
 import com.example.qlmc.entity.KhoMinhChung;
+import com.example.qlmc.entity.Res;
 import com.example.qlmc.service.GoiYService;
 import com.example.qlmc.service.KhoMinhChungService;
+import com.example.qlmc.service.UploadService;
 import com.fasterxml.jackson.databind.JsonNode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -32,6 +34,8 @@ public class MinhChungController {
     private KhoMinhChungService khoMinhChungService;
     @Autowired
     private GoiYService goiYService;
+    @Autowired
+    private UploadService uploadService;
 
     @GetMapping
     public ResponseEntity<List<MinhChung>> getAllMinhChung() {
@@ -51,18 +55,23 @@ public class MinhChungController {
     public ResponseEntity<String> saveMinhChung(@RequestBody JsonNode formData) {
         try {
             Integer idKmc = Integer.parseInt(formData.get("idKmc").asText());
-            Integer idTieuChuan = Integer.parseInt(formData.get("idTieuChuan").asText());
-            Integer idGoiY = Integer.parseInt(formData.get("idGoiY").asText());
+            String folderIdParent = formData.get("folderIdParent").asText();
             String parentMaMc = formData.get("parentMaMc").asText();
             String childMaMc = formData.get("childMaMc").asText();
-
             KhoMinhChung khoMinhChung = khoMinhChungService.findAllById(idKmc);
+            UploadService uploadService = new UploadService();
+            String fileName = parentMaMc + childMaMc + ". " + khoMinhChung.getTenMinhChung();
+            Res res = uploadService.createShortcut(fileName, folderIdParent, khoMinhChung.getLinkLuuTru());
+
+            Integer idTieuChuan = Integer.parseInt(formData.get("idTieuChuan").asText());
+            Integer idGoiY = Integer.parseInt(formData.get("idGoiY").asText());
 
             MinhChung minhChung = new MinhChung();
             minhChung.setParentMaMc(parentMaMc);
             minhChung.setChildMaMc(childMaMc);
             minhChung.setKhoMinhChung(khoMinhChung);
             minhChung.setIdTieuChuan(idTieuChuan);
+            minhChung.setLinkluutru(res.getUrl());
 
             minhChung.setIdGoiY(idGoiY);
 

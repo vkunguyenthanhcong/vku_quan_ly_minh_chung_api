@@ -38,4 +38,7 @@ public class MinhChung {
     @Column(name = "madungchung")
     private int maDungChung;
 
+    @Column(name = "linkluutru")
+    private String linkluutru;
+
 }

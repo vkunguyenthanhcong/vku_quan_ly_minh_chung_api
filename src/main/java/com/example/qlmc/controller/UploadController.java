@@ -17,6 +17,8 @@ public class UploadController {
 
     @Autowired
     private UploadService service;
+
+    @PostMapping
     public Object handleFileUpload(@RequestParam("file") MultipartFile file) throws IOException, GeneralSecurityException {
 
         if (file.isEmpty()) {
