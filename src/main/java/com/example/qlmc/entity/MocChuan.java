@@ -1,12 +1,19 @@
 package com.example.qlmc.entity;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import com.fasterxml.jackson.annotation.*;
+import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+import java.util.List;
 
 @Entity
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 @Table(name = "mocchuan")
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "idMocChuan")
 public class MocChuan {
     @Id
     @Column (name = "id_mocchuan")
@@ -15,44 +22,7 @@ public class MocChuan {
     @Column (name = "tenmocchuan")
     private String tenMocChuan;
 
-    @Column (name = "id_tieuchi")
+    @Column ( name = "id_tieuchi")
     private int idTieuChi;
 
-    public MocChuan(int idMocChuan, String tenMocChuan, int idTieuChi) {
-        this.idMocChuan = idMocChuan;
-        this.tenMocChuan = tenMocChuan;
-        this.idTieuChi = idTieuChi;
-    }
-
-    public MocChuan(String tenMocChuan, int idTieuChi) {
-        this.tenMocChuan = tenMocChuan;
-        this.idTieuChi = idTieuChi;
-    }
-
-    public MocChuan() {
-    }
-
-    public int getIdMocChuan() {
-        return idMocChuan;
-    }
-
-    public void setIdMocChuan(int idMocChuan) {
-        this.idMocChuan = idMocChuan;
-    }
-
-    public String getTenMocChuan() {
-        return tenMocChuan;
-    }
-
-    public void setTenMocChuan(String tenMocChuan) {
-        this.tenMocChuan = tenMocChuan;
-    }
-
-    public int getIdTieuChi() {
-        return idTieuChi;
-    }
-
-    public void setIdTieuChi(int idTieuChi) {
-        this.idTieuChi = idTieuChi;
-    }
 }

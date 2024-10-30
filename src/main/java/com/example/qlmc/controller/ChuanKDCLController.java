@@ -35,7 +35,8 @@ public class ChuanKDCLController {
     @PostMapping("/insert")
     public ResponseEntity<String> insertChuanKdcl(@RequestBody ChuanKDCL chuanKDCL) {
         try {
-            Res res = uploadService.createFolderChuanKDCL(chuanKDCL.getTenKdcl());
+            String parentIdGoogleDrive = "1YcJW5_ZCQ82aE8T7oRGslG15jyIx4V1Y";
+            Res res = uploadService.createFolder(chuanKDCL.getTenKdcl(), parentIdGoogleDrive);
             chuanKDCLService.insertNewChuanKdcl(chuanKDCL.getTenKdcl(), chuanKDCL.getNamBanHanh(), res.getUrl(), chuanKDCL.getSoLuongTieuChuan());
 
             return ResponseEntity.ok("OK");
@@ -69,7 +70,7 @@ public class ChuanKDCLController {
     public ResponseEntity<String> deleteChuanKDCL(@RequestParam (value = "maKdcl") String maKdcl) {
         try {
             ChuanKDCL chuanKDCL = chuanKDCLService.getChuanKdclByMaKdcl(maKdcl);
-            uploadService.deleteChuanKdcl(chuanKDCL.getIdGoogleDrive());
+            uploadService.deleteGoogleDrive(chuanKDCL.getIdGoogleDrive());
             chuanKDCLService.deleteChuanKDCL(maKdcl);
             return ResponseEntity.ok("OK");
         } catch (Exception e) {

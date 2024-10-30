@@ -4,6 +4,11 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+import com.example.qlmc.entity.GoiY;
+import com.example.qlmc.entity.KhoMinhChung;
+import com.example.qlmc.service.GoiYService;
+import com.example.qlmc.service.KhoMinhChungService;
+import com.fasterxml.jackson.databind.JsonNode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -23,81 +28,17 @@ import com.example.qlmc.service.MinhChungService;
 public class MinhChungController {
     @Autowired
     private MinhChungService service;
+    @Autowired
+    private KhoMinhChungService khoMinhChungService;
+    @Autowired
+    private GoiYService goiYService;
 
     @GetMapping
     public ResponseEntity<List<MinhChung>> getAllMinhChung() {
         return ResponseEntity.ok(service.getAllMinhChung());
     }
-    
-    @GetMapping("/CountMinhChungWithTieuChi/{idTieuChi}")
-    public ResponseEntity<Integer>countMinhChungWithTieuChi(@PathVariable int idTieuChi) {
-        return ResponseEntity.ok(service.countMinhChungWithTieuChi(idTieuChi));
-    }
-    @GetMapping("/CountMinhChungByTieuChuan/{idTieuChuan}")
-    public ResponseEntity<Integer>countMinhChungByTieuChuan(@PathVariable int idTieuChuan) {
-        return ResponseEntity.ok(service.countMinhChungByTieuChuan(idTieuChuan));
-    }
-    @GetMapping("/MinhChungAndIdTieuChi")
-    public ResponseEntity<List<Map<String, Object>>> getAllWithIdGoiY() {
-        List<Object[]> result = service.getAllMinhChungAndidTieuChi();
-        List<Map<String, Object>> response = result.stream()
-                .map(row -> {
-                    String parentMaMc = (String) row[1];
-                    String childMaMc = (String) row[2];
-                    String maMinhChung = parentMaMc + childMaMc;
-                    return Map.of(
-                        "idMc", row[0],
-                        "maMinhChung", maMinhChung,
-                        "idKmc", row[3],
-                        "idTieuChuan", row[4],
-                        "idGoiY", row[5],
-                        "maDungChung", row[6],
-                        "tenMinhChung", row[8],
-                        "linkLuuTru", row[9],
-                        "idTieuChi", row[10],
-                            "maCtdt", row[11]
-                    );
-                })
-                .collect(Collectors.toList());
-        
-        return ResponseEntity.ok(response);
-    }
-    
-    @GetMapping("/findByIdTieuChi/{idTieuChi}")
-    public ResponseEntity<List<Map<String, Object>>> getAllWithIdTieuChi(@PathVariable int idTieuChi) {
-        List<Object[]> result = service.getAllWithIdTieuChi(idTieuChi);
-        List<Map<String, Object>> response = result.stream()
-                .map(row -> Map.of(
-                    "parentMaMc", row[0],
-                    "childMaMc", row[1],
-                    "tenMinhChung", row[2],
-                    "soHieu", row[3],
-                    "thoiGian", row[4],
-                    "donViBanHanh", row[5],
-                    "linkLuuTru", row[6],
-                    "maDungChung", row[7]))
-                .collect(Collectors.toList());
-                return ResponseEntity.ok(response);
-    }
-
-    @GetMapping("/MinhChungKhongDungChung")
-    public ResponseEntity<List<Map<String, Object>>> getAllMinhChungKhongDungChung() {
-        List<Object[]> result = service.getAllMinhChungKhongDungChung();
-        List<Map<String, Object>> response = result.stream()
-                .map(row -> Map.of(
-                    "idMc", row[0],
-                    "parentMaMc", row[1],
-                    "childMaMc", row[2],
-                    "tenMinhChung", row[3],
-                    "linkLuuTru", row[4]))
-                .collect(Collectors.toList());
-                return ResponseEntity.ok(response);
-    }
-
-
     @GetMapping("/delete")
     public ResponseEntity<String> processMinhChung(@RequestParam(value = "idMc") int idMc,@RequestParam (value = "parentMaMc") String parentMaMc) {
-
         try {
             service.processMinhChung(idMc, parentMaMc);
             return ResponseEntity.ok("OK");
@@ -107,35 +48,40 @@ public class MinhChungController {
     }
 
     @PostMapping
-    public ResponseEntity<String> saveMinhChung(@RequestBody MinhChung data) {
+    public ResponseEntity<String> saveMinhChung(@RequestBody JsonNode formData) {
         try {
-            service.saveData(data);
+            Integer idKmc = Integer.parseInt(formData.get("idKmc").asText());
+            Integer idTieuChuan = Integer.parseInt(formData.get("idTieuChuan").asText());
+            Integer idGoiY = Integer.parseInt(formData.get("idGoiY").asText());
+            String parentMaMc = formData.get("parentMaMc").asText();
+            String childMaMc = formData.get("childMaMc").asText();
+
+            KhoMinhChung khoMinhChung = khoMinhChungService.findAllById(idKmc);
+
+            MinhChung minhChung = new MinhChung();
+            minhChung.setParentMaMc(parentMaMc);
+            minhChung.setChildMaMc(childMaMc);
+            minhChung.setKhoMinhChung(khoMinhChung);
+            minhChung.setIdTieuChuan(idTieuChuan);
+
+            minhChung.setIdGoiY(idGoiY);
+
+            service.saveData(minhChung);
+
             return ResponseEntity.ok("OK");
         } catch (Exception e) {
             return ResponseEntity.status(500).body("Error processing: " + e.getMessage());
         }
     }
 
-    @GetMapping("/findByMaCtdt/{maCtdt}")
-    public ResponseEntity<List<Map<String, Object>>> findByMaCtdt(@PathVariable String maCtdt) {
-        List<Object[]> result = service.findByMaCtdt(maCtdt);
-        List<Map<String, Object>> response = result.stream()
-                .map(row -> Map.of(
-                    "idMinhChung", row[0],
-                    "parentMaMc", row[1],
-                    "childMaMc", row[2],
-                    "idKhoMinhChung", row[3],
-                    "idTieuChuan", row[4],
-                    "idGoiY", row[5],
-                    "maDungChung", row[6],
-                    "tenMinhChung", row[7]))
-                .collect(Collectors.toList());
-                return ResponseEntity.ok(response);
-    }
     @PostMapping("/dungchung")
-    public ResponseEntity<String> createMinhChung(@RequestBody MinhChung request) {
+    public ResponseEntity<String> createMinhChung(@RequestBody JsonNode formData) {
         try {
-            service.addMinhChungDungChung(request.getIdKmc(), request.getIdTieuChuan(), request.getIdGoiY(), request.getMaDungChung());
+            int idKmc = Integer.parseInt(formData.get("idKmc").asText());
+            int idTieuChuan = Integer.parseInt(formData.get("idTieuChuan").asText());
+            int idGoiY = Integer.parseInt(formData.get("idGoiY").asText());
+            int maDungChung = Integer.parseInt(formData.get("maDungChung").asText());
+            service.addMinhChungDungChung(idKmc, idTieuChuan,idGoiY, maDungChung);
             return ResponseEntity.ok("OK");
         } catch (Exception e) {
             return ResponseEntity.status(500).body("Error processing: " + e.getMessage());

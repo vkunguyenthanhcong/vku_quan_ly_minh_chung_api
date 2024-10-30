@@ -30,17 +30,13 @@ public class CTDTController {
     public ResponseEntity<List<CTDT>> getAllCTDT() {
         return ResponseEntity.ok(ctdtService.getAllCTDT());
     }
-
-    @GetMapping("/filter/{maKdcl}")
-    public ResponseEntity<List<CTDT>> getAllCTDTByMaKDCL(@PathVariable String maKdcl) {
-        return ResponseEntity.ok(ctdtService.getAllCTDTByMaKDCL(maKdcl));
-    }
-
+    
     @GetMapping("/detail/{maCtdt}")
     public ResponseEntity<CTDT> getThongTinChuongTrinhDaoTao(@PathVariable String maCtdt) {
         CTDT response = ctdtService.getThongTinChuongTrinhDaoTao(maCtdt);
         return ResponseEntity.ok(response);
     }
+
 
     @PostMapping
     public ResponseEntity<String> insertCTDT(@RequestBody JsonNode formData) {
@@ -62,7 +58,7 @@ public class CTDTController {
             ctdt.setChuanKdcl(chuanKDCL);
             ctdt.setNganh(nganh);
             ctdt.setTrinhDo(trinhDo);
-            Res res = uploadService.createFolderChuongTrinhDaoTao(tenCtdt, chuanKDCL.getIdGoogleDrive());
+            Res res = uploadService.createFolder(tenCtdt, chuanKDCL.getIdGoogleDrive());
             ctdt.setIdGoogleDrive(res.getUrl());
 
             ctdtService.insertCTDT(ctdt);
@@ -86,7 +82,7 @@ public class CTDTController {
     public ResponseEntity<String> deleteCTDT(@PathVariable(value = "maCtdt") String maCtdt) {
         try {
             CTDT ctdt = ctdtService.getThongTinChuongTrinhDaoTao(maCtdt);
-            uploadService.deleteChuongTrinhDaoTao(ctdt.getIdGoogleDrive());
+            uploadService.deleteGoogleDrive(ctdt.getIdGoogleDrive());
             ctdtService.deleteCTDT(maCtdt);
             return ResponseEntity.ok("OK");
         } catch (Exception e) {

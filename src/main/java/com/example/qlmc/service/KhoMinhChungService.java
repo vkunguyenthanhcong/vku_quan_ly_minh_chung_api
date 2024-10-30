@@ -14,8 +14,6 @@ import com.example.qlmc.repository.KhoMinhChungRepository;
 public class KhoMinhChungService {
     @Autowired
     private KhoMinhChungRepository khoMinhChungRepository;
-
-
     public List<KhoMinhChung> getAllKhoMinhChung() {
         return khoMinhChungRepository.findAll();
     }
@@ -55,8 +53,8 @@ public class KhoMinhChungService {
             return khoMinhChungRepository.searchByDate(tenMc, soHieu, idLoai, startDate, endDate);
         }
     }
-    public Optional<KhoMinhChung> findAllById(int idKmc){
-        return khoMinhChungRepository.findById(idKmc);
+    public KhoMinhChung findAllById(int idKmc){
+        return khoMinhChungRepository.findById(idKmc).orElse(null);
     }
     
     public void updateKhoMinhChung(int idKmc, KhoMinhChung data) {

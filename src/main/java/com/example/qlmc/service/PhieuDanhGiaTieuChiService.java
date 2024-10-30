@@ -23,14 +23,9 @@ public class PhieuDanhGiaTieuChiService {
     public void insertPhieuDanhGia(PhieuDanhGiaTieuChi phieuDanhGiaTieuChi){
         phieuDanhGiaTieuChiRepository.save(phieuDanhGiaTieuChi);
     }
-    public PhieuDanhGiaTieuChi findByidTieuChuanAndidTieuChi(int idTieuChuan, int idTieuChi){
-        return phieuDanhGiaTieuChiRepository.findByTieuChuanAndTieuChi(idTieuChuan, idTieuChi);
-    }
+
     public void updatePhieuDanhGia(PhieuDanhGiaTieuChi phieuDanhGiaTieuChi){
         phieuDanhGiaTieuChiRepository.save(phieuDanhGiaTieuChi);
-    }
-    public List<PhieuDanhGiaTieuChi> findByMaCtdt(String maCtdt){
-        return phieuDanhGiaTieuChiRepository.findByMaCtdt(maCtdt);
     }
 
 }

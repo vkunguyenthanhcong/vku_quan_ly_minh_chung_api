@@ -2,6 +2,7 @@ package com.example.qlmc.service;
 
 import java.util.List;
 
+import com.fasterxml.jackson.databind.JsonNode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -21,11 +22,16 @@ public class TieuChuanService {
     public TieuChuan findById(int id) {
         return tieuChuanRepository.findById(id).orElse(null);
     }
-    public List<TieuChuan> getTieuChuanByMaCtdt(String maCtdt) {
-        return tieuChuanRepository.findByCtdt_MaCtdt(maCtdt);
+    public void insertNewTieuChuan(TieuChuan tieuChuan) {
+        tieuChuanRepository.save(tieuChuan);
     }
-    public List<Object[]> getListTieuChuanAndCount(String maCtdt){
-        return tieuChuanRepository.getListTieuChuanAndCount(maCtdt);
+    public List<TieuChuan> findByMaCtdt(String maCtdt) {
+        return tieuChuanRepository.findByMaCtdt(maCtdt);
     }
-    
+    public void updateTieuChuan(JsonNode formData){
+        TieuChuan tc = tieuChuanRepository.findById(formData.get("id").asInt()).orElseThrow(() -> new RuntimeException("Product not found"));
+        tc.setTenTieuChuan(formData.get("ten").asText());
+        tc.setStt(formData.get("stt").asInt());
+        tieuChuanRepository.save(tc);
+    }
 }

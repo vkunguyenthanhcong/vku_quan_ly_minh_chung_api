@@ -1,74 +1,38 @@
 package com.example.qlmc.entity;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.*;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+import java.util.List;
 
 @Entity
-@Table (name = "tieuchi")
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@Table(name = "tieuchi")
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "idTieuChi")
 public class TieuChi {
     @Id
-    @Column (name = "id_tieuchi")
+    @Column(name = "id_tieuchi")
     private int idTieuChi;
-    
-    @Column (name = "ten_tieuchi")
+
+    @Column(name = "ten_tieuchi")
     private String tenTieuChi;
 
-    @ManyToOne
-    @JoinColumn(name = "id_tieuchuan")
-    @JsonBackReference
-    private TieuChuan tieuChuan;
+    @Column(name = "id_tieuchuan")
+    private int idTieuChuan;
 
-    @Column (name = "yeucau")
-    private String yeuCau;
-
-    @Column (name = "stt")
+    @Column(name = "stt")
     private int stt;
 
-    public int getStt() {
-        return stt;
-    }
-    public void setStt(int stt) {
-        this.stt = stt;
-    }
-    public TieuChi(){
+    @Column (name ="yeucau")
+    private String yeuCau;
 
-    }
-    public int getIdTieuChi() {
-        return idTieuChi;
-    }
+    @Column(name = "id_ggdrive" , nullable = true)
+    private String idGoogleDrive;
 
-    public void setIdTieuChi(int idTieuChi) {
-        this.idTieuChi = idTieuChi;
-    }
-
-    public String getTenTieuChi() {
-        return tenTieuChi;
-    }
-
-    public void setTenTieuChi(String tenTieuChi) {
-        this.tenTieuChi = tenTieuChi;
-    }
-
-  
-    public String getYeuCau() {
-        return yeuCau;
-    }
-
-    public void setYeuCau(String yeuCau) {
-        this.yeuCau = yeuCau;
-    }
-
-    public TieuChuan getTieuChuan() {
-        return tieuChuan;
-    }
-
-    public void setTieuChuan(TieuChuan tieuChuan) {
-        this.tieuChuan = tieuChuan;
-    }
 }

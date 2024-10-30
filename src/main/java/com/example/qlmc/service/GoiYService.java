@@ -19,14 +19,10 @@ public class GoiYService {
         return goiYRepository.findAll();
     }
 
-    public List<GoiY> getAllGoiYWithIdMocChuan(int idMocChuan) {
-        return goiYRepository.findAllByIdMocChuan(idMocChuan);
-    }
-
     public void saveData(GoiY data){
         goiYRepository.save(data);
     }
-    public Optional<GoiY> findById(int idGoiY){
-        return goiYRepository.findById(idGoiY);
+    public GoiY findById(int idGoiY){
+        return goiYRepository.findById(idGoiY).orElse(null);
     }
 }

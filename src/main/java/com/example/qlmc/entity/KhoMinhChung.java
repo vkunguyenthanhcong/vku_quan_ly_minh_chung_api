@@ -1,14 +1,21 @@
 package com.example.qlmc.entity;
 
 import java.sql.Date;
+import java.util.List;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Entity
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 @Table(name = "khominhchung")
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "idKhoMinhChung")
 public class KhoMinhChung {
     @Id
     @Column (name = "id_kmc")
@@ -31,85 +38,5 @@ public class KhoMinhChung {
     @Column (name = "linkluutru")
     private String linkLuuTru;
 
-    public KhoMinhChung(int idKhoMinhChung, String tenMinhChung, String soHieu, Date thoigian, int idLoai, int idDvbh,
-            String linkLuuTru) {
-        this.idKhoMinhChung = idKhoMinhChung;
-        this.tenMinhChung = tenMinhChung;
-        this.soHieu = soHieu;
-        this.thoigian = thoigian;
-        this.idLoai = idLoai;
-        this.idDvbh = idDvbh;
-        this.linkLuuTru = linkLuuTru;
-    }
-
-    public KhoMinhChung(String tenMinhChung, String soHieu, Date thoigian, int idLoai, int idDvbh, String linkLuuTru) {
-        this.tenMinhChung = tenMinhChung;
-        this.soHieu = soHieu;
-        this.thoigian = thoigian;
-        this.idLoai = idLoai;
-        this.idDvbh = idDvbh;
-        this.linkLuuTru = linkLuuTru;
-
-    }
-
-    public KhoMinhChung(){
-        
-    }
-
-public int getIdKhoMinhChung() {
-        return idKhoMinhChung;
-    }
-
-    public void setIdKhoMinhChung(int idKhoMinhChung) {
-        this.idKhoMinhChung = idKhoMinhChung;
-    }
-
-    public String getTenMinhChung() {
-        return tenMinhChung;
-    }
-
-    public void setTenMinhChung(String tenMinhChung) {
-        this.tenMinhChung = tenMinhChung;
-    }
-
-    public String getSoHieu() {
-        return soHieu;
-    }
-
-    public void setSoHieu(String soHieu) {
-        this.soHieu = soHieu;
-    }
-
-    public Date getThoigian() {
-        return thoigian;
-    }
-
-    public void setThoigian(Date thoigian) {
-        this.thoigian = thoigian;
-    }
-
-    public int getIdLoai() {
-        return idLoai;
-    }
-
-    public void setIdLoai(int idLoai) {
-        this.idLoai = idLoai;
-    }
-
-    public int getIdDvbh() {
-        return idDvbh;
-    }
-
-    public void setIdDvbh(int idDvbh) {
-        this.idDvbh = idDvbh;
-    }
-
-    public String getLinkLuuTru() {
-        return linkLuuTru;
-    }
-
-    public void setLinkLuuTru(String linkLuuTru) {
-        this.linkLuuTru = linkLuuTru;
-    }
 
 }

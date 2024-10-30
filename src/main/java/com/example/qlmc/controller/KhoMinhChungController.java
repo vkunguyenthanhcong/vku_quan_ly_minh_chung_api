@@ -50,7 +50,7 @@ public class KhoMinhChungController {
     }
 
     @GetMapping("/findById/{idKmc}")
-    public ResponseEntity<Optional<KhoMinhChung>> findById(@PathVariable int idKmc) {
+    public ResponseEntity<KhoMinhChung> findById(@PathVariable int idKmc) {
         return ResponseEntity.ok(khoMinhChungService.findAllById(idKmc));
     }
 

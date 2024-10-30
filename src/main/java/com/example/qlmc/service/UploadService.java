@@ -53,39 +53,11 @@ public class UploadService {
         }
         return  res;
     }
-    public Res createFolderChuongTrinhDaoTao(String name, String idGoogleDriveChuanKdcl) throws GeneralSecurityException, IOException {
+    public Res createFolder(String name, String parentIdGoogleDrive) throws GeneralSecurityException, IOException {
         Res res = new Res();
         try{
             String folderName = name;
-            String parentFolderId = idGoogleDriveChuanKdcl;
-
-            Drive drive = createDriveService();
-            com.google.api.services.drive.model.File fileMetaData = new com.google.api.services.drive.model.File();
-            fileMetaData.setName(folderName);
-            fileMetaData.setMimeType("application/vnd.google-apps.folder");
-
-            if (parentFolderId != null) {
-                fileMetaData.setParents(Collections.singletonList(parentFolderId));
-            }
-
-            com.google.api.services.drive.model.File folder = drive.files().create(fileMetaData)
-                    .setFields("id")  // Only request the folder ID
-                    .execute();
-            res.setStatus(200);
-            res.setMessage("Folder Successfully Created");
-            res.setUrl(folder.getId());
-        }catch (Exception e){
-            System.out.println(e.getMessage());
-            res.setStatus(500);
-            res.setMessage(e.getMessage());
-        }
-        return  res;
-    }
-    public Res createFolderChuanKDCL(String name) throws GeneralSecurityException, IOException {
-        Res res = new Res();
-        try{
-            String folderName = name;
-            String parentFolderId = "1YcJW5_ZCQ82aE8T7oRGslG15jyIx4V1Y";
+            String parentFolderId = parentIdGoogleDrive;
 
             Drive drive = createDriveService();
             com.google.api.services.drive.model.File fileMetaData = new com.google.api.services.drive.model.File();
@@ -108,7 +80,7 @@ public class UploadService {
         }
         return  res;
     }
-    public Res deleteChuanKdcl(String idGoogleDrive) throws GeneralSecurityException, IOException {
+    public Res deleteGoogleDrive(String idGoogleDrive) throws GeneralSecurityException, IOException {
         Res res = new Res();
         try{
             String folderId = idGoogleDrive;
@@ -124,22 +96,7 @@ public class UploadService {
         }
         return  res;
     }
-    public Res deleteChuongTrinhDaoTao(String idGoogleDrive) throws GeneralSecurityException, IOException {
-        Res res = new Res();
-        try{
-            String folderId = idGoogleDrive;
-            Drive drive = createDriveService();
-            drive.files().delete(folderId).execute();
-            System.out.println("Folder deleted successfully");
-            res.setStatus(200);
-            res.setMessage("Folder Successfully Deleted");
-        }catch (Exception e){
-            System.out.println(e.getMessage());
-            res.setStatus(500);
-            res.setMessage(e.getMessage());
-        }
-        return  res;
-    }
+
 
     private Drive createDriveService() throws GeneralSecurityException, IOException {
 

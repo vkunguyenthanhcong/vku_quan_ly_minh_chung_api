@@ -3,6 +3,9 @@ package com.example.qlmc.controller;
 import java.util.List;
 import java.util.Optional;
 
+import com.example.qlmc.entity.MocChuan;
+import com.example.qlmc.service.MocChuanService;
+import com.fasterxml.jackson.databind.JsonNode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,20 +24,26 @@ public class GoiYController {
 
     @Autowired
     private GoiYService goiYService;
+    @Autowired
+    private MocChuanService mocChuanService;
 
     @GetMapping
     public ResponseEntity<List<GoiY>> getAllGoiY() {
         return ResponseEntity.ok(goiYService.getAllGoiY());
     }
 
-    @GetMapping("/{idMocChuan}")
-    public ResponseEntity<List<GoiY>> getAllWithIdGoiY(@PathVariable int idMocChuan) {
-        return ResponseEntity.ok(goiYService.getAllGoiYWithIdMocChuan(idMocChuan));
-    }
     @PostMapping
-    public ResponseEntity<String> saveGoiY(@RequestBody GoiY data) {
+    public ResponseEntity<String> saveGoiY(@RequestBody JsonNode formData) {
         try{
-            goiYService.saveData(data);
+            GoiY goiY = new GoiY();
+            String goiYString = formData.get("ten").asText();
+            int idMocChuan = Integer.parseInt(formData.get("idParent").asText());
+            int batBuoc = formData.get("batBuoc").asInt();
+            goiY.setTenGoiY(goiYString);
+            goiY.setIdMocChuan(idMocChuan);
+            goiY.setBatBuoc(batBuoc);
+
+            goiYService.saveData(goiY);
             return ResponseEntity.ok("OK");
         }catch (Exception e){
             return ResponseEntity.status(500).body("Error processing: " + e.getMessage());
@@ -42,7 +51,7 @@ public class GoiYController {
     }
 
     @GetMapping("/findById/{idGoiY}")
-    public ResponseEntity<Optional<GoiY>> findById(@PathVariable int idGoiY){
+    public ResponseEntity<GoiY> findById(@PathVariable int idGoiY){
         return ResponseEntity.ok(goiYService.findById(idGoiY));
     }
 }

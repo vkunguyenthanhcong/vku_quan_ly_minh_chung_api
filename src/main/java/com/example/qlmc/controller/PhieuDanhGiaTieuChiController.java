@@ -42,16 +42,7 @@ public class PhieuDanhGiaTieuChiController {
     @GetMapping
     public ResponseEntity<List<PhieuDanhGiaTieuChi>> getAllPhieuDanhGia(){
         return ResponseEntity.ok(phieuDanhGiaTieuChiService.getAllPhieuDanhGia());
-    } 
-    @GetMapping("/findByTieuChuanAndTieuChi")
-    public ResponseEntity<PhieuDanhGiaTieuChi> findByTieuChuanAndTieuChi(@RequestParam(value = "idTieuChuan") int idTieuChuan, @RequestParam(value = "idTieuChi") int idTieuChi){
-        return ResponseEntity.ok(phieuDanhGiaTieuChiService.findByidTieuChuanAndidTieuChi(idTieuChuan, idTieuChi));
-    }   
-    @GetMapping("/findByMaCtdt")
-    public ResponseEntity<List<PhieuDanhGiaTieuChi>> findByMaCtdt(@RequestParam(value = "maCtdt") String maCtdt){
-        return ResponseEntity.ok(phieuDanhGiaTieuChiService.findByMaCtdt(maCtdt));
-    }    
-
+    }
     @DeleteMapping("/{idPhieuDanhGia}")
     public ResponseEntity<String> deletePhieuDanhGia(@PathVariable int idPhieuDanhGia){
         try {
@@ -67,14 +58,11 @@ public class PhieuDanhGiaTieuChiController {
         try {
             PhieuDanhGiaTieuChi phieuDanhGiaTieuChi = new PhieuDanhGiaTieuChi();
             int idPhongBan = Integer.parseInt(formData.get("idPhongBan").asText());
-            PhongBan phongBan = phongBanService.getPhongBanWithId(idPhongBan);
-            phieuDanhGiaTieuChi.setPhongBan(phongBan);
+            phieuDanhGiaTieuChi.setIdPhongBan(idPhongBan);
             int idTieuChuan = Integer.parseInt(formData.get("idTieuChuan").asText());
-            TieuChuan tieuChuan = tieuChuanService.findById(idTieuChuan);
-            phieuDanhGiaTieuChi.setTieuChuan(tieuChuan);
+            phieuDanhGiaTieuChi.setIdTieuChuan(idTieuChuan);
             int idTieuChi = Integer.parseInt(formData.get("idTieuChi").asText());
-            TieuChi tieuChi = tieuChiService.findById(idTieuChi);
-            phieuDanhGiaTieuChi.setTieuChi(tieuChi);
+            phieuDanhGiaTieuChi.setIdTieuChi(idTieuChi);
 
             phieuDanhGiaTieuChi.setMoTa(formData.get("moTa").asText());
             phieuDanhGiaTieuChi.setDiemManh(formData.get("diemManh").asText());
@@ -99,19 +87,15 @@ public class PhieuDanhGiaTieuChiController {
     }
     @PutMapping
     public ResponseEntity<String> updatePhieuDanhGia(@RequestBody JsonNode formData){
-
         try {
             PhieuDanhGiaTieuChi phieuDanhGiaTieuChi = new PhieuDanhGiaTieuChi();
             phieuDanhGiaTieuChi.setIdPhieuDanhGiaTieuChi(Integer.parseInt(formData.get("idPhieuDanhGia").asText()));
             int idPhongBan = Integer.parseInt(formData.get("idPhongBan").asText());
-            PhongBan phongBan = phongBanService.getPhongBanWithId(idPhongBan);
-            phieuDanhGiaTieuChi.setPhongBan(phongBan);
+            phieuDanhGiaTieuChi.setIdPhongBan(idPhongBan);
             int idTieuChuan = Integer.parseInt(formData.get("idTieuChuan").asText());
-            TieuChuan tieuChuan = tieuChuanService.findById(idTieuChuan);
-            phieuDanhGiaTieuChi.setTieuChuan(tieuChuan);
+            phieuDanhGiaTieuChi.setIdTieuChuan(idTieuChuan);
             int idTieuChi = Integer.parseInt(formData.get("idTieuChi").asText());
-            TieuChi tieuChi = tieuChiService.findById(idTieuChi);
-            phieuDanhGiaTieuChi.setTieuChi(tieuChi);
+            phieuDanhGiaTieuChi.setIdTieuChi(idTieuChi);
 
             phieuDanhGiaTieuChi.setMoTa(formData.get("moTa").asText());
             phieuDanhGiaTieuChi.setDiemManh(formData.get("diemManh").asText());
