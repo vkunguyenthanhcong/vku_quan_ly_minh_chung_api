@@ -30,39 +30,56 @@ public class CTDTController {
     public ResponseEntity<List<CTDT>> getAllCTDT() {
         return ResponseEntity.ok(ctdtService.getAllCTDT());
     }
-    
     @GetMapping("/detail/{maCtdt}")
     public ResponseEntity<CTDT> getThongTinChuongTrinhDaoTao(@PathVariable String maCtdt) {
         CTDT response = ctdtService.getThongTinChuongTrinhDaoTao(maCtdt);
         return ResponseEntity.ok(response);
     }
-
-
     @PostMapping
     public ResponseEntity<String> insertCTDT(@RequestBody JsonNode formData) {
         try {
             CTDT ctdt = new CTDT();
-            String maCtdt = formData.get("maCtdt").asText();
-            String tenCtdt = formData.get("tenCtdt").asText();
-            int soTinChi = Integer.parseInt(formData.get("soTinChi").asText());
-            String trinhDo = formData.get("trinhDo").asText();
+            Integer loai = Integer.parseInt(formData.get("loai").asText());
+            if(loai == 1){
+                String maCtdt = formData.get("maCtdt").asText();
+                String tenCtdt = formData.get("tenCtdt").asText();
+                int soTinChi = Integer.parseInt(formData.get("soTinChi").asText());
+                String trinhDo = formData.get("trinhDo").asText();
 
-            Khoa khoa = khoaService.getKhoaById(formData.get("maKhoa").asText());
-            ChuanKDCL chuanKDCL = chuanKDCLService.getChuanKdclByMaKdcl(formData.get("maKdcl").asText());
-            Nganh nganh = nganhService.getNganhById(formData.get("maNganh").asText());
+                Khoa khoa = khoaService.getKhoaById(formData.get("maKhoa").asText());
+                ChuanKDCL chuanKDCL = chuanKDCLService.getChuanKdclByMaKdcl(formData.get("maKdcl").asText());
+                Nganh nganh = nganhService.getNganhById(formData.get("maNganh").asText());
 
-            ctdt.setMaCtdt(maCtdt);
-            ctdt.setTenCtdt(tenCtdt);
-            ctdt.setSoTinChi(soTinChi);
-            ctdt.setKhoa(khoa);
-            ctdt.setChuanKdcl(chuanKDCL);
-            ctdt.setNganh(nganh);
-            ctdt.setTrinhDo(trinhDo);
-            Res res = uploadService.createFolder(tenCtdt, chuanKDCL.getIdGoogleDrive());
-            ctdt.setIdGoogleDrive(res.getUrl());
+                ctdt.setMaCtdt(maCtdt);
+                ctdt.setTenCtdt(tenCtdt);
+                ctdt.setSoTinChi(soTinChi);
+                ctdt.setKhoa(khoa);
+                ctdt.setChuanKdcl(chuanKDCL);
+                ctdt.setNganh(nganh);
+                ctdt.setTrinhDo(trinhDo);
+                ctdt.setLoai(loai);
+                Res res = uploadService.createFolder(tenCtdt, chuanKDCL.getIdGoogleDrive());
+                ctdt.setIdGoogleDrive(res.getUrl());
 
-            ctdtService.insertCTDT(ctdt);
-            return ResponseEntity.ok("OK");
+                ctdtService.insertCTDT(ctdt);
+                return ResponseEntity.ok("OK");
+            }else{
+
+                String tenCtdt = formData.get("tenCtdt").asText();
+                String maCtdt = formData.get("maCtdt").asText();
+
+                ChuanKDCL chuanKDCL = chuanKDCLService.getChuanKdclByMaKdcl(formData.get("maKdcl").asText());
+                ctdt.setMaCtdt(maCtdt);
+                ctdt.setChuanKdcl(chuanKDCL);
+                ctdt.setTenCtdt(tenCtdt);
+                ctdt.setLoai(loai);
+
+                Res res = uploadService.createFolder(tenCtdt, chuanKDCL.getIdGoogleDrive());
+                ctdt.setIdGoogleDrive(res.getUrl());
+
+                ctdtService.insertCTDT(ctdt);
+                return ResponseEntity.ok("OK");
+            }
         } catch (Exception e) {
             return ResponseEntity.status(500).body("Error processing: " + e.getMessage());
         }

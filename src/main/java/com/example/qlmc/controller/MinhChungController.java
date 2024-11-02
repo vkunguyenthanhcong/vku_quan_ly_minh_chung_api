@@ -71,7 +71,7 @@ public class MinhChungController {
             minhChung.setChildMaMc(childMaMc);
             minhChung.setKhoMinhChung(khoMinhChung);
             minhChung.setIdTieuChuan(idTieuChuan);
-            minhChung.setLinkluutru(res.getUrl());
+            minhChung.setLinkLuuTru(res.getUrl());
 
             minhChung.setIdGoiY(idGoiY);
 

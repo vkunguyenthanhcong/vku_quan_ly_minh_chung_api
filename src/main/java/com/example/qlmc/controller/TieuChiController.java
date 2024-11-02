@@ -36,11 +36,6 @@ public class TieuChiController {
     public ResponseEntity<TieuChi> findById(@PathVariable int idTieuChi) {
         return ResponseEntity.ok(tieuChiService.findById(idTieuChi));
     }
-    @GetMapping("/findByMaCtdt/{maCtdt}")
-    public ResponseEntity<List<TieuChi>> findByMaCtdt(@PathVariable String maCtdt) {
-        return ResponseEntity.ok(tieuChiService.findByMaCtdt(maCtdt));
-    }
-
     @PostMapping
     public ResponseEntity<String> insertNewTieuChi(@RequestBody JsonNode formData) {
         try {

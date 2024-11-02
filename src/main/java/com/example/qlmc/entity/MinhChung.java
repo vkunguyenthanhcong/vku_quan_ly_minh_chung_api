@@ -39,6 +39,6 @@ public class MinhChung {
     private int maDungChung;
 
     @Column(name = "linkluutru")
-    private String linkluutru;
+    private String linkLuuTru;
 
 }

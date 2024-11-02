@@ -56,5 +56,8 @@ public class CTDT {
     @Column(name = "id_ggdrive")
     private String idGoogleDrive;
 
+    @Column(name = "loai")
+    private int loai;
+
 
 }
