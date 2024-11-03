@@ -66,7 +66,7 @@ public class ChuanKDCLController {
         }
     }
 
-    @DeleteMapping("/deleteChuanKDCL")
+    @DeleteMapping
     public ResponseEntity<String> deleteChuanKDCL(@RequestParam (value = "maKdcl") String maKdcl) {
         try {
             ChuanKDCL chuanKDCL = chuanKDCLService.getChuanKdclByMaKdcl(maKdcl);

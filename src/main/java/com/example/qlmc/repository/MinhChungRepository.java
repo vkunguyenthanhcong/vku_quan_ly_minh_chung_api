@@ -10,7 +10,7 @@ import com.example.qlmc.entity.MinhChung;
 
 import jakarta.transaction.Transactional;
 
-public interface MinhChungRepository extends JpaRepository<MinhChung, Long> {
+public interface MinhChungRepository extends JpaRepository<MinhChung, Integer> {
     @Query("SELECT m FROM MinhChung m WHERE m.idGoiY = :idGoiY")
     List<MinhChung> findByIdGoiY(int idGoiY);
 

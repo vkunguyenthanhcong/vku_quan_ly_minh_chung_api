@@ -142,4 +142,21 @@ public class UploadService {
 
         return res;
     }
+    public Res removeShortcut(String fileId) throws GeneralSecurityException, IOException {
+        Res res = new Res();
+
+        try {
+            Drive driveService = createDriveService();
+            driveService.files().delete(fileId).execute();
+            res.setStatus(200);
+            res.setMessage("Shortcut successfully removed");
+        } catch (Exception e) {
+            System.out.println("Error removing shortcut: " + e.getMessage());
+            res.setStatus(500);
+            res.setMessage("Error removing shortcut: " + e.getMessage());
+        }
+
+        return res;
+    }
+
 }

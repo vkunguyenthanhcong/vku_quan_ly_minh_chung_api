@@ -21,34 +21,21 @@ public class MinhChungService {
         minhChungRepository.insertMinhChung(idKmc, idTieuChuan, idGoiY, maDungChung);
     }
 
+    public MinhChung findById(int id) {
+        return minhChungRepository.findById(id).orElse(null);
+    }
+
     public List<MinhChung> getAllMinhChung() {
         return minhChungRepository.findAll();
     }
-    public List<Object[]> findByMaCtdt(String maCtdt) {
-        return minhChungRepository.findByMaCtdt(maCtdt);
-    }
-    public List<MinhChung> findByIdGoiY(int idGoiY) {
-        return minhChungRepository.findByIdGoiY(idGoiY);
-    }
 
-    public List<Object[]> getAllWithIdTieuChi(int idTieuChi) {
-        return minhChungRepository.findAllByIdTieuChi(idTieuChi);
-    }
-    public int countMinhChungWithTieuChi(int idTieuChi){
-        return minhChungRepository.findAllByIdTieuChi(idTieuChi).size();
-    }
-    public List<Object[]> getAllMinhChungKhongDungChung(){
-        return minhChungRepository.getAllMinhChung();
-    }
-    public int countMinhChungByTieuChuan(int idTieuChuan){
-        return minhChungRepository.countMinhChungByTieuChuan(idTieuChuan);
-    }
     @Transactional
     public void processMinhChung(int idMc, String parentMaMc) {
         minhChungRepository.deleteByIdMc(idMc);
         minhChungRepository.createTempTable(parentMaMc);
         minhChungRepository.updateWithTempTable(parentMaMc);
         minhChungRepository.dropTempTable();
+
     }
     @Modifying
     public void saveData(MinhChung data){
