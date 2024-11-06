@@ -113,10 +113,8 @@ public class UploadService {
         Res res = new Res();
 
         try {
-            // Initialize Drive service
             Drive driveService = createDriveService();
 
-            // Set up shortcut metadata
             com.google.api.services.drive.model.File shortcutMetadata = new com.google.api.services.drive.model.File();
             shortcutMetadata.setName(name);
             shortcutMetadata.setMimeType("application/vnd.google-apps.shortcut");
@@ -129,7 +127,7 @@ public class UploadService {
             com.google.api.services.drive.model.File shortcut = driveService.files().create(shortcutMetadata)
                     .setFields("id")  // Only request the shortcut ID
                     .execute();
-            String shortcutUrl = "https://drive.google.com/file/d/" + shortcut.getId() + "/preview";
+            String shortcutUrl = shortcut.getId();
 
             res.setStatus(200);
             res.setMessage("Shortcut successfully created");
