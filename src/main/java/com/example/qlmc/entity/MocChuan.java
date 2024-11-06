@@ -22,7 +22,18 @@ public class MocChuan {
     @Column (name = "tenmocchuan")
     private String tenMocChuan;
 
-    @Column ( name = "id_tieuchi")
-    private int idTieuChi;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn (name="id_tieuchi")
+    @JsonBackReference
+    private TieuChi tieuChi;
+    @JsonProperty("idTieuChi")
+    public int getIdTieuChi() {
+        return tieuChi.getIdTieuChi();
+    }
+
+
+    @OneToMany(mappedBy = "mocChuan", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnore
+    private List<GoiY> goiY;
 }

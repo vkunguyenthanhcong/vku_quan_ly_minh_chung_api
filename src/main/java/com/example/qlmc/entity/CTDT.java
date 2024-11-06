@@ -25,7 +25,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "chuongtrinhdaotao")
-@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "maCtdt")
 public class CTDT {
 
     @Id
@@ -59,5 +58,7 @@ public class CTDT {
     @Column(name = "loai")
     private int loai;
 
-
+    @OneToMany(mappedBy = "ctdt", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnore
+    private List<TieuChuan> tieuChuan;
 }

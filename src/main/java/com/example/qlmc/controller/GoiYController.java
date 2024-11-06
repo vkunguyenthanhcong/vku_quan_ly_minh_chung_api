@@ -26,16 +26,21 @@ public class GoiYController {
     public ResponseEntity<List<GoiY>> getAllGoiY() {
         return ResponseEntity.ok(goiYService.getAllGoiY());
     }
-
+    @DeleteMapping("/{id}")
+    public ResponseEntity<String> deleteGoiY(@PathVariable int id) {
+        goiYService.deleteById(id);
+        return ResponseEntity.ok("OK");
+    }
     @PostMapping
     public ResponseEntity<String> saveGoiY(@RequestBody JsonNode formData) {
         try{
             GoiY goiY = new GoiY();
             String goiYString = formData.get("ten").asText();
             int idMocChuan = Integer.parseInt(formData.get("idParent").asText());
+            MocChuan mocChuan = mocChuanService.findById(idMocChuan);
             int batBuoc = formData.get("batBuoc").asInt();
             goiY.setTenGoiY(goiYString);
-            goiY.setIdMocChuan(idMocChuan);
+            goiY.setMocChuan(mocChuan);
             goiY.setBatBuoc(batBuoc);
 
             goiYService.saveData(goiY);

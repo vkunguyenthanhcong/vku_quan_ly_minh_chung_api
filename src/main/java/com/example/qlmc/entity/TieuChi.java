@@ -14,7 +14,6 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "tieuchi")
-@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "idTieuChi")
 public class TieuChi {
     @Id
     @Column(name = "id_tieuchi")
@@ -23,8 +22,15 @@ public class TieuChi {
     @Column(name = "ten_tieuchi")
     private String tenTieuChi;
 
-    @Column(name = "id_tieuchuan")
-    private int idTieuChuan;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn (name="id_tieuchuan")
+    @JsonBackReference
+    private TieuChuan tieuChuan;
+
+    @JsonProperty("idTieuChuan")
+    public int getIdTieuChuan() {
+        return tieuChuan.getIdTieuChuan();
+    }
 
     @Column(name = "stt")
     private int stt;
@@ -34,5 +40,9 @@ public class TieuChi {
 
     @Column(name = "id_ggdrive" , nullable = true)
     private String idGoogleDrive;
+
+    @OneToMany(mappedBy = "tieuChi", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnore
+    private List<MocChuan> mocChuan;
 
 }

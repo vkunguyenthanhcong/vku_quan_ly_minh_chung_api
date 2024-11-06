@@ -6,9 +6,14 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
-
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Entity
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 @Table (name = "phongban")
 public class PhongBan {
     @Id
@@ -19,32 +24,5 @@ public class PhongBan {
     @Column (name = "tenphongban")
     private String tenPhongBan;
 
-    public PhongBan(){
-        
-    }
 
-    public PhongBan(int idPhongBan, String tenPhongBan) {
-        this.idPhongBan = idPhongBan;
-        this.tenPhongBan = tenPhongBan;
-    }
-
-    public PhongBan(String tenPhongBan) {
-        this.tenPhongBan = tenPhongBan;
-    }
-
-    public int getIdPhongBan() {
-        return idPhongBan;
-    }
-
-    public void setIdPhongBan(int idPhongBan) {
-        this.idPhongBan = idPhongBan;
-    }
-
-    public String getTenPhongBan() {
-        return tenPhongBan;
-    }
-
-    public void setTenPhongBan(String tenPhongBan) {
-        this.tenPhongBan = tenPhongBan;
-    }
 }

@@ -25,4 +25,7 @@ public class GoiYService {
     public GoiY findById(int idGoiY){
         return goiYRepository.findById(idGoiY).orElse(null);
     }
+    public void deleteById(int idGoiY){
+        goiYRepository.deleteById(idGoiY);
+    }
 }

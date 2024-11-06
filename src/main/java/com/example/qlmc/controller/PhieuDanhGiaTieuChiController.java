@@ -62,7 +62,8 @@ public class PhieuDanhGiaTieuChiController {
             int idTieuChuan = Integer.parseInt(formData.get("idTieuChuan").asText());
             phieuDanhGiaTieuChi.setIdTieuChuan(idTieuChuan);
             int idTieuChi = Integer.parseInt(formData.get("idTieuChi").asText());
-            phieuDanhGiaTieuChi.setIdTieuChi(idTieuChi);
+            TieuChi tieuChi = tieuChiService.findById(idTieuChi);
+            phieuDanhGiaTieuChi.setTieuChi(tieuChi);
 
             phieuDanhGiaTieuChi.setMoTa(formData.get("moTa").asText());
             phieuDanhGiaTieuChi.setDiemManh(formData.get("diemManh").asText());
@@ -95,7 +96,8 @@ public class PhieuDanhGiaTieuChiController {
             int idTieuChuan = Integer.parseInt(formData.get("idTieuChuan").asText());
             phieuDanhGiaTieuChi.setIdTieuChuan(idTieuChuan);
             int idTieuChi = Integer.parseInt(formData.get("idTieuChi").asText());
-            phieuDanhGiaTieuChi.setIdTieuChi(idTieuChi);
+            TieuChi tieuChi = tieuChiService.findById(idTieuChi);
+            phieuDanhGiaTieuChi.setTieuChi(tieuChi);
 
             phieuDanhGiaTieuChi.setMoTa(formData.get("moTa").asText());
             phieuDanhGiaTieuChi.setDiemManh(formData.get("diemManh").asText());

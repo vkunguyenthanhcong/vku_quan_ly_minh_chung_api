@@ -1,5 +1,7 @@
 package com.example.qlmc.controller;
 
+import java.io.IOException;
+import java.security.GeneralSecurityException;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -33,6 +35,18 @@ public class TieuChuanController {
     public ResponseEntity<List<TieuChuan>> findByMaCtdt(@PathVariable("maCtdt") String maCtdt) {
         return ResponseEntity.ok(tieuChuanService.findByMaCtdt(maCtdt));
     }
+    @DeleteMapping("/{id}")
+    public ResponseEntity<String> deleteTieuChuan(@PathVariable int id) {
+        TieuChuan tieuChuan = tieuChuanService.findById(id);
+        try {
+            uploadService.deleteGoogleDrive(tieuChuan.getIdGoogleDrive());
+        } catch (GeneralSecurityException | IOException e) {
+            throw new RuntimeException(e);
+        }
+        tieuChuanService.deleteTieuChuan(id);
+
+        return ResponseEntity.ok("OK");
+    }
 
     @GetMapping("/{id}")
     public ResponseEntity<TieuChuan> findById(@PathVariable int id) {
@@ -49,9 +63,9 @@ public class TieuChuanController {
             tieuChuan.setTenTieuChuan(tenTieuChuan);
             tieuChuan.setStt(Integer.parseInt(stt));
 
-            tieuChuan.setMaCtdt(formData.get("idParent").asText());
-            CTDT ctdt = ctdtService.getThongTinChuongTrinhDaoTao(formData.get("idParent").asText());
 
+            CTDT ctdt = ctdtService.getThongTinChuongTrinhDaoTao(formData.get("idParent").asText());
+            tieuChuan.setCtdt(ctdt);
             String tenGoogleDrive = "Tiêu chuẩn " + stt + ". " + tenTieuChuan;
             Res res = uploadService.createFolder(tenGoogleDrive, ctdt.getIdGoogleDrive());
             tieuChuan.setIdGoogleDrive(res.getUrl());

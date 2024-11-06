@@ -16,15 +16,17 @@ public class TieuChiService {
     private TieuChiRepository tieuChiRepository;
   
 
-    public List<TieuChi> getAllTieuChi() {
+    public List<TieuChi> findAll() {
         return tieuChiRepository.findAll();
     }
+    public void deleteTieuChi(int id){
+        tieuChiRepository.deleteById(id);
+    }
+
     public TieuChi findById(int idTieuChi){
         return tieuChiRepository.findById(idTieuChi).orElse(null);
     }
-    public List<TieuChi> findByMaCtdt(String maCtdt) {
-        return tieuChiRepository.findByMaCtdt(maCtdt);
-    }
+
     public void insertNewTieuChi(TieuChi tieuChi){
         tieuChiRepository.save(tieuChi);
     }

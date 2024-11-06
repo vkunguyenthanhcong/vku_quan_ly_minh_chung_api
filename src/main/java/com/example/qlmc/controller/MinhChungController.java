@@ -67,6 +67,7 @@ public class MinhChungController {
 
             Integer idTieuChuan = Integer.parseInt(formData.get("idTieuChuan").asText());
             Integer idGoiY = Integer.parseInt(formData.get("idGoiY").asText());
+            GoiY goiY = goiYService.findById(idGoiY);
 
             MinhChung minhChung = new MinhChung();
             minhChung.setParentMaMc(parentMaMc);
@@ -75,7 +76,7 @@ public class MinhChungController {
             minhChung.setIdTieuChuan(idTieuChuan);
             minhChung.setLinkLuuTru(res.getUrl());
 
-            minhChung.setIdGoiY(idGoiY);
+            minhChung.setGoiY(goiY);
 
             service.saveData(minhChung);
 

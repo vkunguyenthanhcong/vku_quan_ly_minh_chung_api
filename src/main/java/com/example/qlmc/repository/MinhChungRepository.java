@@ -11,7 +11,7 @@ import com.example.qlmc.entity.MinhChung;
 import jakarta.transaction.Transactional;
 
 public interface MinhChungRepository extends JpaRepository<MinhChung, Integer> {
-    @Query("SELECT m FROM MinhChung m WHERE m.idGoiY = :idGoiY")
+    @Query("SELECT m FROM MinhChung m WHERE m.goiY.idGoiY = :idGoiY")
     List<MinhChung> findByIdGoiY(int idGoiY);
 
     @Query(value = "SELECT mc.parent_ma_mc, mc.child_ma_mc, kmc.ten_mc, kmc.sohieu, kmc.thoigian, dvbh.ten_dvbh, kmc.linkluutru, mc.madungchung FROM minhchung mc, khominhchung kmc, donvibanhanh dvbh, goiynguonmc goiy, mocchuan WHERE mocchuan.id_tieuchi = :idTieuChi AND mocchuan.id_mocchuan = goiy.id_mocchuan AND mc.id_goiy = goiy.id_goiy AND mc.id_kmc = kmc.id_kmc AND kmc.id_dvbh = dvbh.id_dvbh", nativeQuery =  true)

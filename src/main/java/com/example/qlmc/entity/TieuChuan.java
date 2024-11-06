@@ -1,7 +1,6 @@
 package com.example.qlmc.entity;
 
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import com.fasterxml.jackson.annotation.*;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -14,7 +13,6 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "tieuchuan")
-@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "idTieuChuan")
 public class TieuChuan {
 
     @Id
@@ -28,10 +26,20 @@ public class TieuChuan {
     @Column(name = "stt")
     private int stt;
 
-    @Column(name = "ma_ctdt")
-    private String maCtdt;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn (name="ma_ctdt")
+    @JsonBackReference
+    private CTDT ctdt;
+
+    @JsonProperty("maCtdt")
+    public String getMaCtdt() {
+        return ctdt.getMaCtdt();
+    }
 
     @Column(name = "id_ggdrive", nullable = true)
     private String idGoogleDrive;
 
+    @OneToMany(mappedBy = "tieuChuan", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnore
+    private List<TieuChi> tieuChi;
 }

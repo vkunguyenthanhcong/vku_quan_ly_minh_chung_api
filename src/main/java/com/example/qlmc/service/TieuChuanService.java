@@ -18,7 +18,9 @@ public class TieuChuanService {
     public List<TieuChuan> getAllTieuChuan() {
         return tieuChuanRepository.findAll();
     }
-
+    public void deleteTieuChuan(int id){
+        tieuChuanRepository.deleteById(id);
+    }
     public TieuChuan findById(int id) {
         return tieuChuanRepository.findById(id).orElse(null);
     }

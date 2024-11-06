@@ -1,7 +1,6 @@
 package com.example.qlmc.entity;
 
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import com.fasterxml.jackson.annotation.*;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -32,8 +31,17 @@ public class MinhChung {
     @Column(name = "id_tieuchuan")
     private int idTieuChuan;
 
-    @Column(name="id_goiy")
-    private int idGoiY;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn (name="id_goiy")
+    @JsonBackReference
+    private GoiY goiY;
+
+    @JsonProperty("idGoiY")
+    public int getIdGoiY() {
+        return goiY.getIdGoiY();
+    }
+
 
     @Column(name = "madungchung")
     private int maDungChung;

@@ -1,13 +1,9 @@
 package com.example.qlmc.entity;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.Table;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -29,8 +25,17 @@ public class PhieuDanhGiaTieuChi {
     private int idPhongBan;
     @Column(name = "id_tieuchuan")
     private int idTieuChuan;
-    @Column(name = "id_tieuchi")
-    private int idTieuChi;
+
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn (name="id_tieuchi")
+    @JsonBackReference
+    private TieuChi tieuChi;
+
+    @JsonProperty("idTieuChi")
+    public int getIdTieuChi() {
+        return tieuChi.getIdTieuChi();
+    }
 
     @Column(name = "mota")
     private String moTa;

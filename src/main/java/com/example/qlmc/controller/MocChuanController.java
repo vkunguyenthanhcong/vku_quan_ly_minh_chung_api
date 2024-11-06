@@ -21,7 +21,11 @@ public class MocChuanController {
     private TieuChiService tieuChiService;
     @Autowired
     private MocChuanService mocChuanService;
-
+    @DeleteMapping("/{id}")
+    public ResponseEntity<String> deleteMocChuan(@PathVariable int id) {
+        service.deleteMocChuan(id);
+        return ResponseEntity.ok("OK");
+    }
     @GetMapping
     public ResponseEntity<List<MocChuan>> getAllMocChuan() {
         return ResponseEntity.ok(service.getAllMocChuan());
@@ -34,8 +38,9 @@ public class MocChuanController {
             String tenMocChuan = formData.get("ten").asText();
             String stt = formData.get("stt").asText();
             int idTieuChi = Integer.parseInt(formData.get("idParent").asText());
+            TieuChi tieuChi = tieuChiService.findById(idTieuChi);
             mocChuan.setTenMocChuan(tenMocChuan);
-            mocChuan.setIdTieuChi(idTieuChi);
+            mocChuan.setTieuChi(tieuChi);
 
             mocChuanService.insertMocChuan(mocChuan);
             return ResponseEntity.ok("OK");

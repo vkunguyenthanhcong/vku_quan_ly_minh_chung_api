@@ -16,7 +16,9 @@ public class MocChuanService {
     private MocChuanRepository repository;
     @Autowired
     private MocChuanRepository mocChuanRepository;
-
+    public void deleteMocChuan(int id) {
+        repository.deleteById(id);
+    }
     public List<MocChuan> getAllMocChuan() {
         return repository.findAll();
     }

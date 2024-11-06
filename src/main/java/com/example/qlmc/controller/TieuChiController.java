@@ -1,5 +1,7 @@
 package com.example.qlmc.controller;
 
+import java.io.IOException;
+import java.security.GeneralSecurityException;
 import java.util.List;
 
 import com.example.qlmc.entity.CTDT;
@@ -29,7 +31,19 @@ public class TieuChiController {
 
     @GetMapping
     public ResponseEntity<List<TieuChi>> getAllTieuChi() {
-        return ResponseEntity.ok(tieuChiService.getAllTieuChi());
+        return ResponseEntity.ok(tieuChiService.findAll());
+    }
+    @DeleteMapping("/{id}")
+    public ResponseEntity<String> deleteTieuChi(@PathVariable int id) {
+        TieuChi tieuChi = tieuChiService.findById(id);
+        try {
+            uploadService.deleteGoogleDrive(tieuChi.getIdGoogleDrive());
+        } catch (GeneralSecurityException | IOException e) {
+            throw new RuntimeException(e);
+        }
+        tieuChiService.deleteTieuChi(id);
+
+        return ResponseEntity.ok("OK");
     }
 
     @GetMapping("/findById/{idTieuChi}")
@@ -48,7 +62,7 @@ public class TieuChiController {
 
             tieuChi.setTenTieuChi(tenTieuChi);
             tieuChi.setStt(Integer.parseInt(stt));
-            tieuChi.setIdTieuChuan(idTieuChuan);
+            tieuChi.setTieuChuan(tieuChuan);
             tieuChi.setYeuCau(yeuCau);
 
             String tenGoogleDrive = "Tiêu chí " + stt;
