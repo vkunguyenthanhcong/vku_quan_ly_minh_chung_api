@@ -8,12 +8,7 @@ import com.example.qlmc.service.MocChuanService;
 import com.fasterxml.jackson.databind.JsonNode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.example.qlmc.entity.GoiY;
 import com.example.qlmc.service.GoiYService;
@@ -41,6 +36,24 @@ public class GoiYController {
             int batBuoc = formData.get("batBuoc").asInt();
             goiY.setTenGoiY(goiYString);
             goiY.setIdMocChuan(idMocChuan);
+            goiY.setBatBuoc(batBuoc);
+
+            goiYService.saveData(goiY);
+            return ResponseEntity.ok("OK");
+        }catch (Exception e){
+            return ResponseEntity.status(500).body("Error processing: " + e.getMessage());
+        }
+    }
+    @PutMapping
+    public ResponseEntity<String> updateGoiY(@RequestBody JsonNode formData) {
+        try{
+            int idGoiY = formData.get("id").asInt();
+            GoiY goiY =  goiYService.findById(idGoiY);
+
+            String goiYString = formData.get("ten").asText();
+            int batBuoc = formData.get("batBuoc").asInt();
+
+            goiY.setTenGoiY(goiYString);
             goiY.setBatBuoc(batBuoc);
 
             goiYService.saveData(goiY);
