@@ -5,7 +5,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
 
+import com.example.qlmc.entity.PhongBan;
 import com.example.qlmc.repository.PhongBanRepository;
+import com.fasterxml.jackson.databind.JsonNode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -29,7 +31,6 @@ public class UsersManagementService {
     private PasswordEncoder passwordEncoder;
     @Autowired
     private PhongBanRepository phongBanRepository;
-
 
     public ReqRes register(ReqRes registrationRequest){
         ReqRes resp = new ReqRes();
@@ -164,36 +165,26 @@ public class UsersManagementService {
         return reqRes;
     }
 
-    public ReqRes updateUser(Integer userId, User updatedUser) {
+    public String updateUser(JsonNode formData) {
         ReqRes reqRes = new ReqRes();
         try {
+            int userId = formData.get("id").asInt();
             Optional<User> userOptional = usersRepo.findById(userId);
             if (userOptional.isPresent()) {
                 User existingUser = userOptional.get();
-                existingUser.setEmail(updatedUser.getEmail());
-                existingUser.setUsername(updatedUser.getUsername());
-                existingUser.setSdt(updatedUser.getSdt());
-                existingUser.setRole(updatedUser.getRole());
-
-                // Check if password is present in the request
-                if (updatedUser.getPassword() != null && !updatedUser.getPassword().isEmpty()) {
-                    // Encode the password and update it
-                    existingUser.setPassword(passwordEncoder.encode(updatedUser.getPassword()));
-                }
+                PhongBan phongBan = phongBanRepository.findById(formData.get("idPhongBan").asInt()).orElse(null);
+                existingUser.setPhongBan(phongBan);
 
                 User savedUser = usersRepo.save(existingUser);
                 reqRes.setUser(savedUser);
-                reqRes.setStatusCode(200);
-                reqRes.setMessage("User updated successfully");
+                return ("OK");
             } else {
-                reqRes.setStatusCode(404);
-                reqRes.setMessage("User not found for update");
+                return ("User Not found");
             }
         } catch (Exception e) {
-            reqRes.setStatusCode(500);
-            reqRes.setMessage("Error occurred while updating user: " + e.getMessage());
+            return ("User Not found");
         }
-        return reqRes;
+
     }
 
 

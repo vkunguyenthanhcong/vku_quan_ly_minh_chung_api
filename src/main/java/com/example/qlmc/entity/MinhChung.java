@@ -24,9 +24,8 @@ public class MinhChung {
     @Column(name = "child_ma_mc")
     private String childMaMc;
 
-    @ManyToOne
-    @JoinColumn(name = "id_kmc")
-    private KhoMinhChung khoMinhChung;
+    @Column(name = "id_kmc")
+    private int idKhoMinhChung;
 
     @Column(name = "id_tieuchuan")
     private int idTieuChuan;
@@ -41,7 +40,6 @@ public class MinhChung {
     public int getIdGoiY() {
         return goiY.getIdGoiY();
     }
-
 
     @Column(name = "madungchung")
     private int maDungChung;

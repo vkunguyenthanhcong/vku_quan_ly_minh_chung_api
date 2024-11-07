@@ -1,5 +1,6 @@
 package com.example.qlmc.controller;
 
+import com.fasterxml.jackson.databind.JsonNode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
@@ -50,9 +51,10 @@ public class UserManagementController {
 
     }
 
-    @PutMapping("/admin/update/{userId}")
-    public ResponseEntity<ReqRes> updateUser(@PathVariable Integer userId, @RequestBody User reqres){
-        return ResponseEntity.ok(usersManagementService.updateUser(userId, reqres));
+    @PutMapping("/admin/update")
+    public ResponseEntity<String> updateUser(@RequestBody JsonNode formData){
+        ;
+        return ResponseEntity.ok(usersManagementService.updateUser(formData));
     }
 
     @GetMapping("/adminuser/get-profile")
