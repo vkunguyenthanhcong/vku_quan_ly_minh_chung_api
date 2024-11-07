@@ -45,8 +45,9 @@ public class MinhChungController {
     public ResponseEntity<String> processMinhChung(@RequestParam(value = "idMc") int idMc,@RequestParam (value = "parentMaMc") String parentMaMc) {
         try {
             MinhChung minhChung = service.findById(idMc);
+
+            uploadService.removeShortcut(minhChung.getLinkLuuTru());
             service.processMinhChung(idMc, parentMaMc);
-            uploadService.removeShortcut(extractFileId(minhChung.getLinkLuuTru()));
             return ResponseEntity.ok("OK");
         } catch (Exception e) {
             return ResponseEntity.status(500).body("Error processing: " + e.getMessage());
@@ -99,19 +100,6 @@ public class MinhChungController {
             return ResponseEntity.status(500).body("Error processing: " + e.getMessage());
         }
     }
-    public static String extractFileId(String url) {
-        String fileId = null;
 
-        // Define regex to capture the ID after "d/" and before "/preview"
-        String regex = "https://drive\\.google\\.com/file/d/([\\w-]+)/preview";
-        java.util.regex.Pattern pattern = java.util.regex.Pattern.compile(regex);
-        java.util.regex.Matcher matcher = pattern.matcher(url);
-
-        // If pattern matches, extract the group (file ID)
-        if (matcher.find()) {
-            fileId = matcher.group(1);
-        }
-        return fileId;
-    }
     
 }
