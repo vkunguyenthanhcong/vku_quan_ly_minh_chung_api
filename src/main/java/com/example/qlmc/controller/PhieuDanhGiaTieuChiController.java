@@ -68,15 +68,7 @@ public class PhieuDanhGiaTieuChiController {
             phieuDanhGiaTieuChi.setMoTa(formData.get("moTa").asText());
             phieuDanhGiaTieuChi.setDiemManh(formData.get("diemManh").asText());
             phieuDanhGiaTieuChi.setDiemTonTai(formData.get("diemTonTai").asText());
-            phieuDanhGiaTieuChi.setNoiDungKhacPhuc(formData.get("noiDungKhacPhuc").asText());
-            phieuDanhGiaTieuChi.setDonViKhacPhuc(formData.get("donViKhacPhuc").asText());
-            phieuDanhGiaTieuChi.setThoiGianKhacPhuc(formData.get("thoiGianKhacPhuc").asText());
-            phieuDanhGiaTieuChi.setGhiChuKhacPhuc(formData.get("ghiChuKhacPhuc").asText());
-
-            phieuDanhGiaTieuChi.setNoiDungPhatHuy(formData.get("noiDungPhatHuy").asText());
-            phieuDanhGiaTieuChi.setDonViPhatHuy(formData.get("donViPhatHuy").asText());
-            phieuDanhGiaTieuChi.setThoiGianPhatHuy(formData.get("thoiGianPhatHuy").asText());
-            phieuDanhGiaTieuChi.setGhiChuPhatHuy(formData.get("ghiChuPhatHuy").asText());
+            phieuDanhGiaTieuChi.setKeHoach(formData.get("keHoach").asText());
 
             phieuDanhGiaTieuChi.setMucDanhGia(Integer.parseInt(formData.get("mucDanhGia").asText()));
 
@@ -102,15 +94,7 @@ public class PhieuDanhGiaTieuChiController {
             phieuDanhGiaTieuChi.setMoTa(formData.get("moTa").asText());
             phieuDanhGiaTieuChi.setDiemManh(formData.get("diemManh").asText());
             phieuDanhGiaTieuChi.setDiemTonTai(formData.get("diemTonTai").asText());
-            phieuDanhGiaTieuChi.setNoiDungKhacPhuc(formData.get("noiDungKhacPhuc").asText());
-            phieuDanhGiaTieuChi.setDonViKhacPhuc(formData.get("donViKhacPhuc").asText());
-            phieuDanhGiaTieuChi.setThoiGianKhacPhuc(formData.get("thoiGianKhacPhuc").asText());
-            phieuDanhGiaTieuChi.setGhiChuKhacPhuc(formData.get("ghiChuKhacPhuc").asText());
-
-            phieuDanhGiaTieuChi.setNoiDungPhatHuy(formData.get("noiDungPhatHuy").asText());
-            phieuDanhGiaTieuChi.setDonViPhatHuy(formData.get("donViPhatHuy").asText());
-            phieuDanhGiaTieuChi.setThoiGianPhatHuy(formData.get("thoiGianPhatHuy").asText());
-            phieuDanhGiaTieuChi.setGhiChuPhatHuy(formData.get("ghiChuPhatHuy").asText());
+            phieuDanhGiaTieuChi.setKeHoach(formData.get("keHoach").asText());
 
             phieuDanhGiaTieuChi.setMucDanhGia(Integer.parseInt(formData.get("mucDanhGia").asText()));
 

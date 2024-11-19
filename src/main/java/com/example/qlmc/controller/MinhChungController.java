@@ -1,28 +1,19 @@
 package com.example.qlmc.controller;
 
+import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
 
-import com.example.qlmc.entity.GoiY;
-import com.example.qlmc.entity.KhoMinhChung;
-import com.example.qlmc.entity.Res;
-import com.example.qlmc.service.GoiYService;
-import com.example.qlmc.service.KhoMinhChungService;
-import com.example.qlmc.service.UploadService;
+import com.example.qlmc.entity.*;
+import com.example.qlmc.service.*;
 import com.fasterxml.jackson.databind.JsonNode;
+import org.checkerframework.checker.units.qual.A;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
-
-import com.example.qlmc.entity.MinhChung;
-import com.example.qlmc.service.MinhChungService;
+import org.springframework.web.bind.annotation.*;
 
 
 @RestController
@@ -36,16 +27,54 @@ public class MinhChungController {
     private GoiYService goiYService;
     @Autowired
     private UploadService uploadService;
+    @Autowired
+    private TieuChuanService tieuChuanService;
+    @Autowired
+    private TieuChiService tieuChiService;
+    @Autowired
+    private MocChuanService mocChuanService;
 
     @GetMapping
     public ResponseEntity<List<MinhChung>> getAllMinhChung() {
         return ResponseEntity.ok(service.getAllMinhChung());
     }
-    @GetMapping("/delete")
+    @DeleteMapping("/delete")
     public ResponseEntity<String> processMinhChung(@RequestParam(value = "idMc") int idMc,@RequestParam (value = "parentMaMc") String parentMaMc) {
         try {
             MinhChung minhChung = service.findById(idMc);
+            AtomicInteger firstStt = new AtomicInteger(1000);
+            AtomicInteger idTieuChuan = new AtomicInteger(0);
+            List<MinhChung> listDungChung = service.findByMaDungChung(minhChung.getIdMc());
 
+            if(!listDungChung.isEmpty()) {
+                listDungChung.forEach(item -> {
+                    TieuChuan tieuChuan = tieuChuanService.findById(item.getIdTieuChuan());
+                    if(tieuChuan.getStt() < firstStt.get()) {
+                        firstStt.set(tieuChuan.getStt());
+                        idTieuChuan.set(tieuChuan.getIdTieuChuan());
+                    }
+                });//tim duoc stt tieu chuan nho nhat
+
+                List<MinhChung> filterWithIdTieuChuanNew = listDungChung.stream()
+                        .filter(item -> item.getIdTieuChuan() == idTieuChuan.get())
+                        .collect(Collectors.toList());
+
+                Optional<MinhChung> minSttItem = filterWithIdTieuChuanNew.stream().min(Comparator.comparing(MinhChung::getSttTieuChi));
+
+                MinhChung changeMinhChung = minSttItem.get();
+                TieuChi tieuChi = tieuChiService.findById(changeMinhChung.getIdTieuChi());
+
+                changeMinhChung.setParentMaMc("H"+firstStt.get()+"."+String.format("%02d", firstStt.get())+"."+String.format("%02d", changeMinhChung.getSttTieuChi())+".");
+                int totalMinhChungofTieuChi = service.totalMinhChungOfTieuChi(changeMinhChung.getIdTieuChi()) + 1;
+                changeMinhChung.setChildMaMc(String.format("%02d", totalMinhChungofTieuChi));
+                changeMinhChung.setMaDungChung(0);
+
+                service.UpdateNewMaDungChung(changeMinhChung.getIdMc(), minhChung.getIdMc());
+                String newNameFile = changeMinhChung.getParentMaMc()+changeMinhChung.getChildMaMc()+". "+ minhChung.getTenMinhChung();
+                Res res = uploadService.createShortcut(newNameFile, tieuChi.getIdGoogleDrive(), changeMinhChung.getKhoMinhChung().getLinkLuuTru());
+                changeMinhChung.setLinkLuuTru(res.getUrl());
+                service.saveData(changeMinhChung);
+            }
             uploadService.removeShortcut(minhChung.getLinkLuuTru());
             service.processMinhChung(idMc, parentMaMc);
             return ResponseEntity.ok("OK");
@@ -73,7 +102,7 @@ public class MinhChungController {
             MinhChung minhChung = new MinhChung();
             minhChung.setParentMaMc(parentMaMc);
             minhChung.setChildMaMc(childMaMc);
-            minhChung.setIdKhoMinhChung(idKmc);
+            minhChung.setKhoMinhChung(khoMinhChung);
             minhChung.setIdTieuChuan(idTieuChuan);
             minhChung.setLinkLuuTru(res.getUrl());
 
@@ -100,6 +129,36 @@ public class MinhChungController {
             return ResponseEntity.status(500).body("Error processing: " + e.getMessage());
         }
     }
+    @PutMapping("/down/{idMc}")
+    public ResponseEntity<String> downMaMinhChung(@PathVariable int idMc) {
+        try{
+            MinhChung mc1 = service.findById(idMc);
+            String childMaMc = mc1.getChildMaMc();
+            int num = Integer.parseInt(childMaMc);
+            num = num + 1;
+            String childMaMcNext = String.format("%02d", num);
+            MinhChung mc2 = service.findByParentChildMaMcInTieuChuan(mc1.getParentMaMc(), childMaMcNext, mc1.getIdTieuChuan());
+            service.SwapData(mc1.getIdMc(), mc2.getIdMc());
+            return ResponseEntity.ok("OK");
+        } catch (Exception e) {
+            return ResponseEntity.status(500).body("Error processing: " + e.getMessage());
+        }
+    }
+    @PutMapping("/up/{idMc}")
+    public ResponseEntity<String> upMaMinhChung(@PathVariable int idMc) {
+        try{
+            MinhChung mc1 = service.findById(idMc);
+            String childMaMc = mc1.getChildMaMc();
+            int num = Integer.parseInt(childMaMc);
+            num = num - 1;
+            String childMaMcNext = String.format("%02d", num);
+            MinhChung mc2 = service.findByParentChildMaMcInTieuChuan(mc1.getParentMaMc(), childMaMcNext, mc1.getIdTieuChuan());
+            service.SwapData(mc1.getIdMc(), mc2.getIdMc());
+            return ResponseEntity.ok("OK");
+        } catch (Exception e) {
+            return ResponseEntity.status(500).body("Error processing: " + e.getMessage());
+        }
+    }
 
-    
+
 }

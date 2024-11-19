@@ -24,8 +24,11 @@ public class MinhChung {
     @Column(name = "child_ma_mc")
     private String childMaMc;
 
-    @Column(name = "id_kmc")
-    private int idKhoMinhChung;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn (name="id_kmc")
+    @JsonBackReference
+    private KhoMinhChung khoMinhChung;
+
 
     @Column(name = "id_tieuchuan")
     private int idTieuChuan;
@@ -39,6 +42,24 @@ public class MinhChung {
     @JsonProperty("idGoiY")
     public int getIdGoiY() {
         return goiY.getIdGoiY();
+    }
+
+    @JsonProperty("idKhoMinhChung")
+    public int getIdKhoMinhChung() {
+        return khoMinhChung.getIdKhoMinhChung();
+    }
+
+    @JsonProperty("idTieuChi")
+    public int getIdTieuChi(){
+        return goiY.getMocChuan().getIdTieuChi();
+    }
+    @JsonProperty("sttTieuChi")
+    public int getSttTieuChi(){
+        return goiY.getMocChuan().getTieuChi().getStt();
+    }
+    @JsonProperty("tenMinhChung")
+    public String getTenMinhChung(){
+        return khoMinhChung.getTenMinhChung();
     }
 
     @Column(name = "madungchung")

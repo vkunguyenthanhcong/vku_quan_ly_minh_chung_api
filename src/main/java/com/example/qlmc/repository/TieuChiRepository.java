@@ -10,4 +10,6 @@ import com.example.qlmc.entity.TieuChi;
 
 
 public interface TieuChiRepository extends JpaRepository<TieuChi, Integer> {
+    @Query("SELECT tc FROM TieuChi tc WHERE tc.tieuChuan.idTieuChuan = :idTieuChuan")
+    List<TieuChi> findTieuChiByIdTieuChuan(@Param("idTieuChuan") int idTieuChuan);
 }

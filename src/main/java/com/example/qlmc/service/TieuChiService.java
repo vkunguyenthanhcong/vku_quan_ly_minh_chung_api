@@ -27,6 +27,10 @@ public class TieuChiService {
         return tieuChiRepository.findById(idTieuChi).orElse(null);
     }
 
+    public List<TieuChi> findByIdTieuChuan(int idTieuChuan){
+        return tieuChiRepository.findTieuChiByIdTieuChuan(idTieuChuan);
+    }
+
     public void insertNewTieuChi(TieuChi tieuChi){
         tieuChiRepository.save(tieuChi);
     }

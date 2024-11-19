@@ -1,6 +1,7 @@
 package com.example.qlmc.repository;
 import java.util.List;
 
+import com.example.qlmc.entity.PhanCongDanhGia;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -11,20 +12,50 @@ import com.example.qlmc.entity.MinhChung;
 import jakarta.transaction.Transactional;
 
 public interface MinhChungRepository extends JpaRepository<MinhChung, Integer> {
-    @Query("SELECT m FROM MinhChung m WHERE m.goiY.idGoiY = :idGoiY")
-    List<MinhChung> findByIdGoiY(int idGoiY);
 
-    @Query(value = "SELECT mc.parent_ma_mc, mc.child_ma_mc, kmc.ten_mc, kmc.sohieu, kmc.thoigian, dvbh.ten_dvbh, kmc.linkluutru, mc.madungchung FROM minhchung mc, khominhchung kmc, donvibanhanh dvbh, goiynguonmc goiy, mocchuan WHERE mocchuan.id_tieuchi = :idTieuChi AND mocchuan.id_mocchuan = goiy.id_mocchuan AND mc.id_goiy = goiy.id_goiy AND mc.id_kmc = kmc.id_kmc AND kmc.id_dvbh = dvbh.id_dvbh", nativeQuery =  true)
-    List<Object[]> findAllByIdTieuChi(@Param("idTieuChi") int idTieuChi);
+    @Query("SELECT mc FROM MinhChung mc WHERE mc.maDungChung = :idMc")
+    List<MinhChung> findMinhChungDungChung(@Param("idMc") int idMc);
 
-    @Query(value = "SELECT minhchung.*, khominhchung.ten_mc FROM minhchung, tieuchuan, khominhchung WHERE tieuchuan.ma_ctdt = :maCtdt AND tieuchuan.id_tieuchuan = minhchung.id_tieuchuan AND khominhchung.id_kmc = minhchung.id_kmc;", nativeQuery = true)
-    List<Object[]> findByMaCtdt(@Param("maCtdt") String maCtdt);
+    @Query("SELECT COUNT(mc) FROM MinhChung mc WHERE mc.goiY.mocChuan.tieuChi.idTieuChi = :idTieuChi AND mc.maDungChung = 0")
+    int totalMinhChungOfTieuChi(@Param("idTieuChi") int idTieuChi);
 
-    @Query (value = "SELECT minhchung.id_mc, minhchung.parent_ma_mc, minhchung.child_ma_mc, khominhchung.ten_mc, khominhchung.linkluutru FROM minhchung, khominhchung WHERE minhchung.madungchung = 0 AND minhchung.id_kmc = khominhchung.id_kmc;", nativeQuery=true)
-    List<Object[]> getAllMinhChung();
+    @Query("SELECT mc FROM MinhChung mc WHERE mc.idTieuChuan = :idTieuChuan AND mc.goiY.mocChuan.tieuChi.idTieuChi = :idTieuChi")
+    MinhChung findMinhChungByIdTieuChuanIdTieuChi(@Param("idTieuChuan") int idTieuChuan, @Param("idTieuChi") int idTieuChi);
 
-    @Query(value = "SELECT COUNT(*) FROM minhchung WHERE minhchung.id_tieuchuan = :idTieuChuan", nativeQuery=true)
-    int countMinhChungByTieuChuan(@Param("idTieuChuan") int idTieuChuan);
+    @Modifying
+    @Transactional
+    @Query("UPDATE MinhChung mc SET mc.maDungChung = :idMc WHERE mc.maDungChung = :maDungChung AND mc.maDungChung != 0")
+    void updateNewMaDungChung(@Param("idMc") int idMc, @Param("maDungChung") int maDungChung);
+
+    @Modifying
+    @Transactional
+    @Query(value = "CREATE TEMPORARY TABLE temp_table AS " +
+            "SELECT id_mc, id_kmc, id_tieuchuan, id_goiy, madungchung, linkluutru " +
+            "FROM minhchung WHERE id_mc = :idMc1", nativeQuery = true)
+    void createTempTable(@Param("idMc1") int idMc1);
+
+    @Modifying
+    @Transactional
+    @Query(value = "UPDATE minhchung t1 " +
+            "JOIN minhchung t2 ON t1.id_mc = :idMc1 AND t2.id_mc = :idMc2 " +
+            "SET t1.id_kmc = t2.id_kmc, t1.id_tieuchuan = t2.id_tieuchuan, " +
+            "t1.id_goiy = t2.id_goiy, t1.madungchung = t2.madungchung, " +
+            "t1.linkluutru = t2.linkluutru", nativeQuery = true)
+    void updateFirstRecord(@Param("idMc1") int idMc1, @Param("idMc2") int idMc2);
+
+    @Modifying
+    @Transactional
+    @Query(value = "UPDATE minhchung t2 " +
+            "JOIN temp_table temp ON t2.id_mc = :idMc2 " +
+            "SET t2.id_kmc = temp.id_kmc, t2.id_tieuchuan = temp.id_tieuchuan, " +
+            "t2.id_goiy = temp.id_goiy, t2.madungchung = temp.madungchung, " +
+            "t2.linkluutru = temp.linkluutru", nativeQuery = true)
+    void updateSecondRecord(@Param("idMc2") int idMc2);
+
+
+
+    @Query("SELECT mc FROM MinhChung mc WHERE mc.parentMaMc = :parentMaMc AND mc.childMaMc = :childMaMc AND mc.idTieuChuan = :idTieuChuan")
+    MinhChung findMinhChungByParentChildMaMcInTieuChuan(@Param("parentMaMc") String parentMaMc, @Param("childMaMc") String childMaMc, @Param("idTieuChuan") int idTieuChuan);
 
     @Modifying
     @Transactional
@@ -33,10 +64,9 @@ public interface MinhChungRepository extends JpaRepository<MinhChung, Integer> {
                          @Param("idTieuChuan") int idTieuChuan,
                          @Param("idGoiY") int idGoiY,
                          @Param("maDungChung") int maDungChung);
-
     @Modifying
     @Transactional
-    @Query(value = "DELETE FROM minhchung WHERE id_mc = :idMc OR madungchung = :idMc", nativeQuery = true)
+    @Query(value = "DELETE FROM minhchung WHERE id_mc = :idMc", nativeQuery = true)
     void deleteByIdMc(@Param("idMc") int idMc);
 
 
