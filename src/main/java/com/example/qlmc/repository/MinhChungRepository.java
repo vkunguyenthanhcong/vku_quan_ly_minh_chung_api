@@ -16,11 +16,15 @@ public interface MinhChungRepository extends JpaRepository<MinhChung, Integer> {
     @Query("SELECT mc FROM MinhChung mc WHERE mc.maDungChung = :idMc")
     List<MinhChung> findMinhChungDungChung(@Param("idMc") int idMc);
 
+    @Query("SELECT mc FROM MinhChung mc WHERE mc.goiY.idGoiY = :idGoiY")
+    List<MinhChung> findByIdGoiY(@Param("idGoiY") int idGoiY);
+
     @Query("SELECT COUNT(mc) FROM MinhChung mc WHERE mc.goiY.mocChuan.tieuChi.idTieuChi = :idTieuChi AND mc.maDungChung = 0")
     int totalMinhChungOfTieuChi(@Param("idTieuChi") int idTieuChi);
 
     @Query("SELECT mc FROM MinhChung mc WHERE mc.idTieuChuan = :idTieuChuan AND mc.goiY.mocChuan.tieuChi.idTieuChi = :idTieuChi")
     MinhChung findMinhChungByIdTieuChuanIdTieuChi(@Param("idTieuChuan") int idTieuChuan, @Param("idTieuChi") int idTieuChi);
+
 
     @Modifying
     @Transactional
@@ -30,7 +34,7 @@ public interface MinhChungRepository extends JpaRepository<MinhChung, Integer> {
     @Modifying
     @Transactional
     @Query(value = "CREATE TEMPORARY TABLE temp_table AS " +
-            "SELECT id_mc, id_kmc, id_tieuchuan, id_goiy, madungchung, linkluutru " +
+            "SELECT parent_ma_mc, child_ma_mc " +
             "FROM minhchung WHERE id_mc = :idMc1", nativeQuery = true)
     void createTempTable(@Param("idMc1") int idMc1);
 
@@ -38,18 +42,14 @@ public interface MinhChungRepository extends JpaRepository<MinhChung, Integer> {
     @Transactional
     @Query(value = "UPDATE minhchung t1 " +
             "JOIN minhchung t2 ON t1.id_mc = :idMc1 AND t2.id_mc = :idMc2 " +
-            "SET t1.id_kmc = t2.id_kmc, t1.id_tieuchuan = t2.id_tieuchuan, " +
-            "t1.id_goiy = t2.id_goiy, t1.madungchung = t2.madungchung, " +
-            "t1.linkluutru = t2.linkluutru", nativeQuery = true)
+            "SET t1.child_ma_mc = t2.child_ma_mc", nativeQuery = true)
     void updateFirstRecord(@Param("idMc1") int idMc1, @Param("idMc2") int idMc2);
 
     @Modifying
     @Transactional
     @Query(value = "UPDATE minhchung t2 " +
             "JOIN temp_table temp ON t2.id_mc = :idMc2 " +
-            "SET t2.id_kmc = temp.id_kmc, t2.id_tieuchuan = temp.id_tieuchuan, " +
-            "t2.id_goiy = temp.id_goiy, t2.madungchung = temp.madungchung, " +
-            "t2.linkluutru = temp.linkluutru", nativeQuery = true)
+            "SET t2.child_ma_mc = temp.child_ma_mc", nativeQuery = true)
     void updateSecondRecord(@Param("idMc2") int idMc2);
 
 

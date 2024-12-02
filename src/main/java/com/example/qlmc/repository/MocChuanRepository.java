@@ -9,6 +9,6 @@ import org.springframework.data.repository.query.Param;
 import com.example.qlmc.entity.MocChuan;
 
 public interface MocChuanRepository extends JpaRepository<MocChuan, Integer>{
-    @Query(value = "SELECT * FROM mocchuan WHERE id_tieuchi = :idTieuChi", nativeQuery =  true)
+    @Query("SELECT mc FROM MocChuan mc WHERE mc.tieuChi.idTieuChi = :idTieuChi")
     List<MocChuan> findByIdTieuChi(@Param("idTieuChi") int idTieuChi);
 }

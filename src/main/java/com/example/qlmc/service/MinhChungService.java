@@ -20,6 +20,9 @@ public class MinhChungService {
     public void addMinhChungDungChung(int idKmc, int idTieuChuan, int idGoiY, int maDungChung) {
         minhChungRepository.insertMinhChung(idKmc, idTieuChuan, idGoiY, maDungChung);
     }
+    public List<MinhChung> findByIdGoiY(int idGoiY){
+        return minhChungRepository.findByIdGoiY(idGoiY);
+    }
     public int totalMinhChungOfTieuChi(int idTieuChi) {
         return minhChungRepository.totalMinhChungOfTieuChi(idTieuChi);
     }

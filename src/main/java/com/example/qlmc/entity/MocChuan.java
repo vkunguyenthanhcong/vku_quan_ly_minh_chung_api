@@ -16,6 +16,7 @@ import java.util.List;
 @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "idMocChuan")
 public class MocChuan {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column (name = "id_mocchuan")
     private int idMocChuan;
     

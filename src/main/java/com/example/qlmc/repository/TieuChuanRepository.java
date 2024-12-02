@@ -12,8 +12,6 @@ public interface TieuChuanRepository extends JpaRepository<TieuChuan, Integer> {
 
     @Query("SELECT tc FROM TieuChuan tc WHERE tc.ctdt.maCtdt = :maCtdt")
     List<TieuChuan> findByMaCtdt(String maCtdt);
-
-    @Query(value = "SELECT tc.id_tieuchuan, tc.ten_tieuchuan, (SELECT COUNT(*) FROM minhchung mc WHERE mc.id_tieuchuan = tc.id_tieuchuan) AS count, tc.stt AS total FROM tieuchuan tc WHERE tc.ma_ctdt = :maCtdt", nativeQuery = true)
-    List<Object[]> getListTieuChuanAndCount(@Param("maCtdt") String maCtdt);
-
+    @Query("SELECT tc FROM TieuChuan tc WHERE tc.idGoogleDrive = :idGoogleDrive")
+    TieuChuan findByIdGoogleDrive(String idGoogleDrive);
 }

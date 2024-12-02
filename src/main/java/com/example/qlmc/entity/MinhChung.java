@@ -6,6 +6,9 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.sql.Date;
+import java.sql.Time;
+
 @Entity
 @Data
 @NoArgsConstructor
@@ -43,6 +46,19 @@ public class MinhChung {
     public int getIdGoiY() {
         return goiY.getIdGoiY();
     }
+    @JsonProperty("soHieu")
+    public String getSoHieu() {
+        return khoMinhChung.getSoHieu();
+    }
+    @JsonProperty("thoiGian")
+    public Date getThoiGian() {
+        return khoMinhChung.getThoigian();
+    }
+    @JsonProperty("donViBanHanh")
+    public String getDonViBanHanh() {
+        return khoMinhChung.getDonViBanHanh().getTenDvbh();
+    }
+
 
     @JsonProperty("idKhoMinhChung")
     public int getIdKhoMinhChung() {

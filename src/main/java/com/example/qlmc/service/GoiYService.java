@@ -1,8 +1,8 @@
 package com.example.qlmc.service;
 
 import java.util.List;
-import java.util.Optional;
 
+import com.example.qlmc.entity.MocChuan;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -27,5 +27,11 @@ public class GoiYService {
     }
     public void deleteById(int idGoiY){
         goiYRepository.deleteById(idGoiY);
+    }
+    public List<GoiY> findByMaCtdt(String maCtdt){
+        return goiYRepository.findByMaCtdt(maCtdt);
+    }
+    public List<GoiY> findByIdMocChuan(int idMocChuan){
+        return goiYRepository.findByIdMocChuan(idMocChuan);
     }
 }

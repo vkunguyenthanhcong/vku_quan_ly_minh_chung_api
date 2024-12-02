@@ -22,13 +22,16 @@ public class MocChuanService {
     public List<MocChuan> getAllMocChuan() {
         return repository.findAll();
     }
-
+    public List<MocChuan> findByIdTieuChi(int idTieuChi) {
+        return repository.findByIdTieuChi(idTieuChi);
+    }
     public MocChuan findById(int id) {
         return repository.findById(id).orElse(null);
     }
 
-    public void insertMocChuan(MocChuan mocChuan) {
-        repository.save(mocChuan);
+    public int insertMocChuan(MocChuan mocChuan) {
+        MocChuan savedMocChuan = repository.save(mocChuan);
+        return savedMocChuan.getIdMocChuan();
     }
     public void updateMocChuan(JsonNode formData) {
         MocChuan mocChuan = mocChuanRepository.findById(formData.get("id").asInt()).orElse(null);

@@ -24,11 +24,21 @@ public class TieuChuanService {
     public TieuChuan findById(int id) {
         return tieuChuanRepository.findById(id).orElse(null);
     }
-    public void insertNewTieuChuan(TieuChuan tieuChuan) {
-        tieuChuanRepository.save(tieuChuan);
+    public Boolean insertNewTieuChuan(TieuChuan tieuChuan) {
+        try {
+            tieuChuanRepository.save(tieuChuan);
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
     }
+
     public List<TieuChuan> findByMaCtdt(String maCtdt) {
         return tieuChuanRepository.findByMaCtdt(maCtdt);
+    }
+    public TieuChuan findByIdGoogleDrive(String idGoogleDrive) {
+        return tieuChuanRepository.findByIdGoogleDrive(idGoogleDrive);
     }
     public void updateTieuChuan(JsonNode formData){
         TieuChuan tc = tieuChuanRepository.findById(formData.get("id").asInt()).orElseThrow(() -> new RuntimeException("Product not found"));
