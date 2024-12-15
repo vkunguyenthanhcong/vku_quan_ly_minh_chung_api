@@ -48,6 +48,7 @@ public class ImageUploadController {
             return ResponseEntity.status(500).body("File upload failed: " + e.getMessage());
         }
     }
+
     private String convertImageToBase64(File file) throws IOException {
         // Create a byte array output stream to read the file into a byte array
         try (FileInputStream fileInputStream = new FileInputStream(file);

@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
 
+import com.example.qlmc.controller.ImageUploadController;
 import com.example.qlmc.entity.PhongBan;
 import com.example.qlmc.repository.PhongBanRepository;
 import com.fasterxml.jackson.databind.JsonNode;
@@ -17,6 +18,7 @@ import org.springframework.stereotype.Service;
 import com.example.qlmc.dto.ReqRes;
 import com.example.qlmc.entity.User;
 import com.example.qlmc.repository.UsersRepository;
+import org.springframework.web.multipart.MultipartFile;
 
 @Service
 public class UsersManagementService {
@@ -31,29 +33,30 @@ public class UsersManagementService {
     private PasswordEncoder passwordEncoder;
     @Autowired
     private PhongBanRepository phongBanRepository;
+    @Autowired
+    private ImageUploadController imageUploadController;
 
-    public ReqRes register(ReqRes registrationRequest){
-        ReqRes resp = new ReqRes();
-
+    public Boolean register(JsonNode json) {
         try {
             User ourUser = new User();
-            ourUser.setEmail(registrationRequest.getEmail());
-            ourUser.setSdt(registrationRequest.getSdt());
-            ourUser.setRole(registrationRequest.getRole());
-            ourUser.setUsername(registrationRequest.getUsername());
-            ourUser.setPassword(passwordEncoder.encode(registrationRequest.getPassword()));
-            User ourUsersResult = usersRepo.save(ourUser);
-            if (ourUsersResult.getId()>0) {
-                resp.setUser((ourUsersResult));
-                resp.setMessage("User Saved Successfully");
-                resp.setStatusCode(200);
+            ourUser.setEmail(json.get("email").asText());
+            ourUser.setSdt(json.get("phone").asText());
+            ourUser.setRole("USER");
+            ourUser.setFullName(json.get("fullName").asText());
+
+            ourUser.setPassword(passwordEncoder.encode(json.get("password").asText()));
+            Optional<PhongBan> phongBanOptional = phongBanRepository.findById(json.get("idPhongBan").asInt());
+            phongBanOptional.ifPresent(ourUser::setPhongBan);
+            ourUser.setAvatar(json.get("avatar").asText());
+            User savedUser = usersRepo.save(ourUser);
+            if (savedUser.getId()>0) {
+                return true;
             }
 
         }catch (Exception e){
-            resp.setStatusCode(500);
-            resp.setError(e.getMessage());
+            return false;
         }
-        return resp;
+        return false;
     }
 
 

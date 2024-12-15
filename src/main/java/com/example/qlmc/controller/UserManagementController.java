@@ -5,18 +5,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.example.qlmc.dto.ReqRes;
 import com.example.qlmc.entity.User;
 import com.example.qlmc.service.UsersManagementService;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.util.Map;
 
 
 @RestController
@@ -25,8 +21,8 @@ public class UserManagementController {
     private UsersManagementService usersManagementService;
 
     @PostMapping("/auth/register")
-    public ResponseEntity<ReqRes> regeister(@RequestBody ReqRes reg){
-        return ResponseEntity.ok(usersManagementService.register(reg));
+        public ResponseEntity<Boolean> regeister(@RequestBody JsonNode formData) {
+        return ResponseEntity.ok(usersManagementService.register(formData));
     }
 
     @PostMapping("/auth/login")
