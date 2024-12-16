@@ -25,7 +25,6 @@ public interface MinhChungRepository extends JpaRepository<MinhChung, Integer> {
     @Query("SELECT mc FROM MinhChung mc WHERE mc.idTieuChuan = :idTieuChuan AND mc.goiY.mocChuan.tieuChi.idTieuChi = :idTieuChi")
     MinhChung findMinhChungByIdTieuChuanIdTieuChi(@Param("idTieuChuan") int idTieuChuan, @Param("idTieuChi") int idTieuChi);
 
-
     @Modifying
     @Transactional
     @Query("UPDATE MinhChung mc SET mc.maDungChung = :idMc WHERE mc.maDungChung = :maDungChung AND mc.maDungChung != 0")

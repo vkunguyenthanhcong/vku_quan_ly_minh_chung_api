@@ -21,5 +21,23 @@ public class KhoaService {
         return khoaRepository.findById(id).orElse(null);
     }
 
+    public void changeKhoa(Khoa khoa) {
+        Khoa khoa1 = khoaRepository.findByMaKhoa(khoa.getMaKhoa());
+        if(khoa1 != null) {
+            khoaRepository.save(khoa);
+        }
+    }
+    public Khoa findByMaKhoa(String maKhoa) {
+        return khoaRepository.findByMaKhoa(maKhoa);
+    }
+    public List<Khoa> saveKhoa(Khoa khoa){
+        khoaRepository.save(khoa);
+        return khoaRepository.findAll();
+    }
+    public List<Khoa> deleteKhoa(Khoa khoa){
+         khoaRepository.delete(khoa);
+         return khoaRepository.findAll();
+    }
+    
 
 }

@@ -75,6 +75,7 @@ public class UsersManagementService {
             response.setPhongBan(user.getPhongBan());
             response.setAvatar(user.getAvatar());
             response.setRefreshToken(refreshToken);
+            response.setIsAccept(user.getIsAccept() == 1 ? true : false);
             response.setExpirationTime("24Hrs");
             response.setMessage("Successfully Logged In");
 
@@ -84,9 +85,6 @@ public class UsersManagementService {
         }
         return response;
     }
-
-
-
 
 
     public ReqRes refreshToken(ReqRes refreshTokenReqiest){
@@ -177,6 +175,7 @@ public class UsersManagementService {
                 User existingUser = userOptional.get();
                 PhongBan phongBan = phongBanRepository.findById(formData.get("idPhongBan").asInt()).orElse(null);
                 existingUser.setPhongBan(phongBan);
+                existingUser.setIsAccept(formData.get("isAccept").asBoolean() ? 1 : 0);
 
                 User savedUser = usersRepo.save(existingUser);
                 reqRes.setUser(savedUser);

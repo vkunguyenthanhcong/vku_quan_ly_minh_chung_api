@@ -2,6 +2,7 @@ package com.example.qlmc;
 
 import java.io.IOException;
 
+import com.example.qlmc.service.TokenBlacklistService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContext;
@@ -27,7 +28,8 @@ public class JWTAuthFilter extends OncePerRequestFilter {
 
     @Autowired
     private UserService ourUserDetailsService;
-
+    @Autowired
+    private TokenBlacklistService tokenBlacklistService;
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
@@ -45,6 +47,7 @@ public class JWTAuthFilter extends OncePerRequestFilter {
         userEmail = jwtUtils.extractUsername(jwtToken);
 
         if (userEmail != null && SecurityContextHolder.getContext().getAuthentication() == null) {
+
             UserDetails userDetails = ourUserDetailsService.loadUserByUsername(userEmail);
 
             if (jwtUtils.isTokenValid(jwtToken, userDetails)) {

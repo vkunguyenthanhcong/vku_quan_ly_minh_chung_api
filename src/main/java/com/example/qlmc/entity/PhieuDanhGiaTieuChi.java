@@ -8,6 +8,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import javax.annotation.Nullable;
+
 @Entity
 @Data
 @NoArgsConstructor
@@ -50,5 +52,8 @@ public class            PhieuDanhGiaTieuChi {
 
     @Column(name = "mucdanhgia")
     private int mucDanhGia;
+    @Column(name = "nguoivietbaocao")
+    @Nullable
+    private String nguoiVietBaoCao;
 
 }

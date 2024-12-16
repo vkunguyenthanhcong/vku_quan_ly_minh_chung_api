@@ -71,6 +71,7 @@ public class PhieuDanhGiaTieuChiController {
             phieuDanhGiaTieuChi.setKeHoach(formData.get("keHoach").asText());
 
             phieuDanhGiaTieuChi.setMucDanhGia(Integer.parseInt(formData.get("mucDanhGia").asText()));
+            phieuDanhGiaTieuChi.setNguoiVietBaoCao(formData.get("nguoiVietBaoCao").asText());
 
             phieuDanhGiaTieuChiService.insertPhieuDanhGia(phieuDanhGiaTieuChi);
             return ResponseEntity.ok("OK");

@@ -29,6 +29,5 @@ public class ReqRes {
     private String avatar;
     private User user;
     private List<User> userList;
-
-
+    private Boolean isAccept;
 }

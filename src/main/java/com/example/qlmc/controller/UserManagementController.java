@@ -1,5 +1,8 @@
 package com.example.qlmc.controller;
 
+import com.example.qlmc.repository.UsersRepository;
+import com.example.qlmc.service.JWTUtils;
+import com.example.qlmc.service.TokenBlacklistService;
 import com.fasterxml.jackson.databind.JsonNode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -13,13 +16,35 @@ import com.example.qlmc.service.UsersManagementService;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.Map;
+import java.util.Optional;
 
 
 @RestController
 public class UserManagementController {
     @Autowired
     private UsersManagementService usersManagementService;
+    @Autowired
+    private JWTUtils jwtUtils;
+    @Autowired
+    private UsersRepository usersRepo;
 
+    @GetMapping("/auth/isAccept")
+    public Boolean checkIsAccept(@RequestHeader("Authorization") String authHeader) {
+        if (authHeader != null && authHeader.startsWith("Bearer ")) {
+            String userEmail = jwtUtils.extractUsername(authHeader.substring(7));
+            Optional<User> userOptional = usersRepo.findByEmail(userEmail);
+            if(userOptional.isEmpty()) {
+                return false;
+            }else{
+                if(userOptional.get().getAccept() == 0) {
+                    return false;
+                }else{
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
     @PostMapping("/auth/register")
         public ResponseEntity<Boolean> regeister(@RequestBody JsonNode formData) {
         return ResponseEntity.ok(usersManagementService.register(formData));

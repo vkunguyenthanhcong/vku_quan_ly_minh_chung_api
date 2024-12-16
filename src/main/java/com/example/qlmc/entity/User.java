@@ -26,7 +26,6 @@ public class User implements UserDetails {
     @Column(name = "email")
     private String email;
 
-
     @Column(name = "password")
     private String password;
 
@@ -37,7 +36,10 @@ public class User implements UserDetails {
     private String sdt;
 
     @Column(name = "avatar")
-    private String avatar;  
+    private String avatar;
+
+    @Column(name = "is_accept")
+    private int isAccept;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "id_phongban")
@@ -79,5 +81,13 @@ public class User implements UserDetails {
 
     public void setPhongBan(PhongBan phongBan) {
         this.phongBan = phongBan;
+    }
+
+    public int getAccept() {
+        return isAccept;
+    }
+
+    public void setAccept(int accept) {
+        isAccept = accept;
     }
 }
