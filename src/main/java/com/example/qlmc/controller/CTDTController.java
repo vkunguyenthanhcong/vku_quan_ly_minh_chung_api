@@ -7,6 +7,7 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.atomic.AtomicInteger;
+import java.util.stream.Collectors;
 
 import com.example.qlmc.entity.*;
 import com.example.qlmc.service.*;
@@ -15,6 +16,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import com.fasterxml.jackson.databind.JsonNode;
+
+import jakarta.persistence.EntityManager;
 
 @RestController
 @RequestMapping("/api/ctdt")
@@ -30,16 +33,6 @@ public class CTDTController {
     private NganhService nganhService;
     @Autowired
     private UploadService uploadService;
-    @Autowired
-    private TieuChuanService tieuChuanService;
-    @Autowired
-    private TieuChiService tieuChiService;
-    @Autowired
-    private MocChuanService mocChuanService;
-    @Autowired
-    private GoiYService goiYService;
-    @Autowired
-    private MinhChungService minhChungService;
 
     @GetMapping
     public ResponseEntity<List<CTDT>> getAllCTDT() {
@@ -122,110 +115,83 @@ public class CTDTController {
         }
     }
     @PostMapping("/copydata")
-    public ResponseEntity<String> copyData(@RequestBody JsonNode formData) {
-        try{
-            String maCtdt_1 = formData.get("maCtdt_1").asText();// ctdt goc
-            CTDT ctdt_1 = ctdtService.getThongTinChuongTrinhDaoTao(maCtdt_1);
-            String maCtdt_2 = formData.get("maCtdt_2").asText();// ctdt moi
-            CTDT ctdt_2 = ctdtService.getThongTinChuongTrinhDaoTao(maCtdt_2);
-            List<TieuChuan> listTieuChuan = tieuChuanService.findByMaCtdt(maCtdt_1);
-            for (TieuChuan tc : listTieuChuan) {
-                TieuChuan newTieuChuan = new TieuChuan();
-                newTieuChuan.setTenTieuChuan(tc.getTenTieuChuan());
-                newTieuChuan.setStt(tc.getStt());
-                newTieuChuan.setCtdt(ctdt_2);
-                try {
-                    String tenGoogleDrive = "Tiêu chuẩn " + tc.getStt() + ". " + tc.getTenTieuChuan();
-                    Res folderRes = uploadService.createFolder(tenGoogleDrive, ctdt_2.getIdGoogleDrive());
-                    newTieuChuan.setIdGoogleDrive(folderRes.getUrl());
-                    tieuChuanService.insertNewTieuChuan(newTieuChuan);
-                } catch (GeneralSecurityException | IOException e) {
-                    throw new RuntimeException("Error processing TieuChuan: " + tc.getTenTieuChuan(), e);
-                }
+public ResponseEntity<String> copyData(@RequestBody JsonNode formData) {
+    // Fetch the original and new CTDT objects
+    CTDT originalCtdt = ctdtService.getThongTinChuongTrinhDaoTao(formData.get("maCtdt_1").asText());
+    CTDT newCtdt = ctdtService.getThongTinChuongTrinhDaoTao(formData.get("maCtdt_2").asText());
+    newCtdt.setMaCtdt(formData.get("maCtdt_2").asText());
+
+    // Initialize and clear the existing TieuChuan list in newCtdt
+    List<TieuChuan> existingTieuChuanList = newCtdt.getTieuChuan();
+    existingTieuChuanList.clear();
+
+    // Copy TieuChuan, TieuChi, MocChuan, and GoiY
+    List<TieuChuan> newTieuChuanList = originalCtdt.getTieuChuan().stream()
+        .map(originalTieuChuan -> {
+            TieuChuan newTieuChuan = new TieuChuan();
+            newTieuChuan.setTenTieuChuan(originalTieuChuan.getTenTieuChuan());
+            newTieuChuan.setStt(originalTieuChuan.getStt());
+            newTieuChuan.setCtdt(newCtdt); // Maintain bi-directional relationship
+            
+            // Create folder in Google Drive
+            try {
+                String tenGoogleDrive = "Tiêu chuẩn " + originalTieuChuan.getStt() + ". " + originalTieuChuan.getTenTieuChuan();
+                Res folderRes = uploadService.createFolder(tenGoogleDrive, newCtdt.getIdGoogleDrive());
+                newTieuChuan.setIdGoogleDrive(folderRes.getUrl());
+            } catch (GeneralSecurityException | IOException e) {
+                throw new RuntimeException("Error processing TieuChuan: " + originalTieuChuan.getTenTieuChuan(), e);
             }
-            insertTieuChi(maCtdt_1, maCtdt_2);
-            return ResponseEntity.ok("OK");
-        }catch (Exception e) {
-            return ResponseEntity.status(500).body("Error processing: " + e.getMessage());
-        }
-    }
-    public void insertTieuChi(String maCtdtGoc, String maCtdtMoi) {
-        List<TieuChuan> listTieuChuanGoc = tieuChuanService.findByMaCtdt(maCtdtGoc);
-        List<TieuChuan> listTieuChuanMoi = tieuChuanService.findByMaCtdt(maCtdtMoi);
-        listTieuChuanGoc.forEach(tieuChuanGoc -> {
-            TieuChuan matchingTieuChuanMoi = listTieuChuanMoi.stream()
-                            .filter(tieuChuanMoi -> tieuChuanMoi.getStt() == tieuChuanGoc.getStt())
-                            .findFirst()
-                            .orElse(null);
-                    if (matchingTieuChuanMoi != null) {
-                        List<TieuChi> listTieuChiGoc = tieuChiService.findByIdTieuChuan(tieuChuanGoc.getIdTieuChuan());
 
-                        listTieuChiGoc.forEach(tieuChiGoc -> {
-                            TieuChi newTieuChi = new TieuChi();
-                            newTieuChi.setTenTieuChi(tieuChiGoc.getTenTieuChi());
-                            newTieuChi.setStt(tieuChiGoc.getStt());
-                            newTieuChi.setYeuCau(tieuChiGoc.getYeuCau());
-                            newTieuChi.setTieuChuan(matchingTieuChuanMoi);
-                            try {
-                                String tenGoogleDrive = "Tiêu chí " + tieuChiGoc.getStt() + ". " + tieuChiGoc.getTenTieuChi();
-                                Res res = uploadService.createFolder(tenGoogleDrive, matchingTieuChuanMoi.getIdGoogleDrive());
-                                newTieuChi.setIdGoogleDrive(res.getUrl());
-                                tieuChiService.insertNewTieuChi(newTieuChi);
+            // Copy TieuChi and related data
+            List<TieuChi> newTieuChiList = originalTieuChuan.getTieuChi().stream()
+                .map(originalTieuChi -> {
+                    TieuChi newTieuChi = new TieuChi();
+                    newTieuChi.setTenTieuChi(originalTieuChi.getTenTieuChi());
+                    newTieuChi.setStt(originalTieuChi.getStt());
+                    newTieuChi.setYeuCau(originalTieuChi.getYeuCau());
+                    newTieuChi.setTieuChuan(newTieuChuan); // Maintain bi-directional relationship
 
-                            } catch (Exception e) {
-                                e.printStackTrace();
-                                throw new RuntimeException("Error inserting TieuChi", e);
-                            }
-                        });
-                        insertMocChuan(tieuChuanGoc.getIdTieuChuan(), matchingTieuChuanMoi.getIdTieuChuan());
-
-                    } else {
-                        System.out.println("No matching TieuChuan found for Stt: " + tieuChuanGoc.getStt());
+                    // Create folder in Google Drive
+                    try {
+                        String tenGoogleDrive = "Tiêu chí " + originalTieuChi.getStt() + ". " + originalTieuChi.getTenTieuChi();
+                        Res folderRes = uploadService.createFolder(tenGoogleDrive, newTieuChuan.getIdGoogleDrive());
+                        newTieuChi.setIdGoogleDrive(folderRes.getUrl());
+                    } catch (GeneralSecurityException | IOException e) {
+                        throw new RuntimeException("Error processing TieuChi: " + originalTieuChi.getTenTieuChi(), e);
                     }
-        }
-        );
-    }
-    public void insertMocChuan(int idTieuChuanGoc, int idTieuChuanMoi) {
-        List<TieuChi> listTieuChiGoc = tieuChiService.findByIdTieuChuan(idTieuChuanGoc);
-        List<TieuChi> listTieuChiMoi = tieuChiService.findByIdTieuChuan(idTieuChuanMoi);
-        listTieuChiGoc.forEach(tieuChiGoc -> {
-                    TieuChi matchingTieuChiMoi = listTieuChiMoi.stream()
-                            .filter(tieuChiMoi -> tieuChiMoi.getStt() == tieuChiGoc.getStt())
-                            .findFirst()
-                            .orElse(null);
-                    if (matchingTieuChiMoi != null) {
-                        List<MocChuan> listMocChuanGoc = mocChuanService.findByIdTieuChi(tieuChiGoc.getIdTieuChi());
 
-                        listMocChuanGoc.forEach(mocChuanGoc -> {
+                    // Copy MocChuan and GoiY
+                    List<MocChuan> newMocChuanList = originalTieuChi.getMocChuan().stream()
+                        .map(originalMocChuan -> {
                             MocChuan newMocChuan = new MocChuan();
-                            newMocChuan.setTenMocChuan(mocChuanGoc.getTenMocChuan());
-                            newMocChuan.setTieuChi(matchingTieuChiMoi);
-                            int idMocChuanMoi = mocChuanService.insertMocChuan(newMocChuan);
-                            insertNewGoiY(mocChuanGoc.getIdMocChuan(), idMocChuanMoi);
-                        });
-                    } else {
-                        System.out.println("No matching TieuChuan found for Stt: " + tieuChiGoc.getStt());
-                    }
+                            newMocChuan.setTenMocChuan(originalMocChuan.getTenMocChuan());
+                            newMocChuan.setTieuChi(newTieuChi); // Maintain bi-directional relationship
 
+                            List<GoiY> newGoiYList = originalMocChuan.getGoiY().stream()
+                                .map(originalGoiY -> {
+                                    GoiY newGoiY = new GoiY();
+                                    newGoiY.setTenGoiY(originalGoiY.getTenGoiY());
+                                    newGoiY.setBatBuoc(originalGoiY.getBatBuoc());
+                                    return newGoiY;
+                                }).collect(Collectors.toList());
 
-                }
-        );
-    }
-    public void insertNewGoiY(int idMocChuanGoc, int idMocChuanMoi) {
-        List<GoiY> listGoiYGoc = goiYService.findByIdMocChuan(idMocChuanGoc);
-        MocChuan mocChuanMoi = mocChuanService.findById(idMocChuanMoi);
-        listGoiYGoc.forEach(goiY -> {
-            GoiY newGoiY = new GoiY();
-            newGoiY.setTenGoiY(goiY.getTenGoiY());
-            newGoiY.setBatBuoc(goiY.getBatBuoc());
-            newGoiY.setMocChuan(mocChuanMoi);
-            goiYService.saveData(newGoiY);
+                            newMocChuan.setGoiY(newGoiYList);
+                            return newMocChuan;
+                        }).collect(Collectors.toList());
 
-            List<MinhChung> listMinhChung = minhChungService.findByIdGoiY(goiY.getIdGoiY());
-            listMinhChung.forEach(mc -> {
-                
-            });
-        });
-    }
+                    newTieuChi.setMocChuan(newMocChuanList);
+                    return newTieuChi;
+                }).collect(Collectors.toList());
 
+            newTieuChuan.setTieuChi(newTieuChiList);
+            return newTieuChuan;
+        }).collect(Collectors.toList());
+
+    // Add new TieuChuan to the existing collection
+    existingTieuChuanList.addAll(newTieuChuanList);
+
+    // Update and save the new CTDT
+    ctdtService.updateCTDTCopy(newCtdt);
+    return ResponseEntity.ok("OK");
+}
 }

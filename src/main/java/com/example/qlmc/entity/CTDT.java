@@ -58,7 +58,7 @@ public class CTDT {
     @Column(name = "loai")
     private int loai;
 
-    @OneToMany(mappedBy = "ctdt", cascade = CascadeType.ALL, orphanRemoval = true)
-    @JsonIgnore
-    private List<TieuChuan> tieuChuan;
+        @OneToMany(mappedBy = "ctdt", cascade = CascadeType.ALL, orphanRemoval = true)
+        @JsonIgnore
+        private List<TieuChuan> tieuChuan;
 }

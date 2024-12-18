@@ -32,7 +32,10 @@ public class CTDTService {
     public void updateCTDT(String maCtdt, String tenCtdt, String maKhoa, String maNganh) {
         ctdtRepository.updateCTDT(tenCtdt, maKhoa, maNganh, maCtdt);
     }
-
+    @Modifying
+    public void updateCTDTCopy(CTDT ctdt) {
+        ctdtRepository.save(ctdt);
+    }
     public void insertCTDT(CTDT ctdt) {
         ctdtRepository.save(ctdt);
     }
