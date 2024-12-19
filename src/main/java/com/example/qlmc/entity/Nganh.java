@@ -21,7 +21,6 @@ import lombok.NoArgsConstructor;
 @Table(name = "nganh")
 public class Nganh {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column (name="ma_nganh")
     private String maNganh;
 

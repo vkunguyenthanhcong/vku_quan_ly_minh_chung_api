@@ -29,9 +29,7 @@ public class KhoaController {
         System.out.println(maKhoa);
         try {
             String fieldName = khoa.fieldNames().next();
-            System.out.println(fieldName);
             String fieldValue = khoa.get(fieldName).asText();
-            System.out.println(fieldValue);
             Khoa khoa1 = khoaService.findByMaKhoa(maKhoa);
             if (khoa1 != null) {
                 switch (fieldName) {

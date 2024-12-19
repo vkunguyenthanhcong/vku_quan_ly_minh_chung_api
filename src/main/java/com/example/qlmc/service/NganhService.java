@@ -21,5 +21,17 @@ public class NganhService {
     public Nganh getNganhById(String id) {
         return nganhRepository.findById(id).orElse(null);
     }
+    public List<Nganh> insertNew(Nganh nganh) {
+        nganhRepository.save(nganh);
+        return nganhRepository.findAll();
+    }
+    public List<Nganh> updateNganh(Nganh nganh){
+        nganhRepository.save(nganh);
+        return nganhRepository.findAll();
+    }
+    public List<Nganh> deleteNganh(Nganh nganh){
+        nganhRepository.delete(nganh);
+        return nganhRepository.findAll();
+    }
 
 }
