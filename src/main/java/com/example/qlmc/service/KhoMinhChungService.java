@@ -57,8 +57,7 @@ public class KhoMinhChungService {
         return khoMinhChungRepository.findById(idKmc).orElse(null);
     }
     
-    public void updateKhoMinhChung(int idKmc, KhoMinhChung data) {
-        data.setIdKhoMinhChung(idKmc);
+    public void updateKhoMinhChung(KhoMinhChung data) {
         khoMinhChungRepository.save(data);
     }
 }

@@ -17,5 +17,8 @@ public class DonViBanHanhService {
     public List<DonViBanHanh> getAllDonViBanHanh() {
         return donViBanHanhRepository.findAll();
     }
+    public DonViBanHanh findById(int id){
+        return donViBanHanhRepository.findById(id).orElse(null);
+    }
     
 }

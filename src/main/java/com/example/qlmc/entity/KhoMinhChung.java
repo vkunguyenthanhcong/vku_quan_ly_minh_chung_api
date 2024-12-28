@@ -20,6 +20,7 @@ import lombok.NoArgsConstructor;
 @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "idKhoMinhChung")
 public class KhoMinhChung {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column (name = "id_kmc")
     private int idKhoMinhChung;
 
@@ -40,7 +41,7 @@ public class KhoMinhChung {
     @JsonBackReference
     private DonViBanHanh donViBanHanh;
 
-    @JsonProperty("id_dvbh")
+    @JsonProperty("idDvbh")
     public int getIdDv() {
         return donViBanHanh.getIdDvbh();
     }
