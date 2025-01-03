@@ -16,6 +16,9 @@ public class PhieuDanhGiaTieuChiService {
     public List<PhieuDanhGiaTieuChi> getAllPhieuDanhGia(){
         return phieuDanhGiaTieuChiRepository.findAll();
     }
+    public PhieuDanhGiaTieuChi findById(int id){
+        return phieuDanhGiaTieuChiRepository.findById(id).orElse(null);
+    }
     public void deletePhieuDanhGia(int idPhieuDanhGia){
         phieuDanhGiaTieuChiRepository.deleteById(idPhieuDanhGia);
     }

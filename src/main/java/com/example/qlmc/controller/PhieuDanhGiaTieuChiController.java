@@ -83,6 +83,7 @@ public class PhieuDanhGiaTieuChiController {
     public ResponseEntity<String> updatePhieuDanhGia(@RequestBody JsonNode formData){
         try {
             PhieuDanhGiaTieuChi phieuDanhGiaTieuChi = new PhieuDanhGiaTieuChi();
+            PhieuDanhGiaTieuChi p1 = phieuDanhGiaTieuChiService.findById(Integer.parseInt(formData.get("idPhieuDanhGia").asText()));
             phieuDanhGiaTieuChi.setIdPhieuDanhGiaTieuChi(Integer.parseInt(formData.get("idPhieuDanhGia").asText()));
             int idPhongBan = Integer.parseInt(formData.get("idPhongBan").asText());
             phieuDanhGiaTieuChi.setIdPhongBan(idPhongBan);
@@ -98,7 +99,7 @@ public class PhieuDanhGiaTieuChiController {
             phieuDanhGiaTieuChi.setKeHoach(formData.get("keHoach").asText());
 
             phieuDanhGiaTieuChi.setMucDanhGia(Integer.parseInt(formData.get("mucDanhGia").asText()));
-
+            phieuDanhGiaTieuChi.setNguoiVietBaoCao(p1.getNguoiVietBaoCao());
             phieuDanhGiaTieuChiService.updatePhieuDanhGia(phieuDanhGiaTieuChi);
             return ResponseEntity.ok("OK");
         } catch (Exception e) {
